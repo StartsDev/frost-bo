@@ -1,22 +1,11 @@
-import Avatar from "./components/avatar/Avatar"
-import Button from "./components/button/Button"
-import Input from "./components/input/Input"
+import Bo from "./components/screens/BO/Bo"
 
 function App() {
 
   return (
     <>
       <div>
-        <Button
-          text="Test"
-          action={() => {}}
-        />
-        <Input
-          placeholder="example"
-          type="text"
-          onChange={() => {}}
-        />
-        <Avatar />
+        <Bo />
       </div>
     </>
   )
