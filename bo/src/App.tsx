@@ -1,3 +1,4 @@
+import Avatar from "./components/avatar/Avatar"
 import Button from "./components/button/Button"
 import Input from "./components/input/Input"
 
@@ -15,6 +16,7 @@ function App() {
           type="text"
           onChange={() => {}}
         />
+        <Avatar />
       </div>
     </>
   )
