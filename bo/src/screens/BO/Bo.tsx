@@ -1,6 +1,6 @@
 import { useEffect } from "react"
-import { THEME } from "../../../theme"
-import Avatar from "../../avatar/Avatar"
+import { THEME } from "../../theme"
+import Avatar from "../../components/avatar/Avatar"
 import styles from "./bo.module.css"
 import { MdDescription } from "react-icons/md"
 
