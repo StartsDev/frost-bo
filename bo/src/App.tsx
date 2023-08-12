@@ -1,11 +1,11 @@
-import Bo from "./components/screens/BO/Bo"
+import Bo from "./screens/BO/Bo"
 
 function App() {
 
   return (
     <>
       <div>
-        <Bo />
+        <Bo />        
       </div>
     </>
   )

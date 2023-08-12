@@ -3,6 +3,7 @@ import { THEME } from "../../theme"
 import Avatar from "../../components/avatar/Avatar"
 import styles from "./bo.module.css"
 import { MdDescription } from "react-icons/md"
+import Table from "../../components/table/Table"
 
 function Bo() {
 
@@ -184,6 +185,7 @@ function Bo() {
                             boxShadow: "0px 10px 15px -3px rgba(0,0,0,0.1)"
                         }}
                     >
+                        <Table />
                     </div>
                 </section>
             </section>
