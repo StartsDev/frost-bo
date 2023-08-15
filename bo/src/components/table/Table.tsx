@@ -1,8 +1,8 @@
 import { mapPropertiesOfItems } from "./utils"
 
-interface Props {
+interface Props <T>{
     headers: string[] | [],
-    items: any[],
+    items: T[],
 }
 
 type Info = {
