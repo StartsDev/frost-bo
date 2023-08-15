@@ -1,6 +1,7 @@
+import Item from "./Item"
 import { mapPropertiesOfItems } from "./utils"
 
-interface Props <T>{
+interface Props<T> {
     headers: string[] | [],
     items: T[],
 }
@@ -11,32 +12,36 @@ type Info = {
     date: string
     nameOfTechnical: string
     state: boolean,
+    action?: string
 }
 
 function Table() {
 
-    const headers = ["orderOfJob", "nameClient", "date", "nameOfTechnical", "state"]
+    const headers = ["orderOfJob", "nameClient", "date", "nameOfTechnical", "state", "Accion"]
     const items: Info[] = [
         {
             orderOfJob: "2",
             nameClient: "jhon",
             date: "22/01/2023",
             nameOfTechnical: "julio",
-            state: false
+            state: false,
+            action: "edit"
         },
         {
             orderOfJob: "1",
             nameClient: "samanta",
             date: "20/01/2023",
             nameOfTechnical: "carlos",
-            state: true
+            state: true,
+            action: "delete",
         },
         {
             orderOfJob: "4",
             nameClient: "jhonatan",
             date: "22/01/2023",
             nameOfTechnical: "juan",
-            state: true
+            state: true,
+            action: ""
         },
     ]
 
@@ -51,7 +56,13 @@ function Table() {
             >
                 {
                     headers.map((item, index) => {
-                        return <p key={index} style={{ width: "20%", backgroundColor: "green" }} >{item}</p>
+                        return (
+                            <p  key={index}
+                                style={{ width: "20%", border: "1px solid #c2c2be", textAlign: "center"  }}
+                            >
+                                    {item}
+                            </p>
+                        )
                     })
                 }
             </section>
@@ -64,15 +75,15 @@ function Table() {
                 }}
             >
                 {
-                    items.map(item => {
-                        return (<div key={item.orderOfJob} style={{ width: "100%", display: "flex" }}>
+                    items.map(item => (
+                        <div key={item.orderOfJob} style={{ width: "100%", display: "flex" }}>
                             {
-                                mapPropertiesOfItems(item).map((item, index) => {
-                                    return <p key={index} style={{ width: "20%", backgroundColor: "green" }} >{item}</p>
+                                mapPropertiesOfItems(item).map((value, index) => {
+                                    return <Item key={index} value={value} />
                                 })
                             }
-                        </div>)
-                    })
+                        </div>
+                    ))
                 }
             </section>
         </div>
