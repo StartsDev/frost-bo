@@ -1,6 +1,8 @@
+import styles from './table.module.css'
+
 type Props = {
     value: string | boolean | number | any
-    action?: () => void
+    action?: () => void,
 }
 
 type PropItemStyle = {
@@ -9,10 +11,7 @@ type PropItemStyle = {
 
 function ItemStyle({ children }: PropItemStyle) {
    return <p
-        style={{
-            border: "1px solid #c2c2be",
-            width: "20%"
-        }}
+        className={styles.item}
     >
         {children}
     </p>

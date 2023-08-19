@@ -1,5 +1,7 @@
 import Item from "./Item"
 import { mapPropertiesOfItems } from "./utils"
+import styles from "./table.module.css"
+import { THEME } from "../../theme"
 
 interface Props<T> {
     headers: string[] | [],
@@ -17,7 +19,7 @@ type Info = {
 
 function Table() {
 
-    const headers = ["orderOfJob", "nameClient", "date", "nameOfTechnical", "state", "Accion"]
+    const headers = ["Orden de trabajo", "Cliente", "Fecha", "Tecnico", "Estado", "Accion"]
     const items: Info[] = [
         {
             orderOfJob: "2",
@@ -43,6 +45,14 @@ function Table() {
             state: true,
             action: ""
         },
+        {
+            orderOfJob: "55",
+            nameClient: "Pedro",
+            date: "2/04/2023",
+            nameOfTechnical: "Jean",
+            state: true,
+            action: ""
+        },
     ]
 
     return (
@@ -58,7 +68,8 @@ function Table() {
                     headers.map((item, index) => {
                         return (
                             <p  key={index}
-                                style={{ width: "20%", border: "1px solid #c2c2be", textAlign: "center"  }}
+                                className={styles.headers}
+                                style={{color: THEME.blue}}
                             >
                                     {item}
                             </p>
@@ -75,8 +86,17 @@ function Table() {
                 }}
             >
                 {
-                    items.map(item => (
-                        <div key={item.orderOfJob} style={{ width: "100%", display: "flex" }}>
+                    items.map((item, index) => (
+                        <div 
+                            key={item.orderOfJob}
+                            style={{ 
+                                width: "100%", 
+                                display: "flex",
+                                backgroundColor: index % 2 === 0 ? THEME.white : THEME.blue,
+                                borderRadius: 5,
+                                color: index % 2 === 0 ? THEME.black : THEME.white
+                            }}
+                        >
                             {
                                 mapPropertiesOfItems(item).map((value, index) => {
                                     return <Item key={index} value={value} />
