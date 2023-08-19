@@ -5,14 +5,20 @@ interface Props {
     text: string
     w?: number
     h?: number
-    action: () => void
+    action?: () => void | undefined
+    bg?: 'primary' | 'secondary',
 }
 
-function Button({ text, action, w = 100, h = 40 }: Props) {
+function Button({ text, action, w = 100, h = 40, bg}: Props) {
   return (
     <button
         className={styles?.button}
-        style={{width: w, height: h, backgroundColor: THEME.blue, color: THEME.white}}
+        style={{
+          width: w, 
+          height: h, 
+          backgroundColor: bg === 'primary' ? THEME.blue : THEME.white, 
+          color: bg === 'primary' ? THEME.white : THEME.blue
+        }}
         onClick={action}
     >
         {text}

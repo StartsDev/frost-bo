@@ -43,7 +43,7 @@ function Table() {
             date: "22/01/2023",
             nameOfTechnical: "juan",
             state: true,
-            action: ""
+            action: "delete"
         },
         {
             orderOfJob: "55",
@@ -51,7 +51,7 @@ function Table() {
             date: "2/04/2023",
             nameOfTechnical: "Jean",
             state: true,
-            action: ""
+            action: "edit"
         },
     ]
 
@@ -99,7 +99,7 @@ function Table() {
                         >
                             {
                                 mapPropertiesOfItems(item).map((value, index) => {
-                                    return <Item key={index} value={value} />
+                                    return <Item key={index} value={value} index={index} />
                                 })
                             }
                         </div>
