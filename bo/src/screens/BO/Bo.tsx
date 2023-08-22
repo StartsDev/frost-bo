@@ -37,7 +37,7 @@ function Bo() {
             <div
                 style={{
                     width: "100%",
-                    padding: "1rem 6rem",
+                    padding: "10px 6rem",
                     display: "flex",
                     justifyContent: "space-between",
                     alignItems: "center"
@@ -51,7 +51,7 @@ function Bo() {
             >
                 <aside
                     style={{
-                        width: "15%",
+                        width: "12%",
                         height: "100%",
                     }}
                 >
@@ -83,20 +83,18 @@ function Bo() {
                 </aside>
                 <section
                     style={{
-                        width: "85%",
-                        height: "100%",
+                        width: "100&",
                         display: "flex",
                         flexDirection: "column",
                         paddingLeft: "4rem",
-                        gap: 10,
-                        overflowY: "scroll"
+                        gap: 5,
                     }}
                 >
                     <h1
                         style={{
                             width: "85%",
-                            padding: "1rem 0",
-                            fontSize: "2.5rem"
+                            padding: "10px 0",
+                            fontSize: "1.5rem"
                         }}
                     >
                         Rodrigo Rodriguez 🚀
@@ -107,12 +105,12 @@ function Bo() {
                         <button
                             style={{
                                 width: 120,
-                                height: 40,
+                                height: 30,
                                 backgroundColor: THEME.black,
                                 color: THEME.white,
                                 border: "none",
                                 borderRadius: 5,
-                                fontSize: "1.1rem",
+                                fontSize: "1rem",
                                 display: "flex",
                                 alignItems: "center",
                                 justifyContent: "space-evenly"
@@ -124,7 +122,7 @@ function Bo() {
                     <div
                         style={{
                             width: "80%",
-                            height: 650,
+                            height: "80%",
                             borderRadius: 10,
                             backgroundColor: THEME.white,
                             boxShadow: "0px 10px 15px -3px rgba(0,0,0,0.1)"

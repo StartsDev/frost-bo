@@ -82,7 +82,7 @@ function Table() {
                     width: "100%",
                     height: "80%",
                     display: "flex",
-                    flexDirection: "column"
+                    flexDirection: "column",
                 }}
             >
                 {
@@ -90,7 +90,6 @@ function Table() {
                         <div 
                             key={item.orderOfJob}
                             style={{ 
-                                width: "100%", 
                                 display: "flex",
                                 backgroundColor: index % 2 === 0 ? THEME.white : THEME.blue,
                                 borderRadius: 5,
