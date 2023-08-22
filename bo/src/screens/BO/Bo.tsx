@@ -83,7 +83,7 @@ function Bo() {
                 </aside>
                 <section
                     style={{
-                        width: "100&",
+                        width: "100%",
                         display: "flex",
                         flexDirection: "column",
                         paddingLeft: "4rem",

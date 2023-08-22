@@ -2,6 +2,7 @@ import Item from "./Item"
 import { mapPropertiesOfItems } from "./utils"
 import styles from "./table.module.css"
 import { THEME } from "../../theme"
+import { useGetClients } from "../../hooks/useClients"
 
 interface Props<T> {
     headers: string[] | [],
@@ -18,6 +19,10 @@ type Info = {
 }
 
 function Table() {
+
+    const { clients, loading } = useGetClients()
+
+    console.log(clients, loading)
 
     const headers = ["Orden de trabajo", "Cliente", "Fecha", "Tecnico", "Estado", "Accion"]
     const items: Info[] = [
