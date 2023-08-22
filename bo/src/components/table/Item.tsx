@@ -1,16 +1,13 @@
 import Button from '../button/Button'
 import styles from './table.module.css'
-import { evaluateIndex } from './utils'
 
 type Props = {
     value: string | boolean | number | any
     action?: () => void | undefined,
-    index: number
 }
 
 type PropItemStyle = {
     children: React.ReactNode
-    index?: number
 }
 
 function ItemStyle({ children }: PropItemStyle) {
@@ -21,7 +18,7 @@ function ItemStyle({ children }: PropItemStyle) {
     </p>
 }
 
-function Item({ value, action, index }: Props) {
+function Item({ value, action }: Props) {
 
     if (typeof value === "string" && value === "edit") {
         return (
@@ -31,7 +28,6 @@ function Item({ value, action, index }: Props) {
                     action={action}
                     h={30}
                     w={100}
-                    bg={evaluateIndex(index)}
                 />
             </ItemStyle>
         )
@@ -44,7 +40,6 @@ function Item({ value, action, index }: Props) {
                     text='Eliminar'
                     action={action}
                     h={30}
-                    bg={evaluateIndex(index)}
                 />
             </ItemStyle>
         )

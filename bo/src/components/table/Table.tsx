@@ -99,7 +99,7 @@ function Table() {
                         >
                             {
                                 mapPropertiesOfItems(item).map((value, index) => {
-                                    return <Item key={index} value={value} index={index} />
+                                    return <Item key={index} value={value} />
                                 })
                             }
                         </div>
