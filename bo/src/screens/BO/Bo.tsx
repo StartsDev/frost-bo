@@ -55,7 +55,31 @@ function Bo() {
                         height: "100%",
                     }}
                 >
-                   <Option />
+                   <Option
+                        titleOption="Option 1"
+                        Icon={<MdDescription />}
+                        options={[{ route: "/bo/option1", title: "Option 1 route" }]}
+                   />
+                   <Option
+                        titleOption="Option 2"
+                        Icon={<MdDescription />}
+                        options={[{ route: "/bo/option1", title: "Option 2 route" }]}
+                   />
+                   <Option
+                        titleOption="Option 3"
+                        Icon={<MdDescription />}
+                        options={[{ route: "/bo/option1", title: "Option 3 route" }]}
+                   />
+                   <Option
+                        titleOption="Option 4"
+                        Icon={<MdDescription />}
+                        options={[{ route: "/bo/option1", title: "Option 4 route" }]}
+                   />
+                   <Option
+                        titleOption="Option 5"
+                        Icon={<MdDescription />}
+                        options={[{ route: "/bo/option1", title: "Option 5 route" }]}
+                   />
                 </aside>
                 <section
                     style={{

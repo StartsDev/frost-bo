@@ -1,7 +1,14 @@
 import { THEME } from "../../../theme"
-import styles from "./op.moduel.css"
 
-function Option() {
+type ItemForOptions = { route: string, title: string }
+
+interface Props {
+    Icon?: React.ReactNode
+    titleOption: string
+    options: ItemForOptions[]
+}
+
+function Option({ Icon, titleOption, options }: Props) {
   return (
     <li
     className="list_item list__item--click"
@@ -19,22 +26,29 @@ function Option() {
             cursor: "pointer",
             display: "flex",
             alignItems: "center",
+            justifyContent: "space-evenly",
             gap: "1em",
-            width: "70%",
+            width: "75%",
             margin: "0 auto"
         }}
     >
-        <img src="" alt="" className="list_img" />
-        <a href="" className="nav_link"
+        <div style={{
+            width: "30px",
+            height: "20px",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+        }}>
+            {Icon}
+        </div>
+        <p className="nav_link"
             style={{
                 display: "block",
-                padding: "15px 0",
-                textDecoration: "none"
+                padding: "10px 0",
+                textAlign: "left",
+                width: "100%"
             }}
-        >Opcion</a>
-        <img src="" alt="" className="list_arrow" style={{
-            marginLeft: "auto"
-        }} />
+        >{titleOption}</p>
     </div>
     <ul className="list__show"
         style={{
@@ -46,42 +60,21 @@ function Option() {
             height: 0
         }}
     >
-        <li className="list__inside">
-            <a href="" className="nav__link nav__link--inside"
-                style={{
-                    display: "block",
-                    padding: "15px 0",
-                    textDecoration: "none"
-                }}
-            >Estoy dentro</a>
-        </li>
-        <li className="list__inside">
-            <a href="" className="nav__link nav__link--inside"
-                style={{
-                    display: "block",
-                    padding: "15px 0",
-                    textDecoration: "none"
-                }}
-            >Estoy dentro</a>
-        </li>
-        <li className="list__inside">
-            <a href="" className="nav__link nav__link--inside"
-                style={{
-                    display: "block",
-                    padding: "15px 0",
-                    textDecoration: "none"
-                }}
-            >Estoy dentro</a>
-        </li>
-        <li className="list__inside">
-            <a href="" className="nav__link nav__link--inside"
-                style={{
-                    display: "block",
-                    padding: "15px 0",
-                    textDecoration: "none"
-                }}
-            >Estoy dentro</a>
-        </li>
+        {
+            options.map((option, index) => {
+                return (
+                    <li key={index} className="list__inside">
+                        <p className="nav__link nav__link--inside"
+                            style={{
+                                display: "block",
+                                padding: "15px 0",
+                                textDecoration: "none"
+                        }}
+                        >{option.title}</p>
+                     </li>
+                )
+            })
+        }
     </ul>
 </li>
   )
