@@ -2,64 +2,14 @@ import Item from "./Item"
 import { mapPropertiesOfItems } from "./utils"
 import styles from "./table.module.css"
 import { THEME } from "../../theme"
-import { useGetClients } from "../../hooks/useClients"
 
 interface Props<T> {
     headers: string[] | [],
     items: T[],
 }
 
-type Info = {
-    orderOfJob: string
-    nameClient: string
-    date: string
-    nameOfTechnical: string
-    state: boolean,
-    action?: string
-}
 
-function Table() {
-
-    const { clients, loading } = useGetClients()
-
-    console.log(clients, loading)
-
-    const headers = ["Orden de trabajo", "Cliente", "Fecha", "Tecnico", "Estado", "Accion"]
-    const items: Info[] = [
-        {
-            orderOfJob: "2",
-            nameClient: "jhon",
-            date: "22/01/2023",
-            nameOfTechnical: "julio",
-            state: false,
-            action: "edit"
-        },
-        {
-            orderOfJob: "1",
-            nameClient: "samanta",
-            date: "20/01/2023",
-            nameOfTechnical: "carlos",
-            state: true,
-            action: "delete",
-        },
-        {
-            orderOfJob: "4",
-            nameClient: "jhonatan",
-            date: "22/01/2023",
-            nameOfTechnical: "juan",
-            state: true,
-            action: "delete"
-        },
-        {
-            orderOfJob: "55",
-            nameClient: "Pedro",
-            date: "2/04/2023",
-            nameOfTechnical: "Jean",
-            state: true,
-            action: "edit"
-        },
-    ]
-
+function Table<T>({ headers, items }: Props<T>) {
     return (
         <div>
             <section
@@ -93,7 +43,7 @@ function Table() {
                 {
                     items.map((item, index) => (
                         <div 
-                            key={item.orderOfJob}
+                            key={index}
                             style={{ 
                                 display: "flex",
                                 backgroundColor: index % 2 === 0 ? THEME.white : THEME.blue,
@@ -102,6 +52,7 @@ function Table() {
                             }}
                         >
                             {
+                                //@ts-expect-error
                                 mapPropertiesOfItems(item).map((value, index) => {
                                     return <Item key={index} value={value} />
                                 })
