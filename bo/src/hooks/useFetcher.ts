@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useCallback } from 'react'
 
 type Header = {
     [key: string]: string
@@ -55,9 +55,8 @@ export const useFetcher = <T>({ url, method, body = {}, headers = {} }: FetcherP
     
     const [data, setResponse] = useState<T | []>([])
     const [loading, setLoading] = useState(false)
-
-    useEffect(() => {
-        
+    
+    const fetchMemo = useCallback(async () => {
         setLoading(true)
         fetcher({ url, method, body, headers })
             .then(data => {
@@ -69,6 +68,11 @@ export const useFetcher = <T>({ url, method, body = {}, headers = {} }: FetcherP
             .finally(() => {
                 setLoading(false)
             })
+    }, [])
+
+    useEffect(() => {
+        
+        fetchMemo()
 
     }, [])
 
