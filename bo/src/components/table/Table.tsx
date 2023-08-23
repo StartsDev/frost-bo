@@ -8,7 +8,6 @@ interface Props<T> {
     items: T[],
 }
 
-
 function Table<T>({ headers, items }: Props<T>) {
     return (
         <div>
