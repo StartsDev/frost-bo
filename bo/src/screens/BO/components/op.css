@@ -1,0 +1,38 @@
+.list_item {
+    list-style: "none";
+    width: "100%";
+    text-align: "center";
+    overflow: "hidden";
+}
+
+.list__item__click {}
+
+.list_button {
+    cursor: "pointer";
+    display: "flex";
+    align-items: "center";
+    gap: "1em";
+    width: "70%";
+    margin: "0 auto";
+}
+.list__button__click {}
+
+.list_img{}
+
+.nav_link {
+    display: "block";
+    padding: "15px 0";
+    text-decoration: "none";
+}
+
+.list_arrow {
+    margin-left: "auto"
+}
+
+.list__show {
+    width: "80%";
+    margin-left: "auto";
+    list-style: "none";
+    transition: "height .4s";
+    height: 0;
+}

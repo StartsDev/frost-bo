@@ -1,0 +1,13 @@
+.wrapper {
+    width: 45px;
+    height: 45px;
+    border-radius: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.img {
+    width: 95%;
+    height: 95%;
+}
