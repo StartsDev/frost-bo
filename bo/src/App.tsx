@@ -1,10 +1,10 @@
-import Bo from "./screens/BO/Bo"
+import Login from "./screens/login/Login"
 
 function App() {
   return (
     <>
       <div>
-        <Bo />        
+        <Login />
       </div>
     </>
   )
