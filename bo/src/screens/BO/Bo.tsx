@@ -3,8 +3,8 @@ import { THEME } from "../../theme"
 import Avatar from "../../components/avatar/Avatar"
 import styles from "./bo.module.css"
 import { MdDescription } from "react-icons/md"
-import Table from "../../components/table/Table"
 import Option from "./components/Option"
+import Title from "../../components/title/Title"
 
 function Bo() {
 
@@ -90,15 +90,7 @@ function Bo() {
                         gap: 5,
                     }}
                 >
-                    <h1
-                        style={{
-                            width: "85%",
-                            padding: "10px 0",
-                            fontSize: "1.5rem"
-                        }}
-                    >
-                        Rodrigo Rodriguez 🚀
-                    </h1>
+                    <Title title="Rodrigo Rodriguez"  />
                     <div
                         style={{ width: "85%" }}
                     >
@@ -118,20 +110,6 @@ function Bo() {
                         >
                             export csv <MdDescription />
                         </button>
-                    </div>
-                    <div
-                        style={{
-                            width: "80%",
-                            height: "80%",
-                            borderRadius: 10,
-                            backgroundColor: THEME.white,
-                            boxShadow: "0px 10px 15px -3px rgba(0,0,0,0.1)"
-                        }}
-                    >
-                        <Table
-                            headers={[]}
-                            items={[]}
-                        />
                     </div>
                 </section>
             </section>
