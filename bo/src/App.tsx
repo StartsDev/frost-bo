@@ -1,10 +1,10 @@
-import Login from "./screens/login/Login"
+import { Outlet } from "react-router-dom"
 
 function App() {
   return (
     <>
       <div>
-        <Login />
+        <Outlet />
       </div>
     </>
   )
