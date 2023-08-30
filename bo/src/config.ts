@@ -6,7 +6,7 @@ export const ENDPOINT = {
         delete: "https://business-core-api.onrender.com/api/v1/client/delete-client/",
         add: "https://business-core-api.onrender.com/api/v1/client/create-client/",
     },
-    campus: {
+    squares: {
         add: "https://business-core-api.onrender.com/api/v1/headquarter/create-headquarter/",
         list: "https://business-core-api.onrender.com/api/v1/headquarter/get-headquarters",
         byId: "https://business-core-api.onrender.com/api/v1/headquarter/get-headquarter-client/",

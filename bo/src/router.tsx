@@ -2,11 +2,12 @@ import { createBrowserRouter, RouteObject  } from "react-router-dom";
 
 import Login from "./screens/login/Login";
 import Bo from "./screens/BO/Bo";
+import Clients from "./screens/clients/Clients";
 
 const boChildrens: RouteObject[] = [
     {
-        path: "children",
-        element: <h1>Hola mundo</h1>
+        path: "clients",
+        element: <Clients />,
     }
 ]
 

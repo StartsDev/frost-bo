@@ -1,5 +1,4 @@
 import type {  PropsWithChildren } from "react"
-import { THEME } from "../../theme"
 
 type Props = PropsWithChildren<{}>
 

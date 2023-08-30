@@ -1,4 +1,5 @@
 import { useEffect } from "react"
+import { Outlet } from "react-router-dom"
 import { THEME } from "../../theme"
 import Avatar from "../../components/avatar/Avatar"
 import styles from "./bo.module.css"
@@ -91,26 +92,7 @@ function Bo() {
                     }}
                 >
                     <Title title="Rodrigo Rodriguez"  />
-                    <div
-                        style={{ width: "85%" }}
-                    >
-                        <button
-                            style={{
-                                width: 120,
-                                height: 30,
-                                backgroundColor: THEME.black,
-                                color: THEME.white,
-                                border: "none",
-                                borderRadius: 5,
-                                fontSize: "1rem",
-                                display: "flex",
-                                alignItems: "center",
-                                justifyContent: "space-evenly"
-                            }}
-                        >
-                            export csv <MdDescription />
-                        </button>
-                    </div>
+                    <Outlet />
                 </section>
             </section>
         </section>
