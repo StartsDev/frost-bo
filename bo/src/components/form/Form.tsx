@@ -17,11 +17,18 @@ type Props = {
 function Form({ fields, action, btnText }: Props){
   return (
     <div
+        className={styles?.container}
+        style={{
+            width: "100%",
+            height: "100%",
+            padding: "1rem 1rem",
+        }}
     >
       {fields.map((field, index) => (
-        <div key={index} className={styles?.container}>
-          <label htmlFor={field.name}>{field.label}</label>
+        <div key={index} className={styles?.formRow}>
+          <label htmlFor={field.name} className={styles?.formLabel}>{field.label}</label>
           <input
+            className={styles?.formInput}
             type={field.type}
             name={field.name}
             value={field.value}
