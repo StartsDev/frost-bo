@@ -4,17 +4,30 @@ import { THEME } from "../../theme"
 
 function Login() {
   return (
-    <div
-        className={styles.wrapper}
+    <section
+      className={styles.login}
     >
+      <div
+        className={styles.wrapper}
+      >
         <img src={Logo} alt="logo" width={100} height={80}  />
-        <h3 className={styles.title} >Iniciar Sesión</h3>
+        <h3 className={styles.title} >Bienvenido</h3>
         <div className={styles.inputsContainer} >
-            <input type="text" placeholder="Usuario" />
-            <input type="password" placeholder="Contraseña" />
+            <div>
+              <label>Usuario</label>
+              <input type="text" placeholder="Usuario" />
+            </div>
+            <div>
+              <label>Contraseña</label>
+              <input type="password" placeholder="Contraseña" />
+            </div>
+            <div>
+              <p>¿Olvidaste tu contraseña?</p>
+            </div>
             <button  style={{ backgroundColor: THEME.blue }} >Login</button>
         </div>
-    </div>
+      </div>
+    </section>
   )
 }
 
