@@ -1,5 +1,6 @@
 import Button from '../button/Button'
 import styles from './table.module.css'
+import { Balancer } from 'react-wrap-balancer'
 
 type Props = {
     value: string | boolean | number | any
@@ -26,7 +27,7 @@ function Item({ value, action }: Props) {
                 <Button
                     text='Editar'
                     action={action}
-                    h={30}
+                    h={20}
                     w={100}
                 />
             </ItemStyle>
@@ -47,7 +48,9 @@ function Item({ value, action }: Props) {
 
     return (
         <ItemStyle>
-            {value}
+            <Balancer>
+                {value}
+            </Balancer>
         </ItemStyle>
     )
 

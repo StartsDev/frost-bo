@@ -1,11 +1,14 @@
 /* estilos para los items */
 .item {
-    width: 20%;
-    text-align: left;
+    width: 35%;
+    text-align: center;
     padding: 0.5rem 0;
     padding-left: 5px;
+    font-size: 0.8rem;
     display: flex;
     align-items: flex-end;
+    background-color: red;
+    border: 1px solid white;
 }
 
 /*estilos para los headers*/

@@ -2,7 +2,7 @@ import Item from "./Item"
 import { mapPropertiesOfItems } from "./utils"
 import styles from "./table.module.css"
 import { THEME } from "../../theme"
-
+ 
 interface Props<T> {
     headers: string[] | [],
     items: T[],
@@ -23,7 +23,7 @@ function Table<T>({ headers, items }: Props<T>) {
                         return (
                             <p  key={index}
                                 className={styles.headers}
-                                style={{color: THEME.blue}}
+                                style={{color: THEME.blue, width: "100%"}}
                             >
                                     {item}
                             </p>
@@ -37,6 +37,8 @@ function Table<T>({ headers, items }: Props<T>) {
                     height: "80%",
                     display: "flex",
                     flexDirection: "column",
+                    overflowX: "scroll",
+                    overflowY: "scroll"
                 }}
             >
                 {

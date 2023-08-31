@@ -5,15 +5,45 @@ import { THEME } from "../../theme"
 import { MdDescription } from "react-icons/md"
 import { useFetcher } from "../../hooks/useFetcher"
 import { ENDPOINT } from "../../config"
+import { Client, Equipment, Headquarter } from "../../types"
+import Loader from "../../components/Loader/Loader"
+
+type ClientResponse = Client & { 
+    equipments: Equipment[]
+    headquaerters: Headquarter[]
+    locations: Location[]
+    user_app?: any 
+}
+
+type Response = {
+    clients?: ClientResponse[]
+    numItems?: number
+}
 
 function Clients() {
 
     const { 
         data,
         loading
-    } = useFetcher({method: "GET", url: ENDPOINT.clients.list})
+    } = useFetcher<Response>({method: "GET", url: ENDPOINT.clients.list})
 
-    console.log(data)
+    
+    const clientsPreview = data?.clients?.map(client => {
+
+        const preview: Client = {
+            address: client.address,
+            businessName: client.businessName,
+            city: client.city,
+            contact: client.contact,
+            email: client.email,
+            nit: client.nit,
+            phone: client.phone,
+            id: client.id
+        }
+        
+        return preview
+        
+    })
 
   return (
     <div>
@@ -36,10 +66,16 @@ function Clients() {
             </button>
         </Actions>
         <View>
-            <Table 
-                headers={["Name", "Email", "Phone", "Actions"]}
-                items={[]}
-            />
+            {
+                loading 
+                ? <Loader />
+                : <Table 
+                        headers={["Name", "Email", "Phone", "Actions"]}
+                        items={
+                            clientsPreview === undefined ? [] : clientsPreview
+                        }
+                />
+            }
         </View>
     </div>
   )

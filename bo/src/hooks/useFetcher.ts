@@ -14,7 +14,7 @@ type FetcherParams<T> = {
 }
 
 type ResponseFetcher<T> = {
-    data: T | []
+    data?: T | null | undefined
     loading: boolean
 }
 
@@ -53,7 +53,7 @@ async function fetcher<T>({ url, method, body, headers }: FetcherParams<T>){
 
 export const useFetcher = <T>({ url, method, body = {}, headers = {} }: FetcherParams<any>): ResponseFetcher<T> => {
     
-    const [data, setResponse] = useState<T | []>([])
+    const [data, setResponse] = useState<T | null | undefined>(null)
     const [loading, setLoading] = useState(false)
     
     const fetchMemo = useCallback(async () => {
@@ -77,7 +77,7 @@ export const useFetcher = <T>({ url, method, body = {}, headers = {} }: FetcherP
     }, [])
 
     return {
-        data,
+        data: (data === undefined || data === null) ? null : data,
         loading
     }
 }
