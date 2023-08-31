@@ -1,6 +1,5 @@
 import Button from '../button/Button'
 import styles from './table.module.css'
-import { Balancer } from 'react-wrap-balancer'
 
 type Props = {
     value: string | boolean | number | any
