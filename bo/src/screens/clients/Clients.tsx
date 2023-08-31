@@ -31,19 +31,21 @@ function Clients() {
     const clientsPreview = data?.clients?.map(client => {
 
         const preview: Client = {
-            address: client.address,
-            businessName: client.businessName,
-            city: client.city,
-            contact: client.contact,
-            email: client.email,
-            nit: client.nit,
+            id: client.id,
             phone: client.phone,
-            id: client.id
+            address: client.address,
+            city: client.city,
+            businessName: client.businessName,
+            nit: client.nit,
+            contact: client.contact,
+            email: client.email
         }
         
         return preview
         
     })
+
+    const headers = ["id", "telefono", "direccion", "ciudad", "negocio", "nit", "contacto", "email"]
 
   return (
     <div>
@@ -70,7 +72,7 @@ function Clients() {
                 loading 
                 ? <Loader />
                 : <Table 
-                        headers={["Name", "Email", "Phone", "Actions"]}
+                        headers={headers}
                         items={
                             clientsPreview === undefined ? [] : clientsPreview
                         }

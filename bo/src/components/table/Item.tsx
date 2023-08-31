@@ -48,9 +48,7 @@ function Item({ value, action }: Props) {
 
     return (
         <ItemStyle>
-            <Balancer>
-                {value}
-            </Balancer>
+            {value}
         </ItemStyle>
     )
 
