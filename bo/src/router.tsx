@@ -6,8 +6,8 @@ import Clients from "./screens/clients/Clients";
 import AddClient from "./screens/clients/AddClient";
 
 const routesClients: RouteObject[] = [
-    {path: "clients",  element: <h1>Clientes</h1>  },
-    {path:"add-client",  element: <h1>Crear Cliente</h1>  },
+    {path: "clients",  element: <Clients />  },
+    {path:"add-client",  element: <AddClient />  },
     {path: "add-location",  element: <h1>Crear Ubicación</h1>  },
     {path: "add-square",  element: <h1>Crear Sede</h1>  },
     {path: "edit-client",  element: <h1>Modificar Cliente</h1>  },

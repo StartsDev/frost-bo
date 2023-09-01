@@ -6,9 +6,10 @@ import { THEME } from "../../theme"
 interface Props<T> {
     headers: string[] | [],
     items: T[],
+    actionItem?: (param?: any) => void
 }
 
-function Table<T>({ headers, items }: Props<T>) {
+function Table<T>({ headers, items, actionItem }: Props<T>) {
     return (
         <div>
             <section
@@ -50,6 +51,10 @@ function Table<T>({ headers, items }: Props<T>) {
                                 backgroundColor: index % 2 === 0 ? THEME.white : THEME.blue,
                                 borderRadius: 5,
                                 color: index % 2 === 0 ? THEME.black : THEME.white
+                            }}
+                            onClick={() => {
+                                localStorage.setItem('item', JSON.stringify(item))
+                                actionItem && actionItem()
                             }}
                         >
                             {
