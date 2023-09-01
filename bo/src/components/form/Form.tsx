@@ -3,9 +3,9 @@ import styles from "./form.module.css";
 type Fields = {
   name: string
   type: string
-  value: string
-  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  label: string
+  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  label: string,
+  placeholder?: string
 }
 
 type Props = {
@@ -31,8 +31,8 @@ function Form({ fields, action, btnText }: Props){
             className={styles?.formInput}
             type={field.type}
             name={field.name}
-            value={field.value}
             onChange={field.onChange}
+            placeholder={field.placeholder}
           />
         </div>
       ))}

@@ -84,7 +84,7 @@ function Bo() {
                     alignItems: "center"
                 }}
             >
-                <h2>Frost Office</h2>
+                <h2>Aire Aplicado S.A.S</h2>
                 <Avatar />
             </div>
             <section
