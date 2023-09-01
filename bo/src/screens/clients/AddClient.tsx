@@ -1,8 +1,7 @@
 import { useState, useMemo } from "react"
 import Form from "../../components/form/Form"
 import View from "../../components/view/View"
-import { useFetcher } from "../../hooks/useFetcher";
-import { ENDPOINT } from "../../config";
+import { ENDPOINT } from "../../config"
 
 const fields = [
   {
@@ -51,11 +50,6 @@ const fields = [
 
 function AddClient() {
 
-  const { loading, data } = useFetcher({
-    url: ENDPOINT.clients.add,
-    method: "POST"
-  })
-
   const [client, setCleint] = useState({
     businessName:"",
     nit: "",
@@ -65,6 +59,8 @@ function AddClient() {
     city: "",
     contact: ""
   })
+
+  const [isLoading, setIsLoading] = useState(false)
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setCleint({...client, [event.target.name]: event.target.value})
@@ -82,6 +78,30 @@ function AddClient() {
 
   const sendData = () => {
     console.log(client)
+    fetch(`${ENDPOINT.clients.add}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "x-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIxNzVmZTYxMy03NTNmLTQ3YzctODRmZi01NDAyZjI3ZTk3NzEiLCJmaXJzdE5hbWUiOiJPcmxhbmRvIiwibGFzdE5hbWUiOiJSb2RyaWd1ZXoiLCJlbWFpbCI6InNvcG9ydGVAYWlyZXMuY29tLmNvIiwiaWF0IjoxNjkzMjU2MzU3LCJleHAiOjE2OTU4NDgzNTd9.TszhdwAS6jO-q0Qrd3Dsz4sV0MrDg6Je4qYKnNhrn-o"
+      },
+      body: JSON.stringify(client)
+    }).then(() => {
+      setIsLoading(true)
+    }).catch(() => {
+      console.log('error')
+    })
+    .finally(() => {
+      setIsLoading(false)
+      setCleint({
+        businessName:"",
+        nit: "",
+        address: "",
+        email: "",
+        phone: "",
+        city: "",
+        contact: ""
+      })
+    })
   }
 
   return (
@@ -93,6 +113,7 @@ function AddClient() {
             }}
             btnText="Crear cliente"
         />
+        <p>{isLoading ? "Cargando..." : ""}</p>
     </View>
   )
 }
