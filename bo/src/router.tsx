@@ -10,6 +10,7 @@ import EditLocation from "./screens/location/EditLocation";
 import AddHeadSquare from "./screens/headsquare/AddSquare";
 import EditHeadSquare from "./screens/headsquare/EditSquare";
 import Squares from "./screens/headsquare/Squares";
+import Locations from "./screens/location/Locations";
 
 const routesClients: RouteObject[] = [
     {path: "clients",  element: <Clients />  },
@@ -24,7 +25,7 @@ const routesClients: RouteObject[] = [
 const routesReports: RouteObject[] = [
     {path: "clients", element: <Clients /> },
     {path: "squares", element: <Squares /> },
-    {path: "locations", element: <h1>Ubicaciones</h1> },
+    {path: "locations", element: <Locations /> },
     {path: "cotizations", element:  <h1>Cotizaciones</h1> },
     {path: "technical", element: <h1>Técnicos</h1> },
     {path: "mantenence", element: <h1>Mantenimientos</h1> },

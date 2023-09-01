@@ -37,6 +37,9 @@ export type Headquarter = {
 export type Location = {
     id: string
     locationName: string
+    headquarterId: string
+    headquarter?: Omit<Headquarter, "isPrincipal" | "address" | "email" | "phone">
+    client: Omit<Client, "nit" | "address" | "email" | "phone" | "city" | "contact"> & UserApp
 }
 
 export type UserApp = {
