@@ -3,7 +3,13 @@ import { Outlet } from "react-router-dom"
 import { THEME } from "../../theme"
 import Avatar from "../../components/avatar/Avatar"
 import styles from "./bo.module.css"
-import { MdDescription } from "react-icons/md"
+import { 
+    MdDescription, 
+    MdOutlineSupervisorAccount,
+    MdCardTravel,
+    MdOutlineSupportAgent,
+    MdOutlinePower
+ } from "react-icons/md"
 import Option from "./components/Option"
 import Title from "../../components/title/Title"
 
@@ -29,6 +35,40 @@ function Bo() {
         })
 
     }, [])
+
+    const optionsReports = [
+        { route: "clients", title: "Clientes" },
+        {route: "squares", title: "Sedes" },
+        {route: "locations", title: "Ubicaciones" },
+        {route: "cotizations", title: "Cotizaciones" },
+        {route: "technical", title: "Técnicos" },
+        {route: "mantenence", title: "Mantenimientos" },
+    ]
+
+    const optionsClients = [
+        {route: "clients", title: "Clientes" },
+        {route:"add-client", title: "Crear Cliente" },
+        {route: "add-location", title: "Crear Ubicación" },
+        {route: "add-square", title: "Crear Sede" },
+        {route: "edit-client", title: "Modificar Cliente" },
+        {route: "edit-location", title: "Modificar Ubicación" },
+        {route: "edit-square", title: "Modificar Sede" },
+    ]
+
+    const optionsCotizations = [
+        {route: "add-cotization", title: "Crear Cotización" },
+        {route: "edit-cotization", title: "Modificar Cotización" },
+    ]
+
+    const optionsTechnical = [
+        {route: "add-technical", title: "Crear Técnico" },
+        {route: "edit-technical", title: "Modificar Técnico" },
+    ]
+
+    const optionsMantenence = [
+        {route: "add-mantenence", title: "Crear Mantenimiento" },
+        {route: "edit-mantenence", title: "Modificar Mantenimiento" },
+    ]
 
     return (
         <section
@@ -57,29 +97,29 @@ function Bo() {
                     }}
                 >
                    <Option
-                        titleOption="Option 1"
-                        Icon={<MdDescription />}
-                        options={[{ route: "/bo/option1", title: "Option 1 route" }]}
+                        titleOption="Clientes"
+                        Icon={<MdOutlineSupervisorAccount />}
+                        options={optionsClients}
                    />
                    <Option
-                        titleOption="Option 2"
-                        Icon={<MdDescription />}
-                        options={[{ route: "/bo/option1", title: "Option 2 route" }]}
+                        titleOption="Cotizaciones"
+                        Icon={<MdCardTravel />}
+                        options={optionsCotizations}
                    />
                    <Option
-                        titleOption="Option 3"
-                        Icon={<MdDescription />}
-                        options={[{ route: "/bo/option1", title: "Option 3 route" }]}
+                        titleOption="Tecnicos"
+                        Icon={<MdOutlineSupportAgent />}
+                        options={optionsTechnical}
                    />
                    <Option
-                        titleOption="Option 4"
-                        Icon={<MdDescription />}
-                        options={[{ route: "/bo/option1", title: "Option 4 route" }]}
+                        titleOption="Mantenimientos"
+                        Icon={<MdOutlinePower />}
+                        options={optionsMantenence}
                    />
                    <Option
-                        titleOption="Option 5"
+                        titleOption="Reportes"
                         Icon={<MdDescription />}
-                        options={[{ route: "/bo/option1", title: "Option 5 route" }]}
+                        options={optionsReports}
                    />
                 </aside>
                 <section
