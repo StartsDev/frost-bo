@@ -33,13 +33,14 @@ function Table<T>({ headers, items, actionItem }: Props<T>) {
                 }
             </section>
             <section
+                className={styles.table}
                 style={{
                     width: "100%",
                     height: "80%",
                     display: "flex",
                     flexDirection: "column",
-                    overflowX: "scroll",
-                    overflowY: "scroll"
+                    overflowY: "scroll",
+                    overflow: "hidden"
                 }}
             >
                 {

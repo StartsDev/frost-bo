@@ -1,3 +1,13 @@
+.table::-webkit-scrollbar {
+    background-color: #dcdcda;
+    width: 5px;
+    border-radius: 10px;
+}
+
+.table::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+}
+
 /* estilos para los items */
 .item {
     width: 35%;
