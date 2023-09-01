@@ -6,21 +6,14 @@ import { THEME } from "../../theme"
 import { MdDescription } from "react-icons/md"
 import { useFetcher } from "../../hooks/useFetcher"
 import { ENDPOINT } from "../../config"
-import { Client, Equipment, Headquarter } from "../../types"
+import type { Headquarter } from "../../types"
 import Loader from "../../components/Loader/Loader"
 import { useModal } from "../../hooks/useModal"
 import Modal from "../../components/modal/Modal"
 
-type ClientResponse = Client & { 
-    equipments: Equipment[]
-    headquaerters: Headquarter[]
-    locations: Location[]
-    user_app?: any 
-}
 
 type Response = {
-    clients?: ClientResponse[]
-    numItems?: number
+    headquarters?: Headquarter[]
 }
 
 function Squares() {
@@ -28,7 +21,7 @@ function Squares() {
     const { 
         data,
         loading
-    } = useFetcher<Response>({method: "GET", url: ENDPOINT.clients.list})
+    } = useFetcher<Response>({method: "GET", url: ENDPOINT.squares.list})
 
     const { 
         openModal,
@@ -36,44 +29,42 @@ function Squares() {
         isOpen
     } = useModal()
     
-    const clientsPreview = useMemo(() => {
-        return data?.clients?.map(client => {
-
-            const preview: Client = {
-                id: client.id,
-                phone: client.phone,
-                address: client.address,
-                city: client.city,
-                businessName: client.businessName,
-                nit: client.nit,
-                contact: client.contact,
-                email: client.email
-            }
+    const squarePreview = useMemo(() => {
+        return data?.headquarters?.map(headSquare => {
             
-            return preview
+            return {
+                id: headSquare.id,
+                nombre: headSquare.headName,
+                telefono: headSquare.phone,
+                direccion: headSquare.address,
+                principal: headSquare.isPrincipal ? "Sí" : "No"
+            }
             
         })
     }, [data])
+    const headers = ["id","Nombre", "Teléfono", "Dirección", "Principal"]
 
-    const clientDetail = useMemo(() => {
-        const client = localStorage.getItem('item') === null 
+    
+    const squareDetail = useMemo(() => {
+        const square = localStorage.getItem('item') === null 
                        ? {}
                        : JSON.parse(localStorage.getItem('item')!)
 
-        const idClient: string = client?.id
+        const idS: string = square?.id
         
-        const filteredClient = data?.clients?.filter(client => client.id === idClient)
+        const filteredClient = data?.headquarters?.filter(headSquare => headSquare.id === idS)
         
-        const mapObject = filteredClient?.map(client => {
+        const mapObject = filteredClient?.map(headSquare => {
             return {
-                id: client.id,
-                telefono: client.phone,
-                direccion: client.address,
-                ciudad: client.city,
-                negocio: client.businessName,
-                nit: client.nit,
-                contacto: client.contact,
-                email: client.email
+                id: headSquare.id,
+                nombre: headSquare.headName,
+                telefono: headSquare.phone,
+                direccion: headSquare.address,
+                email: headSquare.email,
+                principal: headSquare.isPrincipal ? "Sí" : "No",
+                estado: headSquare.status ? "Activo" : "Inactivo",
+                nombreCliente: headSquare.Client?.contact,
+                direccionCliente: headSquare.Client?.address
             }
         })
 
@@ -81,7 +72,6 @@ function Squares() {
 
     }, [isOpen])
 
-    const headers = ["id", "telefono", "direccion", "ciudad", "negocio", "nit", "contacto", "email"]
 
   return (
     <div>
@@ -110,7 +100,7 @@ function Squares() {
                 : <Table 
                     headers={headers}
                     items={
-                        clientsPreview === undefined ? [] : clientsPreview
+                        squarePreview === undefined ? [] : squarePreview
                     }
                     actionItem={() => {
                         openModal()
@@ -121,9 +111,9 @@ function Squares() {
         {
             isOpen ? (
                 <Modal
-                    data={clientDetail === undefined ? {} : clientDetail}
+                    data={squareDetail!}
                     onClose={closeModal}
-                    title="Detalle del cliente"
+                    title="Detalle de sede"
                 />
             ) : null
         }
