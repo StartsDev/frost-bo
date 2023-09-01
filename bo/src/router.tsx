@@ -7,12 +7,13 @@ import AddClient from "./screens/clients/AddClient";
 import EditClient from "./screens/clients/EditClient";
 import AddLocation from "./screens/location/AddLocation";
 import EditLocation from "./screens/location/EditLocation";
+import AddHeadSquare from "./screens/headsquare/AddSquare";
 
 const routesClients: RouteObject[] = [
     {path: "clients",  element: <Clients />  },
     {path:"add-client",  element: <AddClient />  },
     {path: "add-location",  element: <AddLocation />  },
-    {path: "add-square",  element: <h1>Crear Sede</h1>  },
+    {path: "add-square",  element: <AddHeadSquare />  },
     {path: "edit-client",  element: <EditClient />  },
     {path: "edit-location",  element: <EditLocation />  },
     {path: "edit-square",  element: <h1>Modificar Sede</h1>  },
