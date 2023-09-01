@@ -113,7 +113,6 @@ function Clients() {
                         clientsPreview === undefined ? [] : clientsPreview
                     }
                     actionItem={() => {
-                        console.log("action")
                         openModal()
                     }}
                 />

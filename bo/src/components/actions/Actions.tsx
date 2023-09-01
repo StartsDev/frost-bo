@@ -8,8 +8,8 @@ function Actions({ children }: Props) {
         style={{
             width: "85%",
             display: "flex",
-            alignItems: "center",
-            justifyContent: "space-evenly"
+            alignItems: "left",
+            gap: 10
         }}
     >
         {children}
