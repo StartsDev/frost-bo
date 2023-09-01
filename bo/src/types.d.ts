@@ -11,13 +11,16 @@ export type Client = {
 
 export type Equipment = {
     id: string
+    name: string
     deccription: string
-    brand: string
+    serial: string
     image: string
     model: string
-    name: string
-    serial: string
     type: string
+    brand: string
+    location?: any
+    client?: any
+    headquarter?: any
 }
 
 export type Headquarter = {
