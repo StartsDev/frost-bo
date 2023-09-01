@@ -5,11 +5,12 @@ import Bo from "./screens/BO/Bo";
 import Clients from "./screens/clients/Clients";
 import AddClient from "./screens/clients/AddClient";
 import EditClient from "./screens/clients/EditClient";
+import AddLocation from "./screens/location/AddLocation";
 
 const routesClients: RouteObject[] = [
     {path: "clients",  element: <Clients />  },
     {path:"add-client",  element: <AddClient />  },
-    {path: "add-location",  element: <h1>Crear Ubicación</h1>  },
+    {path: "add-location",  element: <AddLocation />  },
     {path: "add-square",  element: <h1>Crear Sede</h1>  },
     {path: "edit-client",  element: <EditClient />  },
     {path: "edit-location",  element: <h1>Modificar Ubicación</h1>  },
