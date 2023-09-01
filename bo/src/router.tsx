@@ -21,7 +21,7 @@ const routesClients: RouteObject[] = [
 ]
 
 const routesReports: RouteObject[] = [
-    {path: "clients", element: <h1>Clientes</h1> },
+    {path: "clients", element: <Clients /> },
     {path: "squares", element: <h1>Sedes</h1> },
     {path: "locations", element: <h1>Ubicaciones</h1> },
     {path: "cotizations", element:  <h1>Cotizaciones</h1> },

@@ -26,10 +26,21 @@ export type Headquarter = {
     email: string
     id: string
     phone: string
-    isPrincipal: boolean
+    isPrincipal: boolean,
+    status?: boolean
+    clientId?: string
+    Client?: Client & {
+        user_app?: UserApp[]
+    }
 }
 
 export type Location = {
     id: string
     locationName: string
+}
+
+export type UserApp = {
+    user_id: string
+    role_id: string
+    role_name: string
 }
