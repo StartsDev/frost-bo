@@ -48,7 +48,7 @@ const fields = [
   }
 ];
 
-function AddClient() {
+function EditClient() {
 
   const [client, setCleint] = useState({
     businessName:"",
@@ -57,7 +57,12 @@ function AddClient() {
     email: "",
     phone: "",
     city: "",
-    contact: ""
+    contact: "",
+    user_app:{
+        user_id:"",
+        role_id:"", 
+        role_name:""
+    }
   })
 
   const [isLoading, setIsLoading] = useState(false)
@@ -77,8 +82,9 @@ function AddClient() {
   }, [])
 
   const sendData = () => {
+    //capturar id
     console.log(client)
-    fetch(`${ENDPOINT.clients.add}`, {
+    fetch(`${ENDPOINT.clients.update}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -98,7 +104,12 @@ function AddClient() {
         email: "",
         phone: "",
         city: "",
-        contact: ""
+        contact: "",
+        user_app:{
+            user_id:"",
+            role_id:"", 
+            role_name:""
+        }
       })
     })
   }
@@ -110,11 +121,11 @@ function AddClient() {
             action={() => {
               sendData()
             }}
-            btnText="Crear cliente"
+            btnText="Editar cliente"
         />
         <p>{isLoading ? "Cargando..." : ""}</p>
     </View>
   )
 }
 
-export default AddClient
+export default EditClient
