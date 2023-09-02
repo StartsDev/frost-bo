@@ -1,4 +1,4 @@
-import { createBrowserRouter, RouteObject, Navigate, redirect  } from "react-router-dom";
+import { createBrowserRouter, RouteObject, redirect  } from "react-router-dom";
 
 import Login from "./screens/login/Login";
 import Bo from "./screens/BO/Bo";
@@ -66,9 +66,6 @@ const mainChildren: RouteObject[] = [
         path: "/bo",
         element: <Bo />,
         children: boChildrens,
-        action: async (...arg) => {
-            console.log(arg)
-        },
         loader: async () => {
             
             const tkn: null | string = localStorage.getItem('key')

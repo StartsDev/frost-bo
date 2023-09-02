@@ -69,3 +69,7 @@
     cursor: pointer;
     color: #ffffff;
 }
+
+.error {
+    color: red!important;
+}
