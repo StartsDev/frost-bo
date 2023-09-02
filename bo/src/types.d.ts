@@ -54,7 +54,7 @@ export type UserApp = {
 export type Maintenance = {
     id: number
     activities: string,
-    voltage_on_L1L: number,
+    voltage_on_L1L2: number,
     voltage_on_L1L3: number,
     voltage_on_L2L3: number,
     voltage_control: number,

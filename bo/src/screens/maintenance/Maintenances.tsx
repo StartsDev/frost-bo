@@ -36,7 +36,7 @@ function Maintenances() {
             return {
                 id: maintenance.id,
                 actividades: maintenance.activities,
-                "voltaje on L1L": maintenance.voltage_on_L1L,
+                "voltaje on L1L2": maintenance.voltage_on_L1L2,
                 "amp engine 1": maintenance.amp_engine_1,
                 "voltaje control": maintenance.voltage_control,
                 observaciones: maintenance.observations,
@@ -46,7 +46,7 @@ function Maintenances() {
 
     }, [data])
 
-    const headers = ["id","ubicación", "sede", "negocio"]
+    const headers = ["id","actividades", "voltaje on L1L2", "amp engine 1", "voltaje control", "observaciones"]
 
     
     const maintenanceDetail = useMemo(() => {
@@ -64,7 +64,7 @@ function Maintenances() {
             return {
                 id: maintenance.id,
                 actividades: maintenance.activities,
-                "voltaje on L1L": maintenance.voltage_on_L1L,
+                "voltaje on L1L2": maintenance.voltage_on_L1L2,
                 "voltaje on L1L3": maintenance.voltage_on_L1L3,
                 "voltaje on L2L3": maintenance.voltage_on_L2L3,
                 "amp engine 1": maintenance.amp_engine_1,
