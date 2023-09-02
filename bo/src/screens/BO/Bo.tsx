@@ -12,8 +12,11 @@ import {
  } from "react-icons/md"
 import Option from "./components/Option"
 import Title from "../../components/title/Title"
+import { User } from "../../types"
 
 function Bo() {
+
+    const user: User | null = localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user") || "") : null
 
     useEffect(() => {
         const listElements = document.querySelectorAll(".list__button--click")
@@ -85,7 +88,9 @@ function Bo() {
                 }}
             >
                 <h2>Aire Aplicado S.A.S</h2>
-                <Avatar />
+                <Avatar
+                    image={user?.image ?? ""}
+                />
             </div>
             <section
                 className={styles?.wrapper_bo}
@@ -131,7 +136,7 @@ function Bo() {
                         gap: 5,
                     }}
                 >
-                    <Title title="Rodrigo Rodriguez"  />
+                    <Title title={user?.userName ?? ""}  />
                     <Outlet />
                 </section>
             </section>

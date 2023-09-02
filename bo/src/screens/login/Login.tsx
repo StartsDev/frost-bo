@@ -47,9 +47,8 @@ function Login() {
         navigate("bo", { replace: true })
       }
     })
-    .catch((err) => {
+    .catch(() => {
       setIsError(true)
-      console.log(err)
     })
     .finally(() => {
       setIsLoading(false)
@@ -59,7 +58,6 @@ function Login() {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setLogin({...login, [e.target.name]: e.target.value})
   }
-
 
   return (
     <section
