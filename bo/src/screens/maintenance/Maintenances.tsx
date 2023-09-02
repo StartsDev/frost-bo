@@ -47,7 +47,6 @@ function Maintenances() {
     }, [data])
 
     const headers = ["id","actividades", "voltaje on L1L2", "amp engine 1", "voltaje control", "observaciones"]
-
     
     const maintenanceDetail = useMemo(() => {
 
@@ -112,9 +111,6 @@ function Maintenances() {
         return mapObject?.[0]
 
     }, [isOpen])
-
-    console.log(data)
-
 
   return (
     <div>

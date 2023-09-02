@@ -12,6 +12,7 @@ import EditHeadSquare from "./screens/headsquare/EditSquare";
 import Squares from "./screens/headsquare/Squares";
 import Locations from "./screens/location/Locations";
 import Maintenances from "./screens/maintenance/Maintenances";
+import AddMaintenance from "./screens/maintenance/AddMaintenence";
 
 const routesClients: RouteObject[] = [
     {path: "clients",  element: <Clients />  },
@@ -43,7 +44,7 @@ const routesTechnical: RouteObject[] = [
 ]
 
 const routesMantenence: RouteObject[] = [
-    {path: "add-mantenence", element: <h1>Crear Mantenimiento</h1> },
+    {path: "add-mantenence", element: <AddMaintenance /> },
     {path: "edit-mantenence", element: <h1>Modificar Mantenimiento</h1> },
 ]
 

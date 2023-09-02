@@ -22,6 +22,7 @@ function Form({ fields, action, btnText }: Props){
             width: "100%",
             height: "100%",
             padding: "1rem 1rem",
+            overflowY: "scroll"
         }}
     >
       {fields.map((field, index) => (
