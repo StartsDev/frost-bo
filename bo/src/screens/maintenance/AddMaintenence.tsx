@@ -196,9 +196,7 @@ const fields = [
     label: "Estado",
     placeholder: "Estado"
   }
-];
-
-
+]
 
 const INITIAL_STATE = {
 	"activities":"",
