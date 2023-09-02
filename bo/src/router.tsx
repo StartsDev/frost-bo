@@ -13,6 +13,7 @@ import Squares from "./screens/headsquare/Squares";
 import Locations from "./screens/location/Locations";
 import Maintenances from "./screens/maintenance/Maintenances";
 import AddMaintenance from "./screens/maintenance/AddMaintenence";
+import EditMaintenance from "./screens/maintenance/EditMaintence";
 
 const routesClients: RouteObject[] = [
     {path: "clients",  element: <Clients />  },
@@ -45,7 +46,7 @@ const routesTechnical: RouteObject[] = [
 
 const routesMantenence: RouteObject[] = [
     {path: "add-mantenence", element: <AddMaintenance /> },
-    {path: "edit-mantenence", element: <h1>Modificar Mantenimiento</h1> },
+    {path: "edit-mantenence", element: <EditMaintenance /> },
 ]
 
 const boChildrens: RouteObject[] = [

@@ -279,7 +279,7 @@ function AddMaintenance() {
             action={() => {
               sendData()
             }}
-            btnText="Crear cliente"
+            btnText="Crear"
         />
         <p>{isLoading ? "Cargando..." : ""}</p>
     </View>
