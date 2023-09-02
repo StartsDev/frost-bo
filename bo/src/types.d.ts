@@ -42,7 +42,7 @@ export type Location = {
     locationName: string
     headquarterId: string
     headquarter?: Omit<Headquarter, "isPrincipal" | "address" | "email" | "phone">
-    client: Omit<Client, "nit" | "address" | "email" | "phone" | "city" | "contact"> & UserApp
+    client?: Omit<Client, "nit" | "address" | "email" | "phone" | "city" | "contact"> & UserApp
 }
 
 export type UserApp = {
@@ -92,4 +92,32 @@ export type Maintenance = {
     location?: any
     headquarter?: any
     client?: any
+}
+
+export type User = {
+    id: string,
+    numIdent: string,
+    firstName: string,
+    lastName: string,
+    userName: string,
+    image: string,
+    email: string,
+    phone: string,
+    status: boolean,
+    clientId: any,
+    roleId: string,
+    identId: string,
+    Identification: {
+        name: string
+    }
+    Role: {
+        role: string
+    }
+}
+
+export type Session = {
+    msg: string
+    token: string
+    user: User
+    success: boolean
 }

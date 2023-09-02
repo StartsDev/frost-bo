@@ -42,5 +42,8 @@ export const ENDPOINT = {
     image: {
         upload: "https://business-core-api.onrender.com/api/v1/image/upload-image/",
         uploadWithEquipment: "https://business-core-api.onrender.com/api/v1/image/upload-image-equip/",
+    },
+    auth: {
+        login: "https://frost-api.onrender.com/api/v1/auth/login",
     }
 }
