@@ -10,7 +10,7 @@ interface ModalProps {
 function Modal({ data, onClose, title }: ModalProps){
   return (
     <div className={styles.modal}>
-      <div className={styles.modalContent}>
+      <div className={styles.modalContent} style={{overflowY: "scroll"}} >
         <button className={styles.closeButton} onClick={onClose}>
           X
         </button>
