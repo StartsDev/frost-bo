@@ -2,15 +2,18 @@ import Item from "./Item"
 import { mapPropertiesOfItems } from "./utils"
 import styles from "./table.module.css"
 import { THEME } from "../../theme"
-
+ 
 interface Props<T> {
     headers: string[] | [],
     items: T[],
+    actionItem?: (param?: any) => void
 }
 
-function Table<T>({ headers, items }: Props<T>) {
+function Table<T>({ headers, items, actionItem }: Props<T>) {
     return (
-        <div>
+        <div
+            style={{ width: "100%", height: "100%" }}
+        >
             <section
                 style={{
                     width: "100%",
@@ -23,7 +26,7 @@ function Table<T>({ headers, items }: Props<T>) {
                         return (
                             <p  key={index}
                                 className={styles.headers}
-                                style={{color: THEME.blue}}
+                                style={{color: THEME.blue, width: "100%"}}
                             >
                                     {item}
                             </p>
@@ -32,11 +35,13 @@ function Table<T>({ headers, items }: Props<T>) {
                 }
             </section>
             <section
+                className={styles.table}
                 style={{
                     width: "100%",
-                    height: "80%",
+                    height: "90%",
                     display: "flex",
                     flexDirection: "column",
+                    overflowY: "scroll",
                 }}
             >
                 {
@@ -48,6 +53,10 @@ function Table<T>({ headers, items }: Props<T>) {
                                 backgroundColor: index % 2 === 0 ? THEME.white : THEME.blue,
                                 borderRadius: 5,
                                 color: index % 2 === 0 ? THEME.black : THEME.white
+                            }}
+                            onClick={() => {
+                                localStorage.setItem('item', JSON.stringify(item))
+                                actionItem && actionItem()
                             }}
                         >
                             {

@@ -26,7 +26,7 @@ function Item({ value, action }: Props) {
                 <Button
                     text='Editar'
                     action={action}
-                    h={30}
+                    h={20}
                     w={100}
                 />
             </ItemStyle>

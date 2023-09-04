@@ -6,7 +6,7 @@ export const ENDPOINT = {
         delete: "https://business-core-api.onrender.com/api/v1/client/delete-client/",
         add: "https://business-core-api.onrender.com/api/v1/client/create-client/",
     },
-    campus: {
+    squares: {
         add: "https://business-core-api.onrender.com/api/v1/headquarter/create-headquarter/",
         list: "https://business-core-api.onrender.com/api/v1/headquarter/get-headquarters",
         byId: "https://business-core-api.onrender.com/api/v1/headquarter/get-headquarter-client/",
@@ -31,7 +31,7 @@ export const ENDPOINT = {
     },
     maintanance: {
         add:"https://business-core-api.onrender.com/api/v1/maintanance/create-maintanance/",
-        list: "https://business-core-api.onrender.com/api/v1/maintanance/get-maintanances/",
+        list: "https://business-core-api.onrender.com/api/v1/maintenance/get-maintenances",
         byTech: "https://business-core-api.onrender.com/api/v1/maintanance/get-maint-tech/",
         byClient: "https://business-core-api.onrender.com/api/v1/maintanance/get-main-client/",
         byEquipment: "https://business-core-api.onrender.com/api/v1/maintanance/get-main-equipment/",
@@ -42,5 +42,8 @@ export const ENDPOINT = {
     image: {
         upload: "https://business-core-api.onrender.com/api/v1/image/upload-image/",
         uploadWithEquipment: "https://business-core-api.onrender.com/api/v1/image/upload-image-equip/",
+    },
+    auth: {
+        login: "https://frost-api.onrender.com/api/v1/auth/login",
     }
 }

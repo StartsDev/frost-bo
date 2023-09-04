@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom"
 import { THEME } from "../../../theme"
 
 type ItemForOptions = { route: string, title: string }
@@ -9,6 +10,9 @@ interface Props {
 }
 
 function Option({ Icon, titleOption, options }: Props) {
+
+    const navigate = useNavigate()
+
   return (
     <li
     className="list_item list__item--click"
@@ -22,7 +26,6 @@ function Option({ Icon, titleOption, options }: Props) {
     <div
         className="list_button list__button--click"
         style={{
-            //cursor pointer para --click
             cursor: "pointer",
             display: "flex",
             alignItems: "center",
@@ -68,9 +71,15 @@ function Option({ Icon, titleOption, options }: Props) {
                             style={{
                                 display: "block",
                                 padding: "15px 0",
-                                textDecoration: "none"
-                        }}
-                        >{option.title}</p>
+                                textDecoration: "none",
+                                cursor: "pointer",
+                            }}
+                            onClick={() => {
+                                navigate(option.route)
+                            }}
+                        >
+                            {option.title}
+                        </p>
                      </li>
                 )
             })

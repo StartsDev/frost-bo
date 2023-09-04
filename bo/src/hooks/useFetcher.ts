@@ -14,8 +14,9 @@ type FetcherParams<T> = {
 }
 
 type ResponseFetcher<T> = {
-    data: T | []
+    data?: T | null | undefined
     loading: boolean
+    mutation?: (url: string, body: T, method: Method, headers?: Header) => void | undefined
 }
 
 const getMethod = async (url: string, headers?: Header) => {
@@ -24,12 +25,11 @@ const getMethod = async (url: string, headers?: Header) => {
 }
 
 const mutation = async <T>(url: string, body: T, method: Method, headers?: Header ) => {
-    const response = await fetch(url, {
+    await fetch(url, {
         method,
         body: JSON.stringify(body),
         headers
     })
-    return response
 }
 
 async function fetcher<T>({ url, method, body, headers }: FetcherParams<T>){
@@ -41,8 +41,7 @@ async function fetcher<T>({ url, method, body, headers }: FetcherParams<T>){
             return response.json()
         }
 
-        const response = await mutation(url, body, method, headers)
-        return response.json()
+        await mutation(url, body, method, headers)
 
     } catch (error) {
         
@@ -53,7 +52,7 @@ async function fetcher<T>({ url, method, body, headers }: FetcherParams<T>){
 
 export const useFetcher = <T>({ url, method, body = {}, headers = {} }: FetcherParams<any>): ResponseFetcher<T> => {
     
-    const [data, setResponse] = useState<T | []>([])
+    const [data, setResponse] = useState<T | null | undefined>(null)
     const [loading, setLoading] = useState(false)
     
     const fetchMemo = useCallback(async () => {
@@ -70,14 +69,28 @@ export const useFetcher = <T>({ url, method, body = {}, headers = {} }: FetcherP
             })
     }, [])
 
+    const mutationFetcher = (url: string, body: T, method: Method, headers?: Header): void => {
+        mutation(url, body, method, headers)
+            .then(data => {
+                setLoading(true)
+            })
+            .catch(() => {
+                console.log('error')
+            })
+            .finally(() => {
+                setLoading(false)
+            })
+    }
+
     useEffect(() => {
         
         fetchMemo()
 
-    }, [])
+    }, [method === "GET"])
 
     return {
-        data,
-        loading
+        data: (data === undefined || data === null) ? null : data,
+        loading,
+        mutation: method !== "GET" ? mutationFetcher : undefined
     }
 }

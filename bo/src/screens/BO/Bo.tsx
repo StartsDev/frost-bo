@@ -1,12 +1,22 @@
 import { useEffect } from "react"
+import { Outlet } from "react-router-dom"
 import { THEME } from "../../theme"
 import Avatar from "../../components/avatar/Avatar"
 import styles from "./bo.module.css"
-import { MdDescription } from "react-icons/md"
-import Table from "../../components/table/Table"
+import { 
+    MdDescription, 
+    MdOutlineSupervisorAccount,
+    MdCardTravel,
+    MdOutlineSupportAgent,
+    MdOutlinePower
+ } from "react-icons/md"
 import Option from "./components/Option"
+import Title from "../../components/title/Title"
+import { User } from "../../types"
 
 function Bo() {
+
+    const user: User | null = localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user") || "") : null
 
     useEffect(() => {
         const listElements = document.querySelectorAll(".list__button--click")
@@ -29,6 +39,40 @@ function Bo() {
 
     }, [])
 
+    const optionsReports = [
+        { route: "clients", title: "Clientes" },
+        {route: "squares", title: "Sedes" },
+        {route: "locations", title: "Ubicaciones" },
+        {route: "cotizations", title: "Cotizaciones" },
+        {route: "technical", title: "Técnicos" },
+        {route: "mantenence", title: "Mantenimientos" },
+    ]
+
+    const optionsClients = [
+        {route: "clients", title: "Clientes" },
+        {route:"add-client", title: "Crear Cliente" },
+        {route: "add-location", title: "Crear Ubicación" },
+        {route: "add-square", title: "Crear Sede" },
+        {route: "edit-client", title: "Modificar Cliente" },
+        {route: "edit-location", title: "Modificar Ubicación" },
+        {route: "edit-square", title: "Modificar Sede" },
+    ]
+
+    const optionsCotizations = [
+        {route: "add-cotization", title: "Crear Cotización" },
+        {route: "edit-cotization", title: "Modificar Cotización" },
+    ]
+
+    const optionsTechnical = [
+        {route: "add-technical", title: "Crear Técnico" },
+        {route: "edit-technical", title: "Modificar Técnico" },
+    ]
+
+    const optionsMantenence = [
+        {route: "add-mantenence", title: "Crear Mantenimiento" },
+        {route: "edit-mantenence", title: "Modificar Mantenimiento" },
+    ]
+
     return (
         <section
             style={{ backgroundColor: THEME.white_primary }}
@@ -43,8 +87,10 @@ function Bo() {
                     alignItems: "center"
                 }}
             >
-                <h2>Frost Office</h2>
-                <Avatar />
+                <h2>Aire Aplicado S.A.S</h2>
+                <Avatar
+                    image={user?.image ?? ""}
+                />
             </div>
             <section
                 className={styles?.wrapper_bo}
@@ -56,29 +102,29 @@ function Bo() {
                     }}
                 >
                    <Option
-                        titleOption="Option 1"
-                        Icon={<MdDescription />}
-                        options={[{ route: "/bo/option1", title: "Option 1 route" }]}
+                        titleOption="Clientes"
+                        Icon={<MdOutlineSupervisorAccount />}
+                        options={optionsClients}
                    />
                    <Option
-                        titleOption="Option 2"
-                        Icon={<MdDescription />}
-                        options={[{ route: "/bo/option1", title: "Option 2 route" }]}
+                        titleOption="Cotizaciones"
+                        Icon={<MdCardTravel />}
+                        options={optionsCotizations}
                    />
                    <Option
-                        titleOption="Option 3"
-                        Icon={<MdDescription />}
-                        options={[{ route: "/bo/option1", title: "Option 3 route" }]}
+                        titleOption="Tecnicos"
+                        Icon={<MdOutlineSupportAgent />}
+                        options={optionsTechnical}
                    />
                    <Option
-                        titleOption="Option 4"
-                        Icon={<MdDescription />}
-                        options={[{ route: "/bo/option1", title: "Option 4 route" }]}
+                        titleOption="Mantenimientos"
+                        Icon={<MdOutlinePower />}
+                        options={optionsMantenence}
                    />
                    <Option
-                        titleOption="Option 5"
+                        titleOption="Reportes"
                         Icon={<MdDescription />}
-                        options={[{ route: "/bo/option1", title: "Option 5 route" }]}
+                        options={optionsReports}
                    />
                 </aside>
                 <section
@@ -90,49 +136,8 @@ function Bo() {
                         gap: 5,
                     }}
                 >
-                    <h1
-                        style={{
-                            width: "85%",
-                            padding: "10px 0",
-                            fontSize: "1.5rem"
-                        }}
-                    >
-                        Rodrigo Rodriguez 🚀
-                    </h1>
-                    <div
-                        style={{ width: "85%" }}
-                    >
-                        <button
-                            style={{
-                                width: 120,
-                                height: 30,
-                                backgroundColor: THEME.black,
-                                color: THEME.white,
-                                border: "none",
-                                borderRadius: 5,
-                                fontSize: "1rem",
-                                display: "flex",
-                                alignItems: "center",
-                                justifyContent: "space-evenly"
-                            }}
-                        >
-                            export csv <MdDescription />
-                        </button>
-                    </div>
-                    <div
-                        style={{
-                            width: "80%",
-                            height: "80%",
-                            borderRadius: 10,
-                            backgroundColor: THEME.white,
-                            boxShadow: "0px 10px 15px -3px rgba(0,0,0,0.1)"
-                        }}
-                    >
-                        <Table
-                            headers={[]}
-                            items={[]}
-                        />
-                    </div>
+                    <Title title={user?.userName ?? ""}  />
+                    <Outlet />
                 </section>
             </section>
         </section>

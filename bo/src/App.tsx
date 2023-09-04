@@ -1,10 +1,10 @@
-import Bo from "./screens/BO/Bo"
+import { Outlet } from "react-router-dom"
 
 function App() {
   return (
     <>
       <div>
-        <Bo />        
+        <Outlet />
       </div>
     </>
   )
