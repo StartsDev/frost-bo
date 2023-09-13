@@ -3,5 +3,7 @@ export const THEME = {
     blue: "#2f78ae",
     red: "#ff2b2b",
     white_primary: "#fbfbfa",
-    white: "#fefffe"
+    white: "#fefffe",
+    primary: '#2152a3',
+    backgroundLigth: '#deedf9'
 }
