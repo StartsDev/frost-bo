@@ -4,7 +4,6 @@ export type Client = {
     city: string
     contact: string
     email: string
-    id: string
     nit: string
     phone: string
 }

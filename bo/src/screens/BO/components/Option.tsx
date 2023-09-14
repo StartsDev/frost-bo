@@ -19,8 +19,8 @@ function Option({ Icon, titleOption, options }: Props) {
     style={{
         listStyle: "none",
         width: "100%",
-        textAlign: "center",
-        overflow: "hidden"
+        textAlign: "left",
+        overflow: "hidden",
     }}
 >
     <div
@@ -29,7 +29,6 @@ function Option({ Icon, titleOption, options }: Props) {
             cursor: "pointer",
             display: "flex",
             alignItems: "center",
-            justifyContent: "space-evenly",
             gap: "1em",
             width: "75%",
             margin: "0 auto"
@@ -70,7 +69,7 @@ function Option({ Icon, titleOption, options }: Props) {
                         <p className="nav__link nav__link--inside"
                             style={{
                                 display: "block",
-                                padding: "15px 0",
+                                padding: "15px 10px",
                                 textDecoration: "none",
                                 cursor: "pointer",
                             }}
