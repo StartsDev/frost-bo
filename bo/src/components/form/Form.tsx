@@ -1,20 +1,23 @@
+import {CSSProperties } from 'react'
 import styles from "./form.module.css";
 
-type Fields = {
+export interface Fields {
   name: string
   type: string
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  label: string,
+  label: string
   placeholder?: string
+  style?: CSSProperties
 }
 
 type Props = {
   fields: Fields[]
   action: () => void
   btnText: string
+  error?: boolean | unknown
 }
 
-function Form({ fields, action, btnText }: Props){
+function Form({ fields, action, btnText, error = false }: Props){
   return (
     <div
         className={styles?.container}
@@ -26,7 +29,7 @@ function Form({ fields, action, btnText }: Props){
         }}
     >
       {fields.map((field, index) => (
-        <div key={index} className={styles?.formRow}>
+        <div key={index} className={styles?.formRow} style={field.style}>
           <label htmlFor={field.name} className={styles?.formLabel}>{field.label}</label>
           <input
             className={styles?.formInput}
@@ -34,14 +37,18 @@ function Form({ fields, action, btnText }: Props){
             name={field.name}
             onChange={field.onChange}
             placeholder={field.placeholder}
+            required
           />
         </div>
       ))}
-      <div className={styles?.buttonContainer}>
-        <button onClick={action}>{btnText}</button>
-      </div>
+      {
+        error ? null :
+        <div className={styles?.buttonContainer}>
+          <button onClick={action}>{btnText}</button>
+        </div>
+      }
     </div>
   );
-};
+}
 
 export default Form;

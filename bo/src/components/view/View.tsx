@@ -12,6 +12,7 @@ function View({ children }: Props) {
           marginTop: 10,
           backgroundColor: THEME.white,
           display: "flex",
+          flexDirection: "column",
           justifyContent: "center",
           alignItems: "center",
           boxShadow: "0px 10px 15px -3px rgba(0,0,0,0.1)",

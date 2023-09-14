@@ -5,7 +5,7 @@
 }
 
 .formRow {
-  width: 45%;
+  width: 45.5%;
   height: 70px;
   display: flex;
   flex-direction: column;
@@ -21,9 +21,16 @@
   height: 40px;
   padding: 1rem 0.5rem;
   border-radius: 5px;
-  border: 1.5px solid #2f78ae;
-  outline: 1px solid #2f78ae;
+  border: 0.5px solid #2f78ae;
+  outline: 0.5px solid #2f78ae;
   font-size: 1rem;
+  transition: all 0.3s;
+}
+
+.formInput:focus {
+  border-color: #b3cee3;
+  outline: 1px solid #2f78ae;
+  background-color: rgba(231, 229, 229, 0.754);
 }
 
 .buttonContainer {
@@ -43,4 +50,8 @@
   font-size: 1rem;
   color: #fff;
   background-color: #2f78ae;
+}
+
+.formInputError {
+  color: red !important;
 }
