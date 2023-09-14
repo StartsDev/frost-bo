@@ -1,4 +1,3 @@
-
 function Title({
     title
 }: { title: string }) {
@@ -10,9 +9,10 @@ function Title({
             fontSize: "1.5rem"
         }}
     >
-        {title} 🚀
+        {title} 
     </h1>
   )
 }
+
 
 export default Title

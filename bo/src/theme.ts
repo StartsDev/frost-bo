@@ -8,3 +8,15 @@ export const THEME = {
     backgroundLigth: '#deedf9',
     secondary: '#8d8d8d'
 }
+
+export const ITEM_THEME = {
+    black: "#051923",
+    blue: "#d9f2ff",
+    red: "#ff2b2b",
+    white_primary: "#fbfbfa",
+    white: "#fefffe",
+    lightBlue :"#2e79ba",
+    primary: '#2152a3',
+    backgroundLigth: '#deedf9',
+    secondary: '#8d8d8d'
+}
