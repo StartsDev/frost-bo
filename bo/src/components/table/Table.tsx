@@ -1,7 +1,7 @@
 import Item from "./Item"
 import { mapPropertiesOfItems } from "./utils"
 import styles from "./table.module.css"
-import { THEME } from "../../theme"
+import { THEME, ITEM_THEME } from "../../theme"
  
 interface Props<T> {
     headers: string[] | [],
@@ -38,7 +38,7 @@ function Table<T>({ headers, items, actionItem }: Props<T>) {
                 className={styles.table}
                 style={{
                     width: "100%",
-                    height: "90%",
+                    height: "100%",
                     display: "flex",
                     flexDirection: "column",
                     overflowY: "scroll",
@@ -50,9 +50,8 @@ function Table<T>({ headers, items, actionItem }: Props<T>) {
                             key={index}
                             style={{ 
                                 display: "flex",
-                                backgroundColor: index % 2 === 0 ? THEME.white : THEME.blue,
-                                borderRadius: 5,
-                                color: index % 2 === 0 ? THEME.black : THEME.white
+                                backgroundColor: index % 2 === 0 ? ITEM_THEME.white : ITEM_THEME.blue,
+                                color: index % 2 === 0 ? ITEM_THEME.black : ITEM_THEME.black
                             }}
                             onClick={() => {
                                 localStorage.setItem('item', JSON.stringify(item))
