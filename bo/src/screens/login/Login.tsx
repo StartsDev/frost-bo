@@ -128,10 +128,10 @@ function Login() {
               </div>
               <button
                 onClick={() => {
-                  setLogin({
-                    numIdent: "",
-                    password: "",
-                  })
+                  // setLogin({
+                  //   numIdent: "",
+                  //   password: "",
+                  // })
                   onSubmit()
                 }} 
                 style={{ backgroundColor: THEME.blue }}

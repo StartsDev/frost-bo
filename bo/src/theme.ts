@@ -5,7 +5,8 @@ export const THEME = {
     white_primary: "#fbfbfa",
     white: "#fefffe",
     primary: '#2152a3',
-    backgroundLigth: '#deedf9'
+    backgroundLigth: '#deedf9',
+    secondary: '#8d8d8d'
 }
 
 export const ITEM_THEME = {
@@ -16,5 +17,6 @@ export const ITEM_THEME = {
     white: "#fefffe",
     lightBlue :"#2e79ba",
     primary: '#2152a3',
-    backgroundLigth: '#deedf9'
+    backgroundLigth: '#deedf9',
+    secondary: '#8d8d8d'
 }

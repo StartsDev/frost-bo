@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export type Client = {
     address: string
     businessName: string
@@ -6,6 +7,10 @@ export type Client = {
     email: string
     nit: string
     phone: string
+}
+
+export type ClientResponse = {
+    clients: Client[]
 }
 
 export type Equipment = {
