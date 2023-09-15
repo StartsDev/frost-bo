@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import Actions from "../../components/actions/Actions";
 import View from "../../components/view/View";
 import Table from "../../components/table/Table";
@@ -6,14 +6,15 @@ import { THEME } from "../../theme";
 import { MdDescription } from "react-icons/md";
 import { useFetcher } from "../../hooks/useFetcher";
 import { ENDPOINT } from "../../config";
-import { Client, Equipment, Headquarter } from "../../types";
+import { Client, Equipment, Headquarter, Location } from "../../types";
 import Loader from "../../components/Loader/Loader";
 import { useModal } from "../../hooks/useModal";
 import Modal from "../../components/modal/Modal";
+import {capitalString } from "../../utils/capitalizeStr";
 
 type ClientResponse = Client & {
   equipments: Equipment[];
-  headquaerters: Headquarter[];
+  headquarters: Headquarter[];
   locations: Location[];
   user_app?: any;
 };
@@ -24,6 +25,8 @@ type Response = {
 };
 
 function Clients() {
+  const headquartersArray: Headquarter[] = [];
+  const locationsArray: Location[] = []; 
   const { data, loading } = useFetcher<Response>({
     method: "GET",
     url: ENDPOINT.clients.list,
@@ -35,11 +38,11 @@ function Clients() {
     return data?.clients?.map((client) => {
       const preview: Client = {
         nit: client.nit,
-        businessName: client.businessName,
-        contact: client.contact,
+        businessName: capitalString(client.businessName),
+        contact: capitalString(client.contact),
         phone: client.phone,
-        address: client.address,
-        city: client.city,
+        address: capitalString(client.address),
+        city: capitalString(client.city),
         email: client.email,
       };
 
@@ -60,14 +63,20 @@ function Clients() {
     );
 
     const mapObject = filteredClient?.map((client) => {
+      client.headquarters?.map((head)=>(
+        headquartersArray.push(head)
+      ))
+      client.locations?.map((location)=>(
+        locationsArray.push(location)
+      ))
       return {
-        nit: client.nit,
-        negocio: client.businessName,
-        contacto: client.contact,
-        telefono: client.phone,
-        direccion: client.address,
-        ciudad: client.city,
-        email: client.email,
+        Nit: client.nit,
+        Negocio:  capitalString(client.businessName),
+        Contacto: capitalString(client.contact),
+        Teléfono: client.phone,
+        Dirección:  capitalString(client.address),
+        Ciudad:  capitalString(client.city),
+        Email: client.email,
       };
     });
     return mapObject?.[0];
@@ -77,12 +86,11 @@ function Clients() {
     "nit",
     "negocio",
     "contacto",
-    "telefono",
-    "direccion",
+    "teléfono",
+    "dirección",
     "ciudad",
     "email",
   ];
-
   return (
     <div>
       <Actions>
@@ -120,7 +128,12 @@ function Clients() {
         <Modal
           data={clientDetail === undefined ? {} : clientDetail}
           onClose={closeModal}
-          title="Detalle del cliente"
+          title="Cliente"
+          headTitle ="Sedes"
+          locatTitle ="Ubicaciones"
+          headArray = {headquartersArray}
+          locationArray = {locationsArray}
+
         />
       ) : null}
     </div>
