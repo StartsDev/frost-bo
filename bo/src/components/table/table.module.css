@@ -20,7 +20,35 @@
     display: flex;
     cursor: pointer;
 }
-
+.containerMessage{
+    margin-top:30px;
+    display:grid;
+    gap: 10px;
+    align-items: center;
+    text-align:center;
+    height: 10vh;
+}
+.title{
+    color:rgb(90, 93, 94);
+    font-size: 20px;
+    font-weight:bold;
+}
+.buttonContainer {
+    width: 100%;
+}
+.buttonContainer button {
+    width: 100px;
+    height: 40px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 1rem;
+    color: #fff;
+    background-color: #2f78ae;
+  }
 /*estilos para los headers*/
 .headers {
     width: 20%;

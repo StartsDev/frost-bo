@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useMemo} from "react";
 import Actions from "../../components/actions/Actions";
 import View from "../../components/view/View";
 import Table from "../../components/table/Table";
@@ -10,7 +10,8 @@ import { Client, Equipment, Headquarter, Location } from "../../types";
 import Loader from "../../components/Loader/Loader";
 import { useModal } from "../../hooks/useModal";
 import Modal from "../../components/modal/Modal";
-import {capitalString } from "../../utils/capitalizeStr";
+import { capitalString } from "../../utils/capitalizeStr";
+
 
 type ClientResponse = Client & {
   equipments: Equipment[];
@@ -26,7 +27,7 @@ type Response = {
 
 function Clients() {
   const headquartersArray: Headquarter[] = [];
-  const locationsArray: Location[] = []; 
+  const locationsArray: Location[] = [];
   const { data, loading } = useFetcher<Response>({
     method: "GET",
     url: ENDPOINT.clients.list,
@@ -63,19 +64,15 @@ function Clients() {
     );
 
     const mapObject = filteredClient?.map((client) => {
-      client.headquarters?.map((head)=>(
-        headquartersArray.push(head)
-      ))
-      client.locations?.map((location)=>(
-        locationsArray.push(location)
-      ))
+      client.headquarters?.map((head) => headquartersArray.push(head));
+      client.locations?.map((location) => locationsArray.push(location));
       return {
         Nit: client.nit,
-        Negocio:  capitalString(client.businessName),
+        Negocio: capitalString(client.businessName),
         Contacto: capitalString(client.contact),
         Teléfono: client.phone,
-        Dirección:  capitalString(client.address),
-        Ciudad:  capitalString(client.city),
+        Dirección: capitalString(client.address),
+        Ciudad: capitalString(client.city),
         Email: client.email,
       };
     });
@@ -129,11 +126,10 @@ function Clients() {
           data={clientDetail === undefined ? {} : clientDetail}
           onClose={closeModal}
           title="Cliente"
-          headTitle ="Sedes"
-          locatTitle ="Ubicaciones"
-          headArray = {headquartersArray}
-          locationArray = {locationsArray}
-
+          headTitle="Sedes"
+          locatTitle="Ubicaciones"
+          headArray={headquartersArray}
+          locationArray={locationsArray}
         />
       ) : null}
     </div>

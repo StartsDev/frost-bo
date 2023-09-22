@@ -42,24 +42,17 @@ useEffect(() => {
     { route: "clients", title: "Clientes" },
     { route: "squares", title: "Sedes" },
     { route: "locations", title: "Ubicaciones" },
-    { route: "cotizations", title: "Cotizaciones" },
     { route: "technical", title: "Técnicos" },
     { route: "mantenence", title: "Mantenimientos" },
   ];
 
   const optionsClients = [
-    { route: "clients", title: "Clientes" },
     { route: "add-client", title: "Crear Cliente" },
     { route: "add-location", title: "Crear Ubicación" },
     { route: "add-square", title: "Crear Sede" },
     { route: "edit-client", title: "Modificar Cliente" },
     { route: "edit-location", title: "Modificar Ubicación" },
     { route: "edit-square", title: "Modificar Sede" },
-  ];
-
-  const optionsCotizations = [
-    { route: "add-cotization", title: "Crear Cotización" },
-    { route: "edit-cotization", title: "Modificar Cotización" },
   ];
 
   const optionsTechnical = [
@@ -99,7 +92,7 @@ useEffect(() => {
       <section className={styles?.wrapper_bo}>
         <aside
           style={{
-            width: "12%",
+            width: "14%",
             height: "100%",
           }}
         >
@@ -107,11 +100,6 @@ useEffect(() => {
             titleOption="Clientes"
             Icon={<MdOutlineSupervisorAccount />}
             options={optionsClients}
-          />
-          <Option
-            titleOption="Cotizaciones"
-            Icon={<MdCardTravel />}
-            options={optionsCotizations}
           />
           <Option
             titleOption="Tecnicos"
