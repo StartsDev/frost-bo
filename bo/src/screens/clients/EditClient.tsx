@@ -83,7 +83,6 @@ function EditClient() {
 
   const sendData = () => {
     //capturar id
-    console.log(client)
     fetch(`${ENDPOINT.clients.update}`, {
       method: "POST",
       headers: {

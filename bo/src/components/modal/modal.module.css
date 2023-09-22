@@ -20,16 +20,18 @@
 }
 
 .modalDetailClientGrid {
+  margin-top: 20px;
   display: grid;
-  grid-template-columns: 340px 490px 280px;
-  grid-template-rows: 50px 50px 40px;
-  grid-gap: 3px; 
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 50px 50px 50px 50px;
+  grid-gap: 6px;
+  align-items: center; 
 }
 
 .modalContainerHeadLoc{
   display: grid;
   grid-template-columns: 1fr 1fr;
-  border-top: 1px #2f78ae solid;
+  margin-top: 10px;
   grid-gap: 10px;
 }
 
@@ -54,15 +56,25 @@
 }
 
 .modalItem {
-  padding: 10px;
+  font-size: 0.9rem;
+  display: grid;
+  grid-template-columns: 0.5fr 1fr;
+/*   border: 1px solid red; */
 }
 
 .modalItemKey {
   font-weight: bold;
 }
-
+.modalItemKeyCont{
+  /*  background-color: #952fae;  */
+}
+.modalItemValueCont{
+  /*  background-color: #2f48ae;  */
+}
 .modalItemValue {
-  margin-left: 5px;
+  margin-left: 10px;
+  padding: 10px;
+  background-color: rgb(217, 242, 255);
 }
 
  @-webkit-keyframes scale-up-center {

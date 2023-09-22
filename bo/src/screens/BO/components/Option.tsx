@@ -30,7 +30,7 @@ function Option({ Icon, titleOption, options }: Props) {
             display: "flex",
             alignItems: "center",
             gap: "1em",
-            width: "75%",
+            width: "90%",
             margin: "0 auto"
         }}
     >

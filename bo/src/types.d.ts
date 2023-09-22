@@ -31,7 +31,6 @@ export type Headquarter = {
     address: string
     headName: string
     email: string
-    id: string
     phone: string
     isPrincipal: boolean,
     status?: boolean
