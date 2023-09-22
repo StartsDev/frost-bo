@@ -11,6 +11,7 @@ export type Client = {
     headquarters: []
     locations: []
     equipments: []
+    user_app: UserApp
 }
 
 export type ClientResponse = {

@@ -45,5 +45,6 @@ export const ENDPOINT = {
     },
     auth: {
         login: "https://frost-api.onrender.com/api/v1/auth/login",
+        users: "https://frost-api.onrender.com/api/v1/user/get-users",
     }
 }
