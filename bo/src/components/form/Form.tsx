@@ -7,7 +7,9 @@ export interface Fields {
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
   label: string
   placeholder?: string
+  value?: string
   style?: CSSProperties
+  rowStyle?: CSSProperties
 }
 
 type Props = {
@@ -25,7 +27,7 @@ function Form({ fields, action, btnText, error = false }: Props){
             width: "100%",
             height: "100%",
             padding: "1rem 1rem",
-            overflowY: "scroll"
+            overflowY: "scroll",
         }}
     >
       {fields.map((field, index) => (
@@ -33,6 +35,7 @@ function Form({ fields, action, btnText, error = false }: Props){
           <label htmlFor={field.name} className={styles?.formLabel}>{field.label}</label>
           <input
             className={styles?.formInput}
+            value={field.value}
             type={field.type}
             name={field.name}
             onChange={field.onChange}
