@@ -8,8 +8,8 @@ interface ModalProps {
   data: Record<string, any>;
   onClose: () => void;
   title: string;
-  headTitle: string;
-  locatTitle: string;
+  headTitle?: string;
+  locatTitle?: string;
   headArray: Headquarter[];
   locationArray: Location[];
 }
@@ -25,6 +25,7 @@ function Modal({
 }: ModalProps) {
   const headersHead = ["Nombre"];
   const headersLocations = ["Nombre"];
+
   return (
     <div className={styles.modal}>
       <div className={styles.modalContent} style={{ color: "black" }}>
@@ -34,13 +35,16 @@ function Modal({
         <Title title={title} />
         {/* Div grid para detalles del cliente */}
         <div className={styles.modalDetailClientGrid}>
-          {Object.entries(data).map(([key, value]) => (
-            <div key={key} className={styles.modalItem}>
-              <span className={styles.modalItemKey}>{key}: </span>
-              <span className={styles.modalItemValue}>{value}</span>
+          {
+          Object.entries(data).map(([key, value],index) =>(
+            <div key={index} className={styles.modalItem}>
+              <div className={styles.modalItemKeyCont}><span className={styles.modalItemKey}>{key}: </span></div>
+              <div className={styles.modalItemValueCont}><span className={styles.modalItemValue}>{value}</span></div>
             </div>
-          ))}
+          ))
+          }
         </div>
+
         {/* Div container para Sedes y Ubicaciones */}
         <div className={styles.modalContainerHeadLoc}>
           <div className={styles.itemHeadLoc}>
@@ -49,17 +53,23 @@ function Modal({
               <TableModalHead
                 headers={headersHead}
                 items={headArray === undefined ? [] : headArray}
+                title={headTitle}
               />
             </div>
           </div>
           <div className={styles.itemHeadLoc}>
-            <Title title={locatTitle} />
-            <div>
-              <TableModalLoc
-                headers={headersLocations}
-                items={locationArray === undefined ? [] : locationArray}
-              />
-            </div>
+            {locatTitle && (
+              <>
+                <Title title={locatTitle} />
+                <div>
+                  <TableModalLoc
+                    headers={headersLocations}
+                    items={locationArray === undefined ? [] : locationArray}
+                    title={locatTitle}
+                  />
+                </div>
+              </>
+            )}
           </div>
         </div>
       </div>
