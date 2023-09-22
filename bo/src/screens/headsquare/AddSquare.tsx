@@ -125,7 +125,7 @@ function AddHeadSquare() {
             <label htmlFor="" className={styles.labelStyle}>Seleccione el cliente</label>
             <select name="clientId" id="" className={styles.formInput} onChange={(e)=> handleChange(e as never)}>
               <option value="" style={{color: 'grey'}}>Seleccione un cliente</option>
-              {data?.clients.map((client: any, index: any) =>(
+              {data?.clients?.map((client: any, index: any) =>(
                 <option key={index} value={client.id}>{client.businessName}</option>
               ))}
               

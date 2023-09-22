@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export type Client = {
+    id: string
     address: string
     businessName: string
     city: string
@@ -7,6 +8,9 @@ export type Client = {
     email: string
     nit: string
     phone: string
+    headquarters: []
+    locations: []
+    equipments: []
 }
 
 export type ClientResponse = {
