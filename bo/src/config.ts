@@ -30,7 +30,7 @@ export const ENDPOINT = {
         delete: "https://business-core-api.onrender.com/api/v1/equipment/delete-equipment/",
     },
     maintanance: {
-        add:"https://business-core-api.onrender.com/api/v1/maintanance/create-maintanance/",
+        add:"https://business-core-api.onrender.com/api/v1/maintenance/create-maintenance/",
         list: "https://business-core-api.onrender.com/api/v1/maintenance/get-maintenances",
         byTech: "https://business-core-api.onrender.com/api/v1/maintanance/get-maint-tech/",
         byClient: "https://business-core-api.onrender.com/api/v1/maintanance/get-main-client/",

@@ -46,7 +46,7 @@ function AddLocation() {
   }
 
   const getHeadQuarterCustomer = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const customer: Client = data?.clients.find((client: Client) => client.id === e.target.value )
+    const customer: Client = data?.clients.find((client: Client) => client.id === e.target.value ) as never
     setCustomerHeadquarter(customer.headquarters)
   }
 
