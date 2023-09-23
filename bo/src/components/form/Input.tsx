@@ -11,9 +11,10 @@ interface Props {
   required?: boolean
   styleInput?: CSSProperties
   rowStyle?: CSSProperties
+  disabled?: boolean
 }
 
-export const Input = ({name, type, value, label, placeholder, required = false, styleInput, rowStyle,  onChange}: Props) => {
+export const Input = ({name, type, value, label, placeholder, required = true, styleInput, rowStyle, disabled=false, onChange}: Props) => {
   return (
     <div className={formStyles.formRow} style={rowStyle}>
       <label htmlFor={name} className={formStyles?.formLabel} style={styleInput}>{label}</label>
@@ -26,6 +27,7 @@ export const Input = ({name, type, value, label, placeholder, required = false, 
           onChange={onChange}
           placeholder={placeholder}
           required={required}
+          disabled={disabled}
         />
     </div>
   )

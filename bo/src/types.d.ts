@@ -8,9 +8,9 @@ export type Client = {
     email: string
     nit: string
     phone: string
-    headquarters: []
-    locations: []
-    equipments: []
+    headquarters: Headquarter[]
+    locations: Location[]
+    equipments: Equipment[]
     user_app: UserApp
 }
 
@@ -33,24 +33,22 @@ export type Equipment = {
 }
 
 export type Headquarter = {
+    id: string
     address: string
     headName: string
     email: string
     phone: string
-    isPrincipal: boolean,
-    status?: boolean
-    clientId?: string
-    Client?: Client & {
-        user_app?: UserApp[]
-    }
+    isPrincipal: boolean
+    clientId: string
 }
 
 export type Location = {
     id: string
     locationName: string
     headquarterId: string
-    headquarter?: Omit<Headquarter, "isPrincipal" | "address" | "email" | "phone">
-    client?: Omit<Client, "nit" | "address" | "email" | "phone" | "city" | "contact"> & UserApp
+    description: string
+    // headquarter?: Omit<Headquarter, "isPrincipal" | "address" | "email" | "phone">
+    // client?: Omit<Client, "nit" | "address" | "email" | "phone" | "city" | "contact"> & UserApp
 }
 
 export type UserApp = {
@@ -102,6 +100,11 @@ export type Maintenance = {
     client?: any
 }
 
+export type userResponse = {
+    users: User[],
+    numItmes: number
+}
+
 export type User = {
     id: string,
     numIdent: string,
@@ -128,4 +131,23 @@ export type Session = {
     token: string
     user: User
     success: boolean
+}
+
+export type Roles = {
+    roles: Role[],
+    success: boolean
+}
+
+export type Role = {
+    role: string, 
+    id: string
+}
+export type IdentificationResponse = {
+    identifications: IndentificationType[],
+    success: boolean
+}
+
+export type IndentificationType = {
+    name: string, 
+    id: string
 }

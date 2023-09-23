@@ -56,8 +56,8 @@ useEffect(() => {
   ];
 
   const optionsTechnical = [
-    { route: "add-technical", title: "Crear Técnico" },
-    { route: "edit-technical", title: "Modificar Técnico" },
+    { route: "add-technical", title: "Crear Usuario" },
+    { route: "edit-technical", title: "Modificar Usuario" },
   ];
 
   const optionsMantenence = [
@@ -97,17 +97,17 @@ useEffect(() => {
           }}
         >
           <Option
-            titleOption="Clientes"
+            titleOption="Gestión de Clientes"
             Icon={<MdOutlineSupervisorAccount />}
             options={optionsClients}
           />
           <Option
-            titleOption="Tecnicos"
+            titleOption="Gestión de Usuarios"
             Icon={<MdOutlineSupportAgent />}
             options={optionsTechnical}
           />
           <Option
-            titleOption="Mantenimientos"
+            titleOption="Gestión de Mantenimientos"
             Icon={<MdOutlinePower />}
             options={optionsMantenence}
           />
