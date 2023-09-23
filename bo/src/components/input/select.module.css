@@ -1,0 +1,27 @@
+.formInput {
+  /* width: 30%; */
+  width: 90%;
+  height: 30px;
+  /* padding: 0.5rem 0.5rem; */
+  border-radius: 5px;
+  border: 0.5px solid #2f78ae;
+  outline: 0.5px solid #2f78ae;
+  font-size: 1rem;
+  transition: all 0.3s;
+}
+
+.formInput:focus {
+  border-color: #b3cee3;
+  outline: 1px solid #2f78ae;
+  background-color: rgba(231, 229, 229, 0.754);
+}
+
+.selectContainer {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+}
+
+.labelStyle{
+  margin-bottom: 10px !important;
+}

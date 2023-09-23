@@ -27,6 +27,7 @@ export type Equipment = {
     model: string
     type: string
     brand: string
+    locationId: string
     location?: any
     client?: any
     headquarter?: any

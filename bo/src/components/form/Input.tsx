@@ -21,7 +21,7 @@ export const Input = ({name, type, value, label, placeholder, required = true, s
         <input
           className={formStyles?.formInput}
           value={value}
-          style={{marginBottom: 7}}
+          style={styleInput}
           type={type}
           name={name}
           onChange={onChange}

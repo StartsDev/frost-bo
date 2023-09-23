@@ -9,6 +9,7 @@ export interface Fields {
   placeholder?: string
   value?: string
   style?: CSSProperties
+  styleInput?: CSSProperties
   rowStyle?: CSSProperties
   required?: boolean
   disabled?: boolean

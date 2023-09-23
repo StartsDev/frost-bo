@@ -129,7 +129,7 @@ function EditLocation() {
               <div className={styles.selectContainer} style={{marginLeft: 33}}>
                 <label htmlFor="" className={styles.labelStyle}>Seleccione una sede</label>
                 <select name="id" id="" className={styles.formInput} onChange={(e)=> handleChangeInputCustomer(e as never)}>
-                  <option value="" style={{color: 'grey'}}>Seleccione un cliente</option>
+                  <option value="" style={{color: 'grey'}}>Seleccione una sede</option>
                   {headQuarterList.map((e: Headquarter, index: number) =>(
                     <option key={index} value={e.id}>{e.headName}</option>
                   ))}
@@ -141,9 +141,9 @@ function EditLocation() {
               location.headquarterId.length > 0  && locationList.length > 0 &&
               <>
                 <div className={styles.selectContainer} style={{marginLeft: 33, marginTop: 10}}>
-                  <label htmlFor="" className={styles.labelStyle}>Seleccione la sede a modificar </label>
+                  <label htmlFor="" className={styles.labelStyle}>Seleccione la ubicación </label>
                   <select name="locationName" id="" className={styles.formInput} onChange={(e) => handleChangeInputCustomer(e as never)}>
-                      <option value='' style={{color: 'grey'}}>Seleccione una sede</option>
+                      <option value='' style={{color: 'grey'}}>Seleccione una ubicación</option>
                       {locationList?.map((e: Location, index: number) =>(
                         <option key={index} value={e.locationName}>{e.locationName}</option>
                       ))}
