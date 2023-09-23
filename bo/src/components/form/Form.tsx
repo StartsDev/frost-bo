@@ -10,6 +10,8 @@ export interface Fields {
   value?: string
   style?: CSSProperties
   rowStyle?: CSSProperties
+  required?: boolean
+  disabled?: boolean
 }
 
 type Props = {
