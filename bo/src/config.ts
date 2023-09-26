@@ -35,7 +35,7 @@ export const ENDPOINT = {
         byTech: "https://business-core-api.onrender.com/api/v1/maintanance/get-maint-tech/",
         byClient: "https://business-core-api.onrender.com/api/v1/maintanance/get-main-client/",
         byEquipment: "https://business-core-api.onrender.com/api/v1/maintanance/get-main-equipment/",
-        byId: "https://business-core-api.onrender.com/api/v1/maintanance/detail-main/",
+        byId: "https://business-core-api.onrender.com/api/v1/maintenance/detail-main/",
         update: "https://business-core-api.onrender.com/api/v1/maintanance/update-main/",
         delete: "https://business-core-api.onrender.com/api/v1/maintanance/delete-main/",
     },

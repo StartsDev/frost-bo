@@ -46,8 +46,8 @@ const routesTechnical: RouteObject[] = [
 ]
 
 const routesMantenence: RouteObject[] = [
-    {path: "add-mantenence", element: <AddMaintenance /> },
-    {path: "edit-mantenence", element: <EditMaintenance /> },
+    {path: "add-mantenence", element: <AddMaintenance isEditable={false}/> },
+    {path: "edit-mantenence", element: <AddMaintenance isEditable={true}/>  },
 ]
 
 const boChildrens: RouteObject[] = [
