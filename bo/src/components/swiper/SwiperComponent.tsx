@@ -6,6 +6,7 @@ interface Props {
   images : string[]
 }
 
+
 export const SwiperComponent = ({images}: Props) => {
   return (
     <Swiper

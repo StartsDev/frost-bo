@@ -8,8 +8,6 @@ import { useFetcher } from "../../hooks/useFetcher"
 import { ENDPOINT } from "../../config"
 import type { Equipment } from "../../types"
 import Loader from "../../components/Loader/Loader"
-import { useModal } from "../../hooks/useModal"
-import Modal from "../../components/modal/Modal"
 
 
 type Response = {
@@ -23,55 +21,23 @@ function Equipments() {
         loading
     } = useFetcher<Response>({method: "GET", url: ENDPOINT.equipment.list})
 
-    const { 
-        openModal,
-        closeModal,
-        isOpen
-    } = useModal()
-    
-    const locationPreview = useMemo(() => {
+    const equipmentPreview = useMemo(() => {
         return data?.equipments?.map(equipment => {
             
             return {
-                id: equipment.id,
-                nombre: equipment.name,
                 serial: equipment.serial,
-                modelo: equipment.model
+                nombre: equipment.name,
+                modelo: equipment.model,
+                tipo: equipment.type,
+                marca: equipment.brand
             }
             
         })
 
     }, [data])
 
-    const headers = ["id","nombre", "serial", "modelo"]
+    const headers = ["serial", "nombre", "modelo" ,"tipo", "marca"]
     
-    const squareDetail = useMemo(() => {
-        const equitment = localStorage.getItem('item') === null 
-                            ? {}
-                            : JSON.parse(localStorage.getItem('item')!)
-
-        const idS: string = equitment?.id
-        
-        const filteredClient = data?.equipments?.filter(equipment => equipment.id === idS)
-        
-        const mapObject = filteredClient?.map(equitment => {
-            return {
-                id: equitment.id,
-                nombre: equitment.name,
-                serial: equitment.serial,
-                modelo: equitment.model,
-                brand: equitment.brand,
-                tipo: equitment.type
-            }
-        })
-
-        return mapObject?.[0]
-
-    }, [isOpen])
-
-    console.log(data)
-
-
   return (
     <div>
         <Actions>
@@ -99,25 +65,14 @@ function Equipments() {
                 : <Table 
                     headers={headers}
                     items={
-                        locationPreview === undefined ? [] : locationPreview
+                        equipmentPreview === undefined ? [] : equipmentPreview
                     }
-                    actionItem={() => {
-                        openModal()
-                    }}
                 />
             }
         </View>
-        {
-            isOpen ? (
-                <Modal
-                    data={squareDetail!}
-                    onClose={closeModal}
-                    title="Detalle de sede"
-                />
-            ) : null
-        }
     </div>
   )
 }
+
 
 export default Equipments

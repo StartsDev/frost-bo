@@ -25,6 +25,7 @@ type Response = {
   numItems?: number;
 };
 
+
 function Clients() {
   const headquartersArray: Headquarter[] = [];
   const locationsArray: Location[] = [];
