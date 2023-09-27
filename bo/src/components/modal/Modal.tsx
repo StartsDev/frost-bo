@@ -3,6 +3,7 @@ import styles from "./modal.module.css";
 import TableModalHead from "../../components/table/TableModalHead";
 import TableModalLoc from "../../components/table/TableModalLoc";
 import { Headquarter, Location } from "../../types";
+import { useModal } from "../../hooks/useModal";
 
 interface ModalProps {
   data: Record<string, any>;
@@ -25,7 +26,7 @@ function Modal({
 }: ModalProps) {
   const headersHead = ["Nombre"];
   const headersLocations = ["Nombre"];
-
+  const { openModal, closeModal, isOpen } = useModal();
   return (
     <div className={styles.modal}>
       <div className={styles.modalContent} style={{ color: "black" }}>
@@ -54,6 +55,9 @@ function Modal({
                 headers={headersHead}
                 items={headArray === undefined ? [] : headArray}
                 title={headTitle}
+                actionItem={() => {
+                  openModal();
+                }}
               />
             </div>
           </div>
@@ -66,6 +70,7 @@ function Modal({
                     headers={headersLocations}
                     items={locationArray === undefined ? [] : locationArray}
                     title={locatTitle}
+                    itemsH={headArray === undefined ? [] : headArray}
                   />
                 </div>
               </>
