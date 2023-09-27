@@ -21,16 +21,26 @@ export type ClientResponse = {
 export type Equipment = {
     id: string
     name: string
-    deccription: string
+    description: string
     serial: string
     image: string
     model: string
     type: string
     brand: string
     locationId: string
-    location?: any
-    client?: any
-    headquarter?: any
+    location: {
+        id: string
+        locationName: string
+    }
+    headquarter: {
+        id: string
+        headName: string
+    }
+    client: {
+        id: string
+        businessName: string
+        user_app: UserApp[]
+    }
 }
 
 export type Headquarter = {
@@ -259,3 +269,15 @@ export interface TechRes {
     techNumId: string;
 }
 
+
+export interface EquiomentPayload {
+    id?:             string
+    name:        string;
+    description: string;
+    serial:      string;
+    image?:       string;
+    model:       string;
+    type:        string;
+    brand:       string;
+    locationId:  string;
+}

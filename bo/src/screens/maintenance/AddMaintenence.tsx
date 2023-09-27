@@ -236,7 +236,6 @@ function AddMaintenance({isEditable = false}: Props) {
   const { data: userToModify} = useFetcher<userResponse>({method: "GET", url: ENDPOINT.auth.users})
   const { data: customerData, loading } = useFetcher<ClientResponse>({method: "GET", url: ENDPOINT.clients.list})
   const [maintanance, setMaintenance] = useState(INITIAL_STATE)
-  const [testtest, settesttest] = useState<any>()
   const [customerSelected, setCustomerSelected] = useState<Client>()
   const [headQuarter, setHeadQuarter] = useState<Headquarter[]>()
   const [locationList, setLocationList] = useState<Location[]>()

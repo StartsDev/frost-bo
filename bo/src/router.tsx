@@ -17,6 +17,7 @@ import Maintenances from "./screens/maintenance/Maintenances";
 import AddMaintenance from "./screens/maintenance/AddMaintenence";
 import EditMaintenance from "./screens/maintenance/EditMaintence";
 import CreateTech from "./screens/Technicians/CreateTech";
+import CreateEditEquipment from "./screens/equipment/CreateEditEquipment"
 
 const routesClients: RouteObject[] = [
     {path: "clients",  element: <Clients />  },
@@ -45,6 +46,8 @@ const routesTechnical: RouteObject[] = [
 const routesMantenence: RouteObject[] = [
     {path: "add-mantenence", element: <AddMaintenance isEditable={false}/> },
     {path: "edit-mantenence", element: <AddMaintenance isEditable={true}/>  },
+    {path: "add-equipement", element: <CreateEditEquipment isEditable={false}/>  },
+    {path: "edit-equipement", element: <CreateEditEquipment isEditable={true}/>  },
 ]
 
 const boChildrens: RouteObject[] = [
