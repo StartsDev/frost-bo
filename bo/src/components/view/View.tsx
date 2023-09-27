@@ -7,7 +7,7 @@ function View({ children }: Props) {
     <div
         style={{
           width: "90%",
-          height: 430,
+          height: 530,
           borderRadius: 10,
           marginTop: 10,
           backgroundColor: THEME.white,

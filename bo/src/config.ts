@@ -31,12 +31,12 @@ export const ENDPOINT = {
         delete: "https://business-core-api.onrender.com/api/v1/equipment/delete-equipment/",
     },
     maintanance: {
-        add:"https://business-core-api.onrender.com/api/v1/maintanance/create-maintanance/",
+        add:"https://business-core-api.onrender.com/api/v1/maintenance/create-maintenance/",
         list: "https://business-core-api.onrender.com/api/v1/maintenance/get-maintenances",
         byTech: "https://business-core-api.onrender.com/api/v1/maintanance/get-maint-tech/",
         byClient: "https://business-core-api.onrender.com/api/v1/maintanance/get-main-client/",
         byEquipment: "https://business-core-api.onrender.com/api/v1/maintanance/get-main-equipment/",
-        byId: "https://business-core-api.onrender.com/api/v1/maintanance/detail-main/",
+        byId: "https://business-core-api.onrender.com/api/v1/maintenance/detail-main/",
         update: "https://business-core-api.onrender.com/api/v1/maintanance/update-main/",
         delete: "https://business-core-api.onrender.com/api/v1/maintanance/delete-main/",
     },
@@ -46,5 +46,10 @@ export const ENDPOINT = {
     },
     auth: {
         login: "https://frost-api.onrender.com/api/v1/auth/login",
+        users: "https://frost-api.onrender.com/api/v1/user/get-users",
+        roles: "https://frost-api.onrender.com/api/v1/role/get-roles",
+        identifications: "https://frost-api.onrender.com/api/v1/identification/get-identifications",
+        register: "https://frost-api.onrender.com/api/v1/auth/register",
+        update: "https://frost-api.onrender.com/api/v1/user/update-user",
     }
 }
