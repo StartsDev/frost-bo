@@ -63,6 +63,8 @@ useEffect(() => {
   const optionsMantenence = [
     { route: "add-mantenence", title: "Crear Mantenimiento" },
     { route: "edit-mantenence", title: "Modificar Mantenimiento" },
+    { route: "add-equipement", title: "Crear Equipos" },
+    { route: "edit-equipement", title: "Modificar Equipos" },
   ];
 
   return (
@@ -107,7 +109,7 @@ useEffect(() => {
             options={optionsTechnical}
           />
           <Option
-            titleOption="Gestión de Mantenimientos"
+            titleOption="Gestión Operativa"
             Icon={<MdOutlinePower />}
             options={optionsMantenence}
           />
