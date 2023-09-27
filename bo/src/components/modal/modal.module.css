@@ -24,8 +24,8 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 50px 50px 50px 50px;
-  grid-gap: 6px;
-  align-items: center; 
+  grid-gap: 15px;
+  align-items: center;
 }
 
 .modalContainerHeadLoc{
@@ -68,13 +68,15 @@
 .modalItemKeyCont{
   /*  background-color: #952fae;  */
 }
+
 .modalItemValueCont{
-  /*  background-color: #2f48ae;  */
-}
-.modalItemValue {
-  margin-left: 10px;
-  padding: 10px;
+  padding: 8px;
   background-color: rgb(217, 242, 255);
+  width:100%;
+}
+
+.modalItemValue{
+  border:1px rgb(217, 242, 255) solid;
 }
 
  @-webkit-keyframes scale-up-center {

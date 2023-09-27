@@ -1,15 +1,16 @@
 import styles from "./table.module.css";
 import { useNavigate } from "react-router-dom";
 import { THEME, ITEM_THEME } from "../../theme";
-import { Location } from "../../types";
+import { Headquarter, Location } from "../../types";
 
 interface MyComponentProps {
   headers: string[] | [];
   items: Location[] | [];
   title: string | undefined;
+  itemsH: Headquarter[] | [];
 }
 
-function TableModalLoc({ headers, items, title }: MyComponentProps) {
+function TableModalLoc({ headers, items, title, itemsH }: MyComponentProps) {
   const navigate = useNavigate();
   const handleClick = () => {
     if (title === "Ubicaciones") {
@@ -20,12 +21,14 @@ function TableModalLoc({ headers, items, title }: MyComponentProps) {
     <div style={{ width: "100%", height: "100%" }}>
       {items.length === 0 && title? (
         <div className={styles.containerMessage}>
-          <div className={styles.title}>
+          {itemsH.length > 0 ?<><div className={styles.title}>
             No hay registros de {title.toLowerCase()}
           </div>
           <div className={styles?.buttonContainer}>
             <button onClick={handleClick}>Crear {title.toLowerCase()}</button>
-          </div>
+          </div></> :<div className={styles.title}>
+            No hay registros de {title.toLowerCase()}
+          </div>}
         </div>
       ) : (
         <>
@@ -69,6 +72,7 @@ function TableModalLoc({ headers, items, title }: MyComponentProps) {
                   color: index % 2 === 0 ? ITEM_THEME.black : ITEM_THEME.black,
                 }}
               >
+                
                 {item.locationName}
               </div>
             ))}
