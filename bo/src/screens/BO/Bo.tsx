@@ -7,7 +7,6 @@ import styles from "./bo.module.css";
 import {
   MdDescription,
   MdOutlineSupervisorAccount,
-  MdCardTravel,
   MdOutlineSupportAgent,
   MdOutlinePower,
 } from "react-icons/md";
@@ -42,7 +41,8 @@ useEffect(() => {
     { route: "clients", title: "Clientes" },
     { route: "squares", title: "Sedes" },
     { route: "locations", title: "Ubicaciones" },
-    { route: "technical", title: "Técnicos" },
+    { route: "users", title: "Usuarios" },
+    { route: "equipments", title: "Equipos" },
     { route: "mantenence", title: "Mantenimientos" },
   ];
 

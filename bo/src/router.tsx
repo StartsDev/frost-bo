@@ -11,6 +11,8 @@ import AddHeadSquare from "./screens/headsquare/AddSquare";
 import EditHeadSquare from "./screens/headsquare/EditSquare";
 import Squares from "./screens/headsquare/Squares";
 import Locations from "./screens/location/Locations";
+import Equipments from "./screens/equipment/Equipments";
+import Users from "./screens/users/Users";
 import Maintenances from "./screens/maintenance/Maintenances";
 import AddMaintenance from "./screens/maintenance/AddMaintenence";
 import EditMaintenance from "./screens/maintenance/EditMaintence";
@@ -30,14 +32,9 @@ const routesReports: RouteObject[] = [
     {path: "clients", element: <Clients /> },
     {path: "squares", element: <Squares /> },
     {path: "locations", element: <Locations /> },
-    {path: "cotizations", element:  <h1>Cotizaciones</h1> },
-    {path: "technical", element: <h1>Técnicos</h1> },
+    {path: "users", element: <Users /> },
+    {path: "equipments", element: <Equipments /> },
     {path: "mantenence", element: <Maintenances /> },
-]
-
-const routesCotizations: RouteObject[] = [
-    {path: "add-cotization", element: <h1>Crear Cotización</h1> },
-    {path: "edit-cotization", element: <h1>Modificar Cotización</h1> },
 ]
 
 const routesTechnical: RouteObject[] = [
@@ -53,7 +50,6 @@ const routesMantenence: RouteObject[] = [
 const boChildrens: RouteObject[] = [
     ...routesClients,
     ...routesReports,
-    ...routesCotizations,
     ...routesTechnical,
     ...routesMantenence
 ]
