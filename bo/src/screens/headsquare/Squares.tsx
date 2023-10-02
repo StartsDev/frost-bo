@@ -6,7 +6,7 @@ import { THEME } from "../../theme";
 import { MdDescription } from "react-icons/md";
 import { useFetcher } from "../../hooks/useFetcher";
 import { ENDPOINT } from "../../config";
-import type { Headquarter } from "../../types";
+import type { Headquarter, Location } from "../../types";
 import Loader from "../../components/Loader/Loader";
 import { useModal } from "../../hooks/useModal";
 import Modal from "../../components/modal/Modal";
@@ -17,6 +17,7 @@ type Response = {
 };
 
 function Squares() {
+  const locationsArray: Location[] = [];
   const { data, loading } = useFetcher<Response>({
     method: "GET",
     url: ENDPOINT.squares.list,
@@ -49,6 +50,7 @@ function Squares() {
     );
 
     const mapObject = filteredClient?.map((headSquare) => {
+      headSquare.locations?.map((location) => locationsArray.push(location));
       return {
         Nombre: capitalString(headSquare.headName),
         Teléfono: headSquare.phone,
@@ -106,7 +108,8 @@ function Squares() {
           data={squareDetail!}
           onClose={closeModal}
           title="Sede"
-          headTitle="Ubicaciones"
+          locatTitle="Ubicaciones"
+          locationArray={locationsArray}
         />
       ) : null}
     </div>

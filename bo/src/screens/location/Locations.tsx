@@ -6,7 +6,7 @@ import { THEME } from "../../theme";
 import { MdDescription } from "react-icons/md";
 import { useFetcher } from "../../hooks/useFetcher";
 import { ENDPOINT } from "../../config";
-import type { Location } from "../../types";
+import type { Location, Equipment } from "../../types";
 import Loader from "../../components/Loader/Loader";
 import { useModal } from "../../hooks/useModal";
 import Modal from "../../components/modal/Modal";
@@ -17,15 +17,17 @@ type Response = {
 };
 
 function Locations() {
+  const equipmentArray: Equipment[] = [];
+  const locationArray : Location [] =[];
   const { data, loading } = useFetcher<Response>({
     method: "GET",
     url: ENDPOINT.location.list,
   });
 
-  const { openModal, closeModal, isOpen } = useModal();
-
+  const { openModal, closeModal, isOpen } = useModal();  
   const locationPreview = useMemo(() => {
     return data?.locations?.map((location) => {
+      locationArray.push(location)
       return {
         id: location.id,
         nombre: capitalString(location.locationName),
@@ -39,20 +41,21 @@ function Locations() {
     });
   }, [data]);
   //const locationPreviewFiltered =
-  const headers = ["ubicación", "sede", "negocio"];
+  const headers = ["registro", "ubicación", "sede", "negocio"];
 
-  const squareDetail = useMemo(() => {
+  const locationDetail = useMemo(() => {
     const locate =
       localStorage.getItem("item") === null
         ? {}
         : JSON.parse(localStorage.getItem("item")!);
 
-    const idS: string = locate?.nombre;
+    const idS: string = locate?.id;
 
-    const filteredClient = data?.locations?.filter(
-      (location) => location.locationName === idS
+    const filteredLocation = data?.locations?.filter(
+      (location) => location.id === idS
     );
-    const mapObject = filteredClient?.map((location) => {
+    const mapObject = filteredLocation?.map((location) => {
+      location.equipments?.map((equipment) => equipmentArray.push(equipment));
       return {
         Ubicación: capitalString(location.locationName),
         Negocio: location.client?.businessName
@@ -65,7 +68,6 @@ function Locations() {
     });
     return mapObject?.[0];
   }, [isOpen]);
-  console.log('SQUARE', squareDetail)
   return (
     <div>
       <Actions>
@@ -92,17 +94,7 @@ function Locations() {
         ) : (
           <Table
             headers={headers}
-            items={
-              locationPreview === undefined
-                ? []
-                : locationPreview.map((loc) => {
-                    return {
-                      nombre: loc.nombre,
-                      sede: loc.sede,
-                      negocio: loc.negocio,
-                    };
-                  })
-            }
+            items={locationPreview === undefined?[] : locationPreview}
             actionItem={() => {
               openModal();
             }}
@@ -111,10 +103,11 @@ function Locations() {
       </View>
       {isOpen ? (
         <Modal
-          data={squareDetail!}
+          data={locationDetail!}
           onClose={closeModal}
           title="Ubicación"
-          headTitle="Equipos"
+          equipmentTitle="Equipos"
+          equipmentArray = {equipmentArray}
         />
       ) : null}
     </div>

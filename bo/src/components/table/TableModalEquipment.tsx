@@ -1,23 +1,21 @@
 import styles from "./table.module.css";
 import { useNavigate } from "react-router-dom";
 import { THEME, ITEM_THEME } from "../../theme";
-import { Headquarter } from "../../types";
+import { Equipment } from "../../types";
 import { capitalString } from "../../utils/capitalizeStr";
 
 interface MyComponentProps {
   headers: string[] | [];
-  items: Headquarter[] | [];
+  items: Equipment[] | [];
   title: string | undefined;
 }
 
-function TableModalHead({ headers, items, title }: MyComponentProps) {
+function TableModalEquipment({ headers, items, title }: MyComponentProps) {
   const navigate = useNavigate();
   const handleClick = () => {
-    if (title === "Sedes") {
-      navigate("/bo/add-square", { replace: true });
-    }
-    if (title === "Ubicaciones") {
-      navigate("/bo/add-location", { replace: true });
+    if (title === "Equipos") {
+      //navigate("/bo/add-equipment", { replace: true });
+      alert("Vamos a crear equipos");
     }
   };
 
@@ -74,7 +72,7 @@ function TableModalHead({ headers, items, title }: MyComponentProps) {
                   color: index % 2 === 0 ? ITEM_THEME.black : ITEM_THEME.black,
                 }}
               >
-                { item.headName && capitalString(item.headName)}
+                { item.name && capitalString(item.name)}
               </div>
             ))}
           </section>
@@ -84,4 +82,4 @@ function TableModalHead({ headers, items, title }: MyComponentProps) {
   );
 }
 
-export default TableModalHead;
+export default TableModalEquipment;

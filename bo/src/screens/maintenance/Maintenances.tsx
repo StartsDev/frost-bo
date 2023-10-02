@@ -12,6 +12,7 @@ import { useModal } from "../../hooks/useModal"
 import Modal from "../../components/modal/Modal"
 
 
+
 type Response = {
     maintenances?: Maintenance[]
     numItmes: number
@@ -35,18 +36,17 @@ function Maintenances() {
             
             return {
                 id: maintenance.id,
-                actividades: maintenance.activities,
-                "voltaje on L1L2": maintenance.voltage_on_L1L2,
-                "amp engine 1": maintenance.amp_engine_1,
-                "voltaje control": maintenance.voltage_control,
-                observaciones: maintenance.observations,
+                cliente: maintenance.client.businessName,
+                hora : maintenance.service_hour,
+                fecha : maintenance.service_date,
+                tecnico : maintenance.tech.techName,
             }
             
         })
 
     }, [data])
 
-    const headers = ["id","actividades", "voltaje on L1L2", "amp engine 1", "voltaje control", "observaciones"]
+    const headers = ["orden servicio","cliente", "hora", "fecha", "técnico"]
     
     const maintenanceDetail = useMemo(() => {
 
@@ -61,8 +61,9 @@ function Maintenances() {
         
         const mapObject = filteredMaintenance?.map(maintenance => {
             return {
-                id: maintenance.id,
-                actividades: maintenance.activities,
+                "Nº Orden": `MTO-${maintenance.id}`,
+                Estado : maintenance.status,
+                Actividades: maintenance.activities,
                 "voltaje on L1L2": maintenance.voltage_on_L1L2,
                 "voltaje on L1L3": maintenance.voltage_on_L1L3,
                 "voltaje on L2L3": maintenance.voltage_on_L2L3,
@@ -87,24 +88,21 @@ function Maintenances() {
                 "discharge pressure": maintenance.discharge_pressure,
                 "service hour": maintenance.service_hour,
                 "service date": maintenance.service_date,
-                observaciones: maintenance.observations,
-                tencico: `${maintenance?.tech?.techName} - ${maintenance?.tech?.techNumId}`,
-                equipo: maintenance?.equipment?.name,
-                descripcion: maintenance?.equipment?.description,
-                "serial y modelo": `${maintenance?.equipment?.serial} - ${maintenance?.equipment?.model}`,
-                tipo: maintenance?.equipment?.type,
-                brand: maintenance?.equipment?.brand,
-                ubicacion: maintenance?.location?.locationName,
+                tencico: maintenance?.tech?.techName,
                 "descripcion de la ubicacion": maintenance?.location?.description,
-                sede: maintenance?.location?.headquarter?.headName,
-                "informacion de la sede": `
-                    dir: ${maintenance?.location?.headquarter?.address} - mail: ${maintenance?.location?.headquarter?.email} - tel: ${maintenance?.location?.headquarter?.phone}
-                `,
-                cliente: maintenance?.client?.businessName,
-                nit: maintenance?.client?.nit,
+                Cliente: maintenance?.client?.businessName,
+                Nit: maintenance?.client?.nit,
+                Sede: maintenance?.headquarter?.headName,
+                Ubicacion: maintenance?.location?.locationName,
                 "direcion del cliente": maintenance?.client?.address,
-                "contacto cliente": `${maintenance?.client?.contact} - mail: ${maintenance?.client?.email} - tel: ${maintenance?.client?.phone}`,
-                "ciudad": maintenance?.client?.city
+                "Contacto cliente": `${maintenance?.client?.contact} - mail: ${maintenance?.client?.email} - tel: ${maintenance?.client?.phone}`,
+                "Ciudad": maintenance?.client?.city,
+                Equipo: maintenance?.equipment?.name,
+                Descripcion: maintenance?.equipment?.description,
+                "Serial y Modelo": `${maintenance?.equipment?.serial} - ${maintenance?.equipment?.model}`,
+                Tipo: maintenance?.equipment?.type,
+                Marca: maintenance?.equipment?.brand,
+                Observaciones: maintenance.observations,
             }
         })
 
@@ -129,6 +127,7 @@ function Maintenances() {
                     justifyContent: "space-evenly"
                 }}
             >
+
                 export csv <MdDescription />
             </button>
         </Actions>
@@ -152,7 +151,7 @@ function Maintenances() {
                 <Modal
                     data={maintenanceDetail!}
                     onClose={closeModal}
-                    title="Detalle de mantenimiento"
+                    title="Mantenimiento"
                 />
             ) : null
         }

@@ -72,7 +72,6 @@ function TableModalLoc({ headers, items, title, itemsH }: MyComponentProps) {
                   color: index % 2 === 0 ? ITEM_THEME.black : ITEM_THEME.black,
                 }}
               >
-                
                 {item.locationName}
               </div>
             ))}

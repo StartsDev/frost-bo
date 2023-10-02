@@ -44,13 +44,11 @@ function Item({ value, action }: Props) {
             </ItemStyle>
         )
     }
-
     return (
         <ItemStyle>
             {value}
         </ItemStyle>
     )
-
 }
 
 export default Item
