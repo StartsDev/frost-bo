@@ -5,7 +5,7 @@ import { THEME, ITEM_THEME } from "../../theme"
  
 interface Props<T> {
     headers: string[] | [],
-    items: T[],
+    items: T[] | [],
     actionItem?: (param?: any) => void
 }
 
@@ -60,7 +60,8 @@ function Table<T>({ headers, items, actionItem }: Props<T>) {
                         >
                             {
                                 //@ts-expect-error
-                                mapPropertiesOfItems(item).map((value, index) => {
+                                mapPropertiesOfItems(item).map((value, index) =>
+                                {
                                     return <Item key={index} value={value} />
                                 })
                             }

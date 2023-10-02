@@ -10,6 +10,16 @@
   justify-content: center;
 }
 
+.modalItemHeader{
+  font-size: 0.9rem;
+  display: grid;
+  grid-template-columns: 0.5fr 1fr;
+}
+
+.modalItemValueHead{
+
+}
+
 .modalContent { 
     width: 80%;
     height: 80%;
@@ -26,6 +36,7 @@
   grid-template-rows: 50px 50px 50px 50px;
   grid-gap: 15px;
   align-items: center;
+  border-top: #2f78ae 1px solid;
 }
 
 .modalContainerHeadLoc{

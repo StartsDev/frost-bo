@@ -51,13 +51,20 @@ export type Headquarter = {
     phone: string
     isPrincipal: boolean
     clientId: string
+    status: string
+    Client: ClientRes
+    locations: Location[]
 }
 
 export type Location = {
     id: string
+    registro: number
     locationName: string
     headquarterId: string
     description: string
+    headquarter: HeadquarterRes
+    client: ClientRes
+    equipments: Equipment[]
     // headquarter?: Omit<Headquarter, "isPrincipal" | "address" | "email" | "phone">
     // client?: Omit<Client, "nit" | "address" | "email" | "phone" | "city" | "contact"> & UserApp
 }
@@ -155,7 +162,7 @@ export type Roles = {
 }
 
 export type Role = {
-    role: string, 
+    role: string,
     id: string
 }
 export type IdentificationResponse = {
@@ -164,7 +171,7 @@ export type IdentificationResponse = {
 }
 
 export type IndentificationType = {
-    name: string, 
+    name: string,
     id: string
 }
 
@@ -173,102 +180,111 @@ export type IndentificationType = {
 
 export interface MaintResponse {
     maintenance: Maintenance;
-    succes:      boolean;
+    succes: boolean;
 }
 
 export interface Maintenance {
-    id:                  number;
-    activities:          string;
-    voltage_on_L1L2:     number;
-    voltage_on_L1L3:     number;
-    voltage_on_L2L3:     number;
-    voltage_control:     number;
-    suction_pressure:    number;
-    amp_engine_1:        number;
-    amp_engine_2:        number;
-    amp_engine_3:        number;
-    amp_engine_4:        number;
-    amp_engine_evap:     number;
+    id: number;
+    activities: string;
+    voltage_on_L1L2: number;
+    voltage_on_L1L3: number;
+    voltage_on_L2L3: number;
+    voltage_control: number;
+    suction_pressure: number;
+    amp_engine_1: number;
+    amp_engine_2: number;
+    amp_engine_3: number;
+    amp_engine_4: number;
+    amp_engine_evap: number;
     compressor_1_amp_L1: number;
     compressor_1_amp_L2: number;
     compressor_1_amp_L3: number;
     compressor_2_amp_L1: number;
     compressor_2_amp_L2: number;
     compressor_2_amp_L3: number;
-    supply_temp:         number;
-    return_temp:         number;
-    water_in_temp:       number;
-    water_out_temp:      number;
-    sprinkler_state:     number;
-    float_state:         number;
-    discharge_pressure:  number;
-    service_hour:        string;
-    service_date:        string;
-    customer_sign:       null;
-    tech_sign:           string;
-    photos:              any[];
-    tech:                TechRes;
-    customerId:          string;
-    observations:        null;
-    additional_remarks:  null;
-    status:              string;
-    delete:              boolean;
-    equipmentId:         string;
-    Equipment:           EquipmentRes;
+    supply_temp: number;
+    return_temp: number;
+    water_in_temp: number;
+    water_out_temp: number;
+    sprinkler_state: number;
+    float_state: number;
+    discharge_pressure: number;
+    service_hour: string;
+    service_date: string;
+    customer_sign: null;
+    tech_sign: string;
+    photos: any[];
+    tech: TechRes;
+    customerId: string;
+    observations: null;
+    additional_remarks: null;
+    status: string;
+    delete: boolean;
+    equipmentId: string;
+    location: LocationRes;
+    headquarter: HeadquarterRes;
+    equipment: EquipmentRes;
+    client: ClientRes;
 }
 
 export interface EquipmentRes {
-    name:        string;
+    name: string;
     description: string;
-    serial:      string;
-    image:       string;
-    model:       string;
-    type:        string;
-    brand:       string;
-    locationId:  string;
-    Location:    LocationRes;
+    serial: string;
+    image: string;
+    model: string;
+    type: string;
+    brand: string;
+    locationId: string;
+    Location: LocationRes;
 }
 
 export interface LocationRes {
-    locationName:  string;
-    description:   string;
+    locationName: string;
+    description: string;
     headquarterId: string;
-    Headquarter:   HeadquarterRes;
+    Headquarter: HeadquarterRes;
 }
 
 export interface HeadquarterRes {
-    headName:    string;
-    address:     string;
-    email:       string;
-    phone:       string;
+    headName: string;
+    address: string;
+    email: string;
+    phone: string;
     isPrincipal: boolean;
-    clientId:    string;
-    Client:      ClientRes;
+    clientId: string;
+    Client: ClientRes;
 }
 
 export interface ClientRes {
     businessName: string;
-    nit:          string;
-    address:      string;
-    email:        string;
-    phone:        string;
-    city:         string;
-    contact:      string;
-    user_app:     UserAppRes[];
+    nit: string;
+    address: string;
+    email: string;
+    phone: string;
+    city: string;
+    contact: string;
+    user_app: UserAppRes[];
 }
 
 export interface UserAppRes {
-    user_id:   string;
-    role_id:   string;
+    user_id: string;
+    role_id: string;
     role_name: string;
 }
 
 export interface TechRes {
+    techId: string;
+    techName: string;
+    techNumId: string;
+}
+
+
+export interface HeadRes {
     techId:    string;
     techName:  string;
     techNumId: string;
 }
-
 
 export interface EquiomentPayload {
     id?:             string
@@ -280,4 +296,5 @@ export interface EquiomentPayload {
     type:        string;
     brand:       string;
     locationId:  string;
+
 }
