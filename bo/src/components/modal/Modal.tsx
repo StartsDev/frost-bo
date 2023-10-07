@@ -5,6 +5,7 @@ import TableModalLoc from "../../components/table/TableModalLoc";
 import TableModalEquipment from "../../components/table/TableModalEquipment";
 import { Headquarter, Location, Equipment } from "../../types";
 import Headmaint from "../../screens/maintenance/Headermaint";
+import FooterMaint from "../../screens/maintenance/FootMaint";
 import { useModal } from "../../hooks/useModal";
 
 
@@ -36,6 +37,33 @@ function Modal({
   const headersLocations = ["Nombre"];
   const headersEquipments = ["Serial", "Nombre", "Modelo", "Tipo", "Marca"];
   //const { openModal, closeModal, isOpen } = useModal();
+  const excludedKeys = new Set([
+    "Actividades",
+    "Estado", 
+    "Cliente",
+    "Sede", 
+    "Nit",
+    "Ciudad",
+    "Contacto cliente",
+    "Nº Orden",
+    "Tipo",
+    "Marca", 
+    "Serial y Modelo",
+    "Ubicacion",
+    "Equipo",
+    "Técnico",
+    "Direcion del cliente",
+    "descripcion de la ubicacion",
+    "Hora Servicio",
+    "Fecha Servicio",
+    "Descripcion",
+    "Observaciones",
+    "Ubicación",
+    "Firma técnico",
+    "Firma cliente"
+  ]);
+  const shouldExcludeKey = (key) => excludedKeys.has(key);
+  const filteredEntries = Object.entries(data).filter(([key]) => !shouldExcludeKey(key));
 
   return (
     <div className={styles.modal}>
@@ -49,12 +77,11 @@ function Modal({
 
         {title === "Mantenimiento" ?
           <>
-            <Headmaint data={data} title={title} />
+            <Headmaint data={data}/>
             {/* Div grid para detalles del mantenimiento */}
             <div className={styles.modalDetailClientGrid}>
               {
-                Object.entries(data).filter(([key]) => key !== "Actividades" && key !== "Estado" && key !== "Cliente" && key !== "Sede" && key !== "Nit" && key !== "Ciudad" && key !== "Contacto cliente" && key !== "Nº Orden" && key !== "Tipo" && key !== "Marca" && key !== "Serial y Modelo" && key !== "Ubicacion")
-                  .map(([key, value], index) => (
+                filteredEntries.map(([key, value], index) => (
                     <div key={index} className={styles.modalItem}>
                       <div className={styles.modalItemKeyCont}><span className={styles.modalItemKey}>{key}: </span></div>
                       <div className={styles.modalItemValueCont}><span className={styles.modalItemValue}>{value}</span></div>
@@ -62,6 +89,8 @@ function Modal({
                   ))
               }
             </div>
+             {/* componente de observaciones y firmas */}
+             <FooterMaint data={data}/>
           </> :
           <div>
              {/* Detalles */}

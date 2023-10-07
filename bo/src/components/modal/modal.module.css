@@ -13,13 +13,46 @@
 .modalItemHeader{
   font-size: 0.9rem;
   display: grid;
-  grid-template-columns: 0.5fr 1fr;
+  grid-template-columns: 0.3fr 1fr;
+  /* background-color: rgb(217, 242, 255); */
+}
+
+.modalItemKeyHead{
+  padding: 10px;
+  margin-left: 20px;
 }
 
 .modalItemValueHead{
-
+  padding: 10px;
+  width:75%;
 }
 
+.modalItemFooter{
+  margin-top:1px;
+  display :grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 15px;
+}
+.modalItemKeyFoot{
+  font-weight: bold;
+  font-size: 0.9rem;
+  font-family: 'Lato', sans-serif;
+}
+.modalItemValueFoot{
+ margin-top: 1px;
+ font-family: 'Lato', sans-serif;
+ color:black;
+ padding: 2px;
+ background-color: rgb(217, 242, 255);
+ border: none;
+ overflow-y: scroll;
+ resize: none;
+}
+
+.ItemValue{
+  padding: 5px;
+  background-color: rgb(210, 218, 218);
+}
 .modalContent { 
     width: 80%;
     height: 80%;
@@ -36,7 +69,19 @@
   grid-template-rows: 50px 50px 50px 50px;
   grid-gap: 15px;
   align-items: center;
-  border-top: #2f78ae 1px solid;
+}
+
+.modalDetailSignGrid{
+  margin-top: 10px;
+  display: grid;
+  grid-template-columns: 0.5fr 0.5fr;
+  grid-gap: 15px;
+}
+
+.modalItemValueSign{
+  padding: 10px;
+  background-color: rgb(217, 242, 255);
+  height: 90px;
 }
 
 .modalContainerHeadLoc{
@@ -66,18 +111,24 @@
     background-color: #2f78ae;
 }
 
+.modalSignContainer{
+  margin-top: 1px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 12px;
+  background-color: #2f78ae;
+}
+
 .modalItem {
   font-size: 0.9rem;
   display: grid;
   grid-template-columns: 0.5fr 1fr;
-/*   border: 1px solid red; */
 }
-
-.modalItemKey {
+.ItemKey{
   font-weight: bold;
 }
-.modalItemKeyCont{
-  /*  background-color: #952fae;  */
+.modalItemKey{
+  font-weight: bold;
 }
 
 .modalItemValueCont{

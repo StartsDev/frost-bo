@@ -26,7 +26,7 @@ function Locations() {
 
   const { openModal, closeModal, isOpen } = useModal();  
   const locationPreview = useMemo(() => {
-    return data?.locations?.map((location) => {
+    return data?.locations?.map((location,index) => {
       locationArray.push(location)
       return {
         id: location.id,
@@ -40,6 +40,7 @@ function Locations() {
       };
     });
   }, [data]);
+  const copiaArray = locationPreview?.slice();
   //const locationPreviewFiltered =
   const headers = ["registro", "ubicación", "sede", "negocio"];
 
@@ -54,6 +55,7 @@ function Locations() {
     const filteredLocation = data?.locations?.filter(
       (location) => location.id === idS
     );
+    //console.log(filteredLocation)
     const mapObject = filteredLocation?.map((location) => {
       location.equipments?.map((equipment) => equipmentArray.push(equipment));
       return {
@@ -68,6 +70,7 @@ function Locations() {
     });
     return mapObject?.[0];
   }, [isOpen]);
+
   return (
     <div>
       <Actions>
@@ -92,6 +95,8 @@ function Locations() {
         {loading ? (
           <Loader />
         ) : (
+          <>
+          {console.log(locationPreview)}
           <Table
             headers={headers}
             items={locationPreview === undefined?[] : locationPreview}
@@ -99,6 +104,7 @@ function Locations() {
               openModal();
             }}
           />
+          </>
         )}
       </View>
       {isOpen ? (
