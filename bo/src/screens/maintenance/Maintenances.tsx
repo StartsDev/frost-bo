@@ -10,7 +10,7 @@ import type { Maintenance } from "../../types"
 import Loader from "../../components/Loader/Loader"
 import { useModal } from "../../hooks/useModal"
 import Modal from "../../components/modal/Modal"
-
+import moment from "moment";
 
 
 type Response = {
@@ -86,23 +86,25 @@ function Maintenances() {
                 "sprinkler state": maintenance.sprinkler_state,
                 "float state": maintenance.float_state,
                 "discharge pressure": maintenance.discharge_pressure,
-                "service hour": maintenance.service_hour,
-                "service date": maintenance.service_date,
-                tencico: maintenance?.tech?.techName,
                 "descripcion de la ubicacion": maintenance?.location?.description,
                 Cliente: maintenance?.client?.businessName,
                 Nit: maintenance?.client?.nit,
-                Sede: maintenance?.headquarter?.headName,
-                Ubicacion: maintenance?.location?.locationName,
-                "direcion del cliente": maintenance?.client?.address,
+                "Direcion del cliente": maintenance?.client?.address,
                 "Contacto cliente": `${maintenance?.client?.contact} - mail: ${maintenance?.client?.email} - tel: ${maintenance?.client?.phone}`,
                 "Ciudad": maintenance?.client?.city,
+                Técnico: maintenance?.tech?.techName,
+                "Hora Servicio": maintenance.service_hour,
+                "Fecha Servicio": moment(maintenance.service_date).format('DD/MM/YYYY'),
+                Sede: maintenance?.headquarter?.headName,
+                Ubicación: maintenance?.location?.locationName,
                 Equipo: maintenance?.equipment?.name,
                 Descripcion: maintenance?.equipment?.description,
                 "Serial y Modelo": `${maintenance?.equipment?.serial} - ${maintenance?.equipment?.model}`,
                 Tipo: maintenance?.equipment?.type,
                 Marca: maintenance?.equipment?.brand,
                 Observaciones: maintenance.observations,
+                "Firma técnico":maintenance.tech_sign,
+                "Firma cliente":maintenance.customer_sign, 
             }
         })
 

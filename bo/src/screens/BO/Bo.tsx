@@ -128,7 +128,8 @@ useEffect(() => {
             gap: 5,
           }}
         >
-          <Title title={`${user?.firstName} ${user?.lastName}` ?? ""} />
+          <Title title={`Bienvenido, ${user?.firstName} ${user?.lastName}` ?? ""} />
+          <h2>Hello dashboard</h2>
           <Outlet />
         </section>
       </section>

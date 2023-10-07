@@ -14,8 +14,7 @@ function TableModalEquipment({ headers, items, title }: MyComponentProps) {
   const navigate = useNavigate();
   const handleClick = () => {
     if (title === "Equipos") {
-      //navigate("/bo/add-equipment", { replace: true });
-      alert("Vamos a crear equipos");
+      navigate("/bo/add-equipement", { replace: true });
     }
   };
 
