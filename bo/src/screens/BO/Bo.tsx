@@ -129,7 +129,7 @@ useEffect(() => {
           }}
         >
           <Title title={`Bienvenido, ${user?.firstName} ${user?.lastName}` ?? ""} />
-          <h2>Hello dashboard</h2>
+         
           <Outlet />
         </section>
       </section>
