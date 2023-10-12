@@ -1,10 +1,11 @@
-import { useState, useMemo } from "react"
-import Form, { Fields } from "../../components/form/Form"
+import { useState } from "react"
+import moment from "moment"
+import { Fields } from "../../components/form/Form"
 import View from "../../components/view/View"
 import { ENDPOINT } from "../../config"
 import { SelectInput } from "../../components/input/SelectInput"
 import { useFetcher } from "../../hooks/useFetcher"
-import { Client, ClientResponse, Equipment, Headquarter, Location, MainResponse, Maintenance, userResponse } from "../../types"
+import { Client, ClientResponse, Equipment, Headquarter, Location, userResponse } from "../../types"
 import { Input } from "../../components/form/Input"
 import formStyles from "../../components/form/form.module.css";
 import style from './maintenance.module.css'
@@ -12,203 +13,12 @@ import inputStyle from '../../components/input/select.module.css'
 import { ToastContainer, toast } from 'react-toastify';
 import Loader from "../../components/Loader/Loader"
 import { SwiperComponent } from "../../components/swiper/SwiperComponent"
+import { EQUIPMENT_TYPES, minisplitParamters, bombasParameters, torresParameters, fieldsFixed, minisplitFields, bombasFields, torresFields } from '../../helpers';
 
-
-const fields:Fields[]= [
-  {
-    name: "service_date",
-    type: "date",
-    label: "Fecha de servicio",
-    placeholder: "Fecha de servicio"
-  },
-  {
-    name: "service_hour",
-    type: "time",
-    label: "Hora de servicio",
-    placeholder: "Hora de servicio"
-  },
-  {
-    name: "activities",
-    type: "textArea",
-    label: "Actividades ejecutadas",
-    placeholder: "Describa las actividades ejecutadas en el mantenimiento",
-    rowStyle: {width: '100%',height: 100, marginTop: 10, marginBottom: 10},
-    style: {height: 100}
-  },
-  {
-    name: "voltage_on_L1L2",
-    type: "number",
-    label: "Voltaje L1L2",
-    placeholder: "Voltaje L1L2"
-  },
-  {
-    name: "voltage_on_L1L3",
-    type: "number",
-    label: "Voltaje L1L3",
-    placeholder: "Voltaje L1L3"
-  },
-  {
-    name: "voltage_on_L2L3",
-    type: "number",
-    label: "Voltaje L2L3",
-    placeholder: "Voltaje L2L3"
-  },
-  {
-    name: "voltage_control",
-    type: "number",
-    label: "Voltaje Control",
-    placeholder: "Voltaje Control"
-  },
-  {
-    name: "suction_pressure",
-    type: "number",
-    label: "Presión de succion",
-    placeholder: "Presión de succion"
-  },
-  {
-    name: "amp_engine_1",
-    type: "number",
-    label: "Amperaje 1",
-    placeholder: "Amp 1"
-  },
-  {
-    name: "amp_engine_2",
-    type: "number",
-    label: "Amperaje 2",
-    placeholder: "Amp 2"
-  },
-  {
-    name: "amp_engine_3",
-    type: "number",
-    label: "Amperaje 3",
-    placeholder: "Amp 3"
-  },
-  {
-    name: "amp_engine_4",
-    type: "number",
-    label: "Amperaje 4",
-    placeholder: "Amp 4"
-  },
-  {
-    name: "amp_engine_evap",
-    type: "number",
-    label: "Amperaje Evaporador",
-    placeholder: "Amp Evap"
-  },
-  {
-    name: "compressor_1_amp_L1",
-    type: "number",
-    label: "Amperaje Motor 1 L1",
-    placeholder: "Amp 1 L1"
-  },
-  {
-    name: "compressor_1_amp_L2",
-    type: "number",
-    label: "Amperaje Motor 1 L2",
-    placeholder: "Amp 1 L2"
-  },
-  {
-    name: "compressor_1_amp_L3",
-    type: "number",
-    label: "Amperaje Motor 1 L3",
-    placeholder: "Amp 1 L3"
-  },
-  {
-    name: "compressor_2_amp_L1",
-    type: "number",
-    label: "Amperaje Motor 2 L1",
-    placeholder: "Amp 2 L1"
-  },
-  {
-    name: "compressor_2_amp_L2",
-    type: "number",
-    label: "Amperaje Motor 2 L2",
-    placeholder: "Amp 2 L2"
-  },
-  {
-    name: "compressor_2_amp_L3",
-    type: "number",
-    label: "Amperaje Motor 2 L3",
-    placeholder: "Amp 2 L3"
-  }, 
-  {
-    name: "supply_temp",
-    type: "number",
-    label: "Temperatura de suministro",
-    placeholder: "Temperatura de suministro"
-  },
-  {
-    name: "return_temp",
-    type: "number",
-    label: "Temperatura de retorno",
-    placeholder: "Temperatura de retorno"
-  },
-  {
-    name: "water_in_temp",
-    type: "number",
-    label: "Temperatura de entrada de agua",
-    placeholder: "Temperatura de entrada de agua"
-  },
-  {
-    name: "water_out_temp",
-    type: "number",
-    label: "Temperatura de salida de agua",
-    placeholder: "Temperatura de salida de agua"
-  },
-  {
-    name: "sprinkler_state",
-    type: "number",
-    label: "Estado de bomba",
-    placeholder: "Estado de bomba"
-  },
-  {
-    name: "float_state",
-    type: "number",
-    label: "Estado de flotador",
-    placeholder: "Estado de bomba"
-  },
-  {
-    name: "discharge_pressure",
-    type: "number",
-    label: "Presión de descarga",
-    placeholder: "Presión de descarga"
-  },
-  {
-    name: "observations",
-    type: "text",
-    label: "Observaciones",
-    placeholder: "Observaciones",
-    rowStyle: {width: '100%', height: 100, marginTop: 10, marginBottom: 10},
-    style: {height: 100}
-  },
-]
 
 const INITIAL_STATE = {
   "id": "",
 	"activities":"",
-	"voltage_on_L1L2":0,
-	"voltage_on_L1L3":0,
-	"voltage_on_L2L3":0,
-  "voltage_control":0,
-	"suction_pressure":0,
-	"amp_engine_1":0,
-	"amp_engine_2":0,
-	"amp_engine_3":0,
-  "amp_engine_4":0,
-  "amp_engine_evap":0,
-  "compressor_1_amp_L1":0,
-  "compressor_1_amp_L2":0,
-  "compressor_1_amp_L3":0,
-  "compressor_2_amp_L1":0,
-  "compressor_2_amp_L2":0,
-  "compressor_2_amp_L3":0,
-  "supply_temp":0,
-  "return_temp":0,
-  "ater_in_temp":0,
-  "water_out_temp":0,
-  "sprinkler_state":0,
-  "float_state":0,
-	"discharge_pressure":0,
 	"service_hour":"",
 	"service_date":"",
 	"customer_sign": "",
@@ -222,26 +32,25 @@ const INITIAL_STATE = {
   "headQuarter":"",
   "location":"",
   "equipmentName":"",
-  "techName":"",
+  "techId":"",
+  "techName": "",
+  "type":"",
 }
 
 
 interface Props {
   isEditable: boolean
 }
-
 function AddMaintenance({isEditable = false}: Props) {
-  
-  
   const { data: userToModify} = useFetcher<userResponse>({method: "GET", url: ENDPOINT.auth.users})
   const { data: customerData, loading } = useFetcher<ClientResponse>({method: "GET", url: ENDPOINT.clients.list})
   const [maintanance, setMaintenance] = useState(INITIAL_STATE)
+  const [fields, setFields] = useState<Fields[]>([])
   const [customerSelected, setCustomerSelected] = useState<Client>()
   const [headQuarter, setHeadQuarter] = useState<Headquarter[]>()
   const [locationList, setLocationList] = useState<Location[]>()
-  const [equipmentList, setEquipmentList] = useState<Equipment[]>()
-  const typesEquipoment = ['BOMBAS',"MINISPLIT, CENTRAL, PISOTECHO, CASSETTE", "TORRES" ]
-  
+  const [equipmentList, setEquipmentList] = useState<Equipment[]>()  
+  const [equipmentListByType, setEquipmentListBytype] = useState<Equipment[]>()  
   const [isLoading, setIsLoading] = useState(false)
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -268,6 +77,41 @@ function AddMaintenance({isEditable = false}: Props) {
     if(e.target.name === 'locationId') {
       const equipmentData: Equipment[] = customerSelected?.equipments.filter(p => p.locationId === e.target.value) as never
       setEquipmentList(equipmentData)
+      setMaintenance({
+        ...maintanance,
+        location: e.target.value
+      })
+    }
+    if(e.target.name === 'type'){
+      const equipmentByType: Equipment[]= equipmentList?.filter((equip) => equip.type === e.target.value) as never
+      console.log(equipmentByType)
+      if(e.target.value === EQUIPMENT_TYPES[0].name){
+        setEquipmentListBytype(equipmentByType)
+        setFields([...fieldsFixed, ...minisplitFields])
+        setMaintenance({
+          ...maintanance,
+          ...minisplitParamters,
+          type: e.target.value
+        })
+      }
+      if(e.target.value === EQUIPMENT_TYPES[1].name){
+        setEquipmentListBytype(equipmentByType)
+        setFields([...fieldsFixed, ...bombasFields])
+        setMaintenance({
+          ...maintanance,
+          ...bombasParameters,
+          type: e.target.value
+        })
+      }
+      if(e.target.value === EQUIPMENT_TYPES[2].name){
+        setEquipmentListBytype(equipmentByType)
+        setFields([...fieldsFixed, ...torresFields])
+        setMaintenance({
+          ...maintanance,
+          ...torresParameters,
+          type: e.target.value
+        })
+      }
     }
     if(e.target.name === 'equipmentId' ){
       const equipmentFound: Equipment = equipmentList?.find(equip => equip.id === e.target.value) as never
@@ -277,16 +121,24 @@ function AddMaintenance({isEditable = false}: Props) {
         equipmentId: e.target.value
       })
     }    
+    if(e.target.name === 'techId' ){
+      setMaintenance({
+        ...maintanance,
+        techId: e.target.value
+      })
+    }    
   }
+
 
   const sendData = (e:React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault()
     setIsLoading(true)
-    fetch(`${ENDPOINT.maintanance.add}`, {
-      method: "POST",
+    fetch(isEditable ? `${ENDPOINT.maintanance.update}${maintanance.id}` : `${ENDPOINT.maintanance.add}` , {
+      method: isEditable ? "PATCH" : "POST",
       headers: {
         "Content-Type": "application/json",
-        "x-token": localStorage.getItem('key')!
+        "x-token": localStorage.getItem('key')!,
+        "x-apikey": import.meta.env.VITE_X_API_KEY
       },
       body: JSON.stringify(maintanance)
     }).then((res) => {
@@ -298,7 +150,7 @@ function AddMaintenance({isEditable = false}: Props) {
       if(!data.success) {
         toast.error(data.msg)
       } else {
-        toast.success(`El servicio con OT ${data.ot} ha sido creado con exito`)
+        toast.success(`El servicio con OT ${data.ot} ha sido ${isEditable ? 'modificado' : 'creado'} con exito`)
       }
     }).catch(() => {
       console.log('error')
@@ -323,8 +175,15 @@ function AddMaintenance({isEditable = false}: Props) {
       if(!data.succes) {
         toast.error('Hubo un error')
       } else {
-        // setMaintenance(data.maintenance)
-        console.log(data);
+        if(EQUIPMENT_TYPES[0].name.toLowerCase().includes(data.maintenance.Equipment.type.toLowerCase().trim())) {
+          setFields([...fieldsFixed, ...minisplitFields])
+        }
+        if(data.maintenance.Equipment.type === EQUIPMENT_TYPES[1].name){
+          setFields([...fieldsFixed, ...bombasFields])
+        }
+        if(data.maintenance.Equipment.type === EQUIPMENT_TYPES[2].name){
+          setFields([...fieldsFixed, ...torresFields])
+        }
         setMaintenance({
           id: data.maintenance.id,
           activities:data.maintenance.activities,
@@ -352,19 +211,21 @@ function AddMaintenance({isEditable = false}: Props) {
           float_state: data.maintenance.float_state,
           discharge_pressure: data.maintenance.discharge_pressure,
           service_hour:data.maintenance.service_hour,
-          service_date: data.maintenance.service_hour,
+          service_date: moment(data.maintenance.service_date).format('YYYY-MM-DD'),
           customer_sign: "",
           tech_sign:"",
           photos:data.maintenance.photos,
           observations:data.maintenance.observations,
           customerId: data.maintenance.customerId,
           equipmentId: data.maintenance.equipmentId,
+          techId: data.maintenance?.tech?.techId,
+          techName: data.maintenance?.tech?.techName,
           businessName: data.maintenance?.Equipment?.Location?.Headquarter?.Client?.businessName,
           headQuarter: data.maintenance?.Equipment?.Location?.Headquarter?.headName,
           location: data.maintenance?.Equipment?.Location?.locationName,
           equipmentName: data.maintenance?.Equipment?.name,
-          techName: data.tech?.techName,
-          additional_remarks: ""
+          additional_remarks: "",
+          type: data.maintenance?.Equipment?.type?.trim()
         })
       }
     })
@@ -375,8 +236,6 @@ function AddMaintenance({isEditable = false}: Props) {
       setIsLoading(false)
     })
   }
-
-  // console.log(maintanance);
 
   return (
     <View>
@@ -418,8 +277,8 @@ function AddMaintenance({isEditable = false}: Props) {
                 label="Tecnico"
                 placeholder="Selecciona un tecnico"
                 data={userToModify?.users as never}
-                name="firstName"
-                selected={maintanance.techName !== '' ? true : false}
+                name="techId"
+                selectedValue={maintanance?.techName?.split(" ")[0]}
                 handleChange={handleInputChange}
                 value="id"
                 property="firstName"
@@ -432,7 +291,7 @@ function AddMaintenance({isEditable = false}: Props) {
             <form onSubmit={(e)=>sendData(e as never)} style={{width: '100%', height: '100%', display: 'flex', flexWrap: 'wrap', padding: '1rem 1rem', justifyContent: 'space-between', overflowY: "scroll",}}>
                 {fields.map((field)=> (
                   <Input
-                  key={field.name} 
+                    key={field.name} 
                     label={field.label}
                     name={field.name}
                     type={field.type}
@@ -470,7 +329,6 @@ function AddMaintenance({isEditable = false}: Props) {
               placeholder="Selecciona una empresa"
               data={customerData?.clients as never}
               name="businessName"
-              selected={false}
               handleChange={handleInputChange}
               value="id"
               property="businessName"
@@ -480,7 +338,6 @@ function AddMaintenance({isEditable = false}: Props) {
               placeholder="Selecciona una sede"
               data={headQuarter as never}
               name="headId"
-              selected={false}
               handleChange={handleInputChange}
               value="id"
               property="headName"
@@ -490,52 +347,74 @@ function AddMaintenance({isEditable = false}: Props) {
               placeholder="Selecciona una ubicación"
               data={locationList as never}
               name="locationId"
-              selected={false}
               handleChange={handleInputChange}
               value="id"
               property="locationName"
             />
-            <SelectInput
-              label="Equipo"
-              placeholder="Selecciona un equipo"
-              data={equipmentList as never}
-              name="equipmentId"
-              selected={false}
-              handleChange={handleInputChange}
-              value="id"
-              property="name"
-            />
-            <SelectInput
-              label="Tecnico"
-              placeholder="Selecciona un tecnico"
-              data={userToModify?.users as never}
-              name="firstName"
-              selected={false}
-              handleChange={handleInputChange}
-              value="id"
-              property="firstName"
-            />
-          </div>
-          <form onSubmit={(e)=>sendData(e as never)} style={{width: '100%', height: '100%', display: 'flex', flexWrap: 'wrap', padding: '1rem 1rem', justifyContent: 'space-between', overflowY: "scroll",}}>
-              {fields.map((field)=> (
-                <Input
-                  key={field.name} 
-                  label={field.label}
-                  name={field.name}
-                  type={field.type}
-                  placeholder={field.placeholder ?? ''}
-                  onChange={handleChange}
-                  required={field.required}
-                  styleInput={field.style}
-                  rowStyle={field.rowStyle}
-                  disabled={isEditable ? field.disabled : false}
-                  value={maintanance[field.name]}
+            {
+              maintanance.location !== "" &&
+              <SelectInput
+                label="Tipo"
+                placeholder="Selecciona el tipo de equipo"
+                data={EQUIPMENT_TYPES}
+                name="type"
+                handleChange={handleInputChange}
+                value="id"
+                property="name"
+              />
+            }
+            {
+              maintanance.type !== "" && equipmentListByType!.length > 0 &&
+              <>
+                <SelectInput
+                  label="Equipo"
+                  placeholder={"Selecciona un equipo"}
+                  data={equipmentList as never}
+                  name="equipmentId"
+                  handleChange={handleInputChange}
+                  value="id"
+                  property="name"
                 />
-              ))}
-              <div className={formStyles.buttonContainer} style={{marginTop: 10}}>
-                <button type='submit'>{isEditable ? 'Modificar Mantenimiento' : 'Crear Mantenimiento'}</button>
-              </div>
-          </form>
+              </>
+            }
+                <SelectInput
+                  label="Tecnico"
+                  placeholder="Selecciona un tecnico"
+                  data={userToModify?.users as never}
+                  name="techId"
+                  handleChange={handleInputChange}
+                  value="id"
+                  property="firstName"
+                />
+          </div>
+          {maintanance.type !== "" && equipmentListByType?.length === 0 &&
+          <div className={style.textInformation}>
+            <span style={{color: 'grey', fontSize: 18}}>No hay equipos creados del tipo seleccionado</span>
+          </div>
+          }
+          {
+            maintanance.equipmentId.length > 0 && maintanance.techId.length > 0 &&
+            <form onSubmit={(e)=>sendData(e as never)} style={{width: '100%', height: '100%', display: 'flex', flexWrap: 'wrap', padding: '1rem 1rem', justifyContent: 'space-between', overflowY: "scroll",}}>
+                {fields.length > 0 && fields.map((field)=> (
+                  <Input
+                    key={field.name} 
+                    label={field.label}
+                    name={field.name}
+                    type={field.type}
+                    placeholder={field.placeholder ?? ''}
+                    onChange={handleChange}
+                    required={field.required}
+                    styleInput={field.style}
+                    rowStyle={field.rowStyle}
+                    disabled={isEditable ? field.disabled : false}
+                    value={maintanance[field.name]}
+                  />
+                ))}
+                <div className={formStyles.buttonContainer} style={{marginTop: 10}}>
+                  <button type='submit'>{isEditable ? 'Modificar Mantenimiento' : 'Crear Mantenimiento'}</button>
+                </div>
+            </form>
+          }
         </>
       }
       </>

@@ -4,15 +4,13 @@ import View from "../../components/view/View"
 import { ENDPOINT } from "../../config"
 import { SelectInput } from "../../components/input/SelectInput"
 import { useFetcher } from "../../hooks/useFetcher"
-import { Client, ClientResponse, EquiomentPayload, Equipment, EquipmentRes, Headquarter, Location, MainResponse, Maintenance, userResponse } from "../../types"
+import { Client, ClientResponse, EquiomentPayload, Equipment, Headquarter, Location} from "../../types"
 import { Input } from "../../components/form/Input"
 import formStyles from "../../components/form/form.module.css";
-import style from './maintenance.module.css'
-import inputStyle from '../../components/input/select.module.css'
 import { ToastContainer, toast } from 'react-toastify';
 import Loader from "../../components/Loader/Loader"
 import { THEME } from '../../theme';
-
+import { EQUIPMENT_TYPES } from '../../helpers';
 
 const fields:Fields[]= [
   {
@@ -47,15 +45,11 @@ const fields:Fields[]= [
   },
 ]
 
-
 interface Props {
   isEditable: boolean
 }
 
 function AddEquipment({isEditable = false}: Props) {
-  
-  
-  // const { data: equipToModify} = useFetcher<Equipment[]>({method: "GET", url: ENDPOINT.auth.users})
   const { data: customerData, loading } = useFetcher<ClientResponse>({method: "GET", url: ENDPOINT.clients.list})
   const [equipment, setEquipment] = useState<EquiomentPayload>({
     id: '', 
@@ -72,7 +66,7 @@ function AddEquipment({isEditable = false}: Props) {
   const [headQuarter, setHeadQuarter] = useState<Headquarter[]>()
   const [locationList, setLocationList] = useState<Location[]>()
   const [equipmentList, setEquipmentList] = useState<Equipment[]>()
-  // const typesEquipoment = ['BOMBAS',"MINISPLIT, CENTRAL, PISOTECHO, CASSETTE", "TORRES" ]
+  const [equipmentListByType, setEquipmentListByType] = useState<Equipment[]>()
   
   const [isLoading, setIsLoading] = useState(false)
 
@@ -88,15 +82,12 @@ function AddEquipment({isEditable = false}: Props) {
       const customerSelected: Client = customerData?.clients.find((c: Client) => c.id === e.target.value) as never
       setCustomerSelected(customerSelected)
       setHeadQuarter(customerSelected.headquarters)
-      // setEquipment({
-      //   ...equipment,
-      //   locationId: e.target.value
-      // })
     }
     if(e.target.name === 'headId'){
       const locationsData: Location[] = customerSelected?.locations.filter(l => l.headquarterId === e.target.value) as never
       setLocationList(locationsData)
     }
+    
     if(e.target.name === 'locationId') {
       const equipmentData: Equipment[] = customerSelected?.equipments.filter(p => p.locationId === e.target.value) as never
       setEquipmentList(equipmentData)
@@ -105,9 +96,17 @@ function AddEquipment({isEditable = false}: Props) {
         locationId: e.target.value
       })
     }   
+
+    if(e.target.name === 'type'){
+      const equipmentDataBytype: Equipment[] = equipmentList?.filter(p => p.type === e.target.value) as never
+      setEquipmentListByType(equipmentDataBytype)
+      setEquipment({
+      ...equipment,
+      type: e.target.value
+      })
+    }
     if(e.target.name === 'equipmentId') {
       const equipmentSelected: Equipment = customerSelected?.equipments.find(p => p.id === e.target.value) as never
-      // setEquipmentList(equipmentData)
       setEquipment({
         ...equipment,
         id: equipmentSelected.id,
@@ -122,8 +121,6 @@ function AddEquipment({isEditable = false}: Props) {
     }   
   }
 
-  console.log(equipment);
-
   const sendData = (e:React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault()
     setIsLoading(true)
@@ -131,7 +128,8 @@ function AddEquipment({isEditable = false}: Props) {
       method: isEditable ? "PATCH" : "POST",
       headers: {
         "Content-Type": "application/json",
-        "x-token": localStorage.getItem('key')!
+        "x-token": localStorage.getItem('key')!,
+        "x-apikey": import.meta.env.VITE_X_API_KEY
       },
       body: JSON.stringify(equipment)
     }).then((res) => {
@@ -163,9 +161,6 @@ function AddEquipment({isEditable = false}: Props) {
       })
     })
   }
-
-
-  // console.log(maintanance);
 
   return (
     <View>
@@ -205,12 +200,21 @@ function AddEquipment({isEditable = false}: Props) {
               value="id"
               property="locationName"
             />
+            <SelectInput
+              label="Tipo de equipo"
+              placeholder="Selecciona el tipo de equipo"
+              data={EQUIPMENT_TYPES}
+              name="type"
+              handleChange={handleInputChange}
+              value="name"
+              property="name"
+            />
             {
               isEditable &&
                 <SelectInput
                   label="Equipo"
                   placeholder="Selecciona un equipo"
-                  data={equipmentList as never}
+                  data={equipmentListByType as never}
                   name="equipmentId"
                   selected={false}
                   handleChange={handleInputChange}
@@ -220,35 +224,38 @@ function AddEquipment({isEditable = false}: Props) {
 
             }
           </div>
-          <form onSubmit={(e)=>sendData(e as never)} style={{width: '100%', height: '100%', display: 'flex', flexWrap: 'wrap', padding: '1rem 1rem', justifyContent: 'space-between', overflowY: "scroll",}}>
-              {fields.map((field)=> (
-                <Input
-                  key={field.name} 
-                  label={field.label}
-                  name={field.name}
-                  type={field.type}
-                  placeholder={field.placeholder ?? ''}
-                  onChange={handleChange}
-                  required={field.required}
-                  styleInput={field.style}
-                  rowStyle={field.rowStyle}
-                  disabled={isEditable ? field.disabled : false}
-                  value={equipment[field.name]}
-                />
-              ))}
-              {
-                isEditable && equipment.id!.length > 0 &&
-                <div className={formStyles.buttonContainer} style={{marginTop: 10}}>
-                  <button type='submit'>{'Modificar Equipo'}</button>
-                </div>
-              }
-              {
-              !isEditable && equipment.locationId.length > 0 && 
-                <div className={formStyles.buttonContainer} style={{marginTop: 10}}>
-                  <button type='submit'>{'Crear Equipo'}</button>
-                </div>
-              }
-          </form>
+          {
+            (equipment.type !== "" && equipment.id === "" || equipment.type !== "" && equipment.id !== "")  &&
+            <form onSubmit={(e)=>sendData(e as never)} style={{width: '100%', height: '100%', display: 'flex', flexWrap: 'wrap', padding: '1rem 1rem', justifyContent: 'space-between', overflowY: "scroll",}}>
+                {fields.map((field)=> (
+                  <Input
+                    key={field.name} 
+                    label={field.label}
+                    name={field.name}
+                    type={field.type}
+                    placeholder={field.placeholder ?? ''}
+                    onChange={handleChange}
+                    required={field.required}
+                    styleInput={field.style}
+                    rowStyle={field.rowStyle}
+                    disabled={isEditable ? field.disabled : false}
+                    value={equipment[field.name]}
+                  />
+                ))}
+                {
+                  isEditable && equipment.id!.length > 0 &&
+                  <div className={formStyles.buttonContainer} style={{marginTop: 10}}>
+                    <button type='submit'>{'Modificar Equipo'}</button>
+                  </div>
+                }
+                {
+                !isEditable && equipment.locationId.length > 0 && 
+                  <div className={formStyles.buttonContainer} style={{marginTop: 10}}>
+                    <button type='submit'>{'Crear Equipo'}</button>
+                  </div>
+                }
+            </form>
+          }
       </>
       }
     </View>

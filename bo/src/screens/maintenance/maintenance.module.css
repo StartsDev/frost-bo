@@ -35,3 +35,11 @@
 .headerModalContainer{
   border : 1px red solid;
 }
+
+.textInformation {
+  width: 100%;
+  height: 50px;
+  display: flex; 
+  align-items: center;
+  justify-content: center
+}
