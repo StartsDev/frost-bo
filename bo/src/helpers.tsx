@@ -77,6 +77,14 @@ export const fieldsFixed = [
     placeholder: "Hora de servicio"
   },
   {
+    name: "photos",
+    type: "file",
+    label: "Fotos del servicio",
+    rowStyle: {width: '100%',height: 300, marginTop: 0, marginBottom: 10},
+    style: {height: 10}
+    // placeholder: "Hora de servicio"
+  },
+  {
     name: "activities",
     type: "textArea",
     label: "Actividades ejecutadas",
