@@ -310,6 +310,7 @@ function AddMaintenance({isEditable = false}: Props) {
                     imageList={maintanance.photos}
                     disabled={isEditable ? field.disabled : false}
                     id={maintanance.id}
+                    isEditable={true}
                     value={maintanance[field.name]}
                   />
                 ))}
@@ -370,7 +371,7 @@ function AddMaintenance({isEditable = false}: Props) {
                 <SelectInput
                   label="Equipo"
                   placeholder={"Selecciona un equipo"}
-                  data={equipmentList as never}
+                  data={equipmentListByType as never}
                   name="equipmentId"
                   handleChange={handleInputChange}
                   value="id"
