@@ -244,6 +244,8 @@ function AddMaintenance({isEditable = false}: Props) {
     })
   }
 
+  // console.log(maintanance)
+
   return (
     <View>
     <ToastContainer />
