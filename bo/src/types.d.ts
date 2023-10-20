@@ -12,6 +12,7 @@ export type Client = {
     locations: Location[]
     equipments: Equipment[]
     user_app: UserApp
+    createdAt:string;
 }
 
 export type ClientResponse = {
@@ -41,6 +42,7 @@ export type Equipment = {
         businessName: string
         user_app: UserApp[]
     }
+    createdAt:string;
 }
 
 export type Headquarter = {
@@ -54,6 +56,7 @@ export type Headquarter = {
     status: string
     Client: ClientRes
     locations: Location[]
+    createdAt:string;
 }
 
 export type Location = {
@@ -65,6 +68,7 @@ export type Location = {
     headquarter: HeadquarterRes
     client: ClientRes
     equipments: Equipment[]
+    createdAt:string;
     // headquarter?: Omit<Headquarter, "isPrincipal" | "address" | "email" | "phone">
     // client?: Omit<Client, "nit" | "address" | "email" | "phone" | "city" | "contact"> & UserApp
 }
@@ -73,6 +77,7 @@ export type UserApp = {
     user_id: string
     role_id: string
     role_name: string
+    createdAt:string;
 }
 
 // export type MainResponse = {

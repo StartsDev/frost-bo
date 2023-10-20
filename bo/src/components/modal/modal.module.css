@@ -1,3 +1,15 @@
+.modalCSV {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: left;
+  justify-content: left;
+}
+
 .modal {
   position: fixed;
   top: 0;
@@ -60,6 +72,54 @@
     padding: 20px;
     background-color: white;
     animation: scale-up-center 0.2s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+}
+
+.modalContentCSV { 
+  width: 450px;
+  height: 250px;
+  border-radius: 10px;
+  padding: 20px;
+  margin-top: 80px;
+  margin-left: 230px;
+  background-color: white;
+  animation: scale-up-center 0.2s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+}
+
+.modalCSVcontainer{
+  display:grid;
+  grid-template-columns: 1fr;
+  grid-gap: 10px;
+  align-items: center;
+}
+
+.itemCSVForm{
+  display:grid;
+  grid-template-columns: 1fr;
+  align-items: center;
+  text-align: center;
+  grid-gap: 20px;
+}
+
+.itemCSVInput{
+  appearance: none;
+  color: #2f78ae;
+  font-size: 15px;
+  border:1px solid #ECF0F1;
+  background:#ECF0F1;
+  padding: 4px;
+  visibility: visible;
+  width: 140px;
+  cursor: pointer;
+}
+
+.itemCSVButton{
+  border:1px solid #ECF0F1;
+  padding: 10px;
+  color:#ECF0F1;
+  background-color: #2f78ae;
+  cursor: pointer;
+  font-size: medium;
+  border-radius: 7px;
 }
 
 .modalDetailClientGrid {

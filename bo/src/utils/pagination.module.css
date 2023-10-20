@@ -1,0 +1,27 @@
+.buttonsContainer {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 30px;
+    align-items: center; 
+}
+
+.item {
+
+    flex: 1;
+    padding: 7px;
+    text-align: center;
+    min-width: 100px;
+    box-sizing: border-box;
+    margin:0;
+}
+
+.buttonItem{
+    border:1px solid #ECF0F1;
+    padding: 10px;
+    color:#ECF0F1;
+    background-color: #2f78ae;
+    cursor: pointer;
+    font-size: medium;
+    border-radius: 7px;
+    width: 100%;
+}

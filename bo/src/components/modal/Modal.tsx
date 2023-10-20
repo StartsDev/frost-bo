@@ -90,7 +90,7 @@ function Modal({
               }
             </div>
              {/* componente de observaciones y firmas */}
-             <FooterMaint data={data}/>
+            <FooterMaint data={data}/>
           </> :
           <div>
              {/* Detalles */}

@@ -38,7 +38,7 @@ function Table<T>({ headers, items, actionItem }: Props<T>) {
                 className={styles.table}
                 style={{
                     width: "100%",
-                    height: "450px",
+                    height: "430px",
                     display: "flex",
                     flexDirection: "column",
                     overflowY: "scroll",
