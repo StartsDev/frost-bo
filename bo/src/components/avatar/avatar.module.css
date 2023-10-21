@@ -11,4 +11,47 @@
     width: 90%;
     height: 90%;
     border-radius: 100%;
+    cursor: pointer;
 }
+
+.menuElement {
+    width: 170px;
+    min-height: 50px;
+    position: absolute;
+    border-radius: 5px;
+    background-color: white;
+    box-shadow: 4px 2px 4px 1px #80808082;
+    right: 0px;
+    top: 70px;
+    /* transform: translateX(-100); */
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+  }
+  
+  .menuElement.visible {
+    opacity: 1;
+    visibility: visible;
+    z-index: 100;
+  }
+
+  .logoutButton{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    /* height: 48px; */
+  }
+
+  .optionMenu {
+    width: 100%;
+    padding: 5px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    border-bottom: 1px solid rgba(128, 128, 128, 0.261);
+    font-size: 14px; 
+    font-weight: 600; 
+    color: black;
+    text-align: center;
+    cursor: pointer;
+  }

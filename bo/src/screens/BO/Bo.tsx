@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
 import { THEME } from "../../theme";
 import Avatar from "../../components/avatar/Avatar";
@@ -15,7 +15,7 @@ import Title from "../../components/title/Title";
 import { User } from "../../types";
 
 function Bo() {
-const user: User | null = localStorage.getItem("user")
+const user: User = localStorage.getItem("user")
     ? JSON.parse(localStorage.getItem("user") || "")
     : null;
 
@@ -31,6 +31,7 @@ useEffect(() => {
           height = menu.scrollHeight;
         }
 
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         //@ts-expect-error
         menu.style.height = `${height}px`;
       });
@@ -89,7 +90,7 @@ useEffect(() => {
         <h2>Aire Aplicado S.A.S</h2>
       </div>
 
-        <Avatar image={user?.image ?? ""} />
+      <Avatar id={user?.id} userProfileImage={user?.image} />
       </div>
       <section className={styles?.wrapper_bo}>
         <aside

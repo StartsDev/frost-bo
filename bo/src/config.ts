@@ -33,16 +33,17 @@ export const ENDPOINT = {
     maintanance: {
         add:"https://business-core-api.onrender.com/api/v1/maintenance/create-maintenance/",
         list: "https://business-core-api.onrender.com/api/v1/maintenance/get-maintenances",
-        byTech: "https://business-core-api.onrender.com/api/v1/maintanance/get-maint-tech/",
-        byClient: "https://business-core-api.onrender.com/api/v1/maintanance/get-main-client/",
-        byEquipment: "https://business-core-api.onrender.com/api/v1/maintanance/get-main-equipment/",
+        byTech: "https://business-core-api.onrender.com/api/v1/maintenance/get-maint-tech/",
+        byClient: "https://business-core-api.onrender.com/api/v1/maintenance/get-main-client/",
+        byEquipment: "https://business-core-api.onrender.com/api/v1/maintenance/get-main-equipment/",
         byId: "https://business-core-api.onrender.com/api/v1/maintenance/detail-main/",
-        update: "https://business-core-api.onrender.com/api/v1/maintanance/update-main/",
-        delete: "https://business-core-api.onrender.com/api/v1/maintanance/delete-main/",
+        update: "https://business-core-api.onrender.com/api/v1/maintenance/update-main/",
+        delete: "https://business-core-api.onrender.com/api/v1/maintenance/delete-main/",
     },
     image: {
         upload: "https://business-core-api.onrender.com/api/v1/image/upload-image/",
         uploadWithEquipment: "https://business-core-api.onrender.com/api/v1/image/upload-image-equip/",
+        uploadAvatar: "https://frost-api.onrender.com/api/v1/user/upload-avatar-user",
     },
     auth: {
         login: "https://frost-api.onrender.com/api/v1/auth/login",
