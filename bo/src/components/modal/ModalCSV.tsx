@@ -14,15 +14,8 @@ function ModalCSV({ onClose, title, itemsCSV, moduleName }: ModalProps) {
     const [startDate, setStartDate] = useState<string>('');
     const [endDate, setEndDate] = useState<string>('');
     const label: string = 'Exportar';
-  
+
     // CSV Format
-   /*  const convertToCSV = (dataCSV): any => {
-        const headers = Object.keys(dataCSV[0]);
-        const rows = dataCSV.map((obj: any) => headers.map((header: any) => obj[header]));
-        const headerRow = headers.join(',');
-        const csvRows = [headerRow, ...rows.map((row: any) => row.join(','))];
-        return csvRows.join('\n');
-    } */
     const convertToCSV = (dataCSV): any => {
         const headers = Object.keys(dataCSV[0]);
         const rows = dataCSV.map((obj: any) => headers.map((header: any) => {

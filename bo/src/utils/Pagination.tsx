@@ -19,13 +19,14 @@ const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages, onPage
 
     return (
         <div className={styles.buttonsContainer}>
-            {currentPage === 1 && <> <div className={styles.item}>
-                <span><p className={styles.textItem}> {currentPage} de {totalPages} </p></span>
-            </div>
-                <div className={styles.item}>
-                    <button className={styles.buttonItem} onClick={handleNext} disabled={currentPage === totalPages}><FaChevronRight /></button>
-                </div></>}
-            {currentPage === totalPages && <>
+            {currentPage === 1 && currentPage < totalPages &&
+                <> <div className={styles.item}>
+                    <span><p className={styles.textItem}> {currentPage} de {totalPages} </p></span>
+                </div>
+                    <div className={styles.item}>
+                        <button className={styles.buttonItem} onClick={handleNext} disabled={currentPage === totalPages}><FaChevronRight /></button>
+                    </div></>}
+            {currentPage === totalPages && currentPage != 1 && totalPages != 1 && <>
                 <div className={styles.item}>
                     <button className={styles.buttonItem} onClick={handlePrev} disabled={currentPage === 1}><FaChevronLeft /></button>
                 </div>
@@ -42,6 +43,11 @@ const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages, onPage
                 </div>
                 <div className={styles.item}>
                     <button className={styles.buttonItem} onClick={handleNext} disabled={currentPage === totalPages}><FaChevronRight /></button>
+                </div>
+            </>}
+            {currentPage === 1 && totalPages === 1 && <>
+                <div className={styles.item}>
+                    <span><p className={styles.textItem}> {currentPage} de {totalPages} </p></span>
                 </div>
             </>}
         </div>

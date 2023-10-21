@@ -75,7 +75,6 @@ function Equipments() {
 
     const equipmentPreviewCSV = useMemo(() => {
         return item?.equipments?.map(equipment => {
-
             return {
                 serial: equipment.serial,
                 nombre: capitalString(equipment.name),
@@ -198,8 +197,6 @@ function Equipments() {
                     data={equipmentDetail!}
                     onClose={closeModal}
                     title="Equipo"
-                // equipmentTitle="Equipos"
-                // equipmentArray={equipmentArray}
                 />
             ) : null}
         </div>

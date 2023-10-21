@@ -12,11 +12,12 @@ export type Client = {
     locations: Location[]
     equipments: Equipment[]
     user_app: UserApp
-    createdAt:string;
+    fecha:string;
 }
 
 export type ClientResponse = {
     clients: Client[]
+    fecha:string;
 }
 
 export type Equipment = {
@@ -152,6 +153,7 @@ export type User = {
     Role: {
         role: string
     }
+    createdAt:string
 }
 
 export type Session = {
