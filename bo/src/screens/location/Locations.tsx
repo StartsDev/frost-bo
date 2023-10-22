@@ -10,6 +10,7 @@ import Loader from "../../components/Loader/Loader";
 import { useModal } from "../../hooks/useModal";
 import Modal from "../../components/modal/Modal";
 import { capitalString } from "../../utils/capitalizeStr";
+import { uuidToShortenedInteger } from "../../utils/uuidToInt";
 import axios from "axios";
 import Pagination from "../../utils/Pagination";
 import { useModalCSV } from "../../hooks/useModalCSV";
@@ -54,7 +55,7 @@ function Locations() {
     fetchData();
   }, [currentPage, pageSize]);
 
-//Not paginated Data
+  //Not paginated Data
   useEffect(() => {
     const fetchDataSingle = async () => {
       try {
@@ -73,6 +74,7 @@ function Locations() {
     setCurrentPage(page);
   };
 
+
   const { openModal, closeModal, isOpen } = useModal();
   const { openModalCSV, closeModalCSV, isOpenCSV } = useModalCSV();
 
@@ -81,7 +83,7 @@ function Locations() {
     return item?.locations?.map((location) => {
       locationArray.push(location)
       return {
-        id: location.id,
+        id: uuidToShortenedInteger(location.id, 5),
         nombre: capitalString(location.locationName),
         negocio: location.client?.businessName
           ? capitalString(location.client.businessName)
@@ -99,7 +101,7 @@ function Locations() {
     return data?.locations?.map((location) => {
       locationArray.push(location)
       return {
-        id: location.id,
+        id: uuidToShortenedInteger(location.id, 5),
         nombre: capitalString(location.locationName),
         negocio: location.client?.businessName
           ? capitalString(location.client.businessName)
@@ -113,7 +115,7 @@ function Locations() {
   }, [data]);
 
   //const locationPreviewFiltered =
-  const headers = ["registro", "ubicación", "sede", "negocio", "fecha"];
+  const headers = ["id", "ubicación", "sede", "negocio", "fecha"];
 
   const locationDetail = useMemo(() => {
     const locate =
@@ -121,10 +123,9 @@ function Locations() {
         ? {}
         : JSON.parse(localStorage.getItem("item")!);
 
-    const idS: string = locate?.id;
-
+    const idS: number = locate?.id
     const filteredLocation = data?.locations?.filter(
-      (location) => location.id === idS
+      (location) => uuidToShortenedInteger(location.id, 5) === idS
     );
 
     const mapObject = filteredLocation?.map((location) => {
