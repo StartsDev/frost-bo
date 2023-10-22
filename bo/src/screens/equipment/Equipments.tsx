@@ -103,7 +103,7 @@ function Equipments() {
         })
 
     }, [data])
-
+    
     const headers = ["serial", "nombre", "modelo", "tipo", "marca", "fecha"]
 
     const equipmentDetail = useMemo(() => {
@@ -119,7 +119,7 @@ function Equipments() {
         );
 
         const mapObject = filteredEquipment?.map((equipment) => {
-            
+            setImageUrl(equipment.image)
             return {
                 Serial: capitalString(equipment.serial),
                 Nombre: equipment.name

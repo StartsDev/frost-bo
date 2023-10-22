@@ -29,10 +29,10 @@ export const PhotoSelector = ({setImage, setMenu, id}: Props) => {
       headers: {
         'Content-Type':'multipart/form-data',
         "x-token": localStorage.getItem('key')!,
-        "x-apikey": import.meta.env.VITE_X_API_KEY
+        // "x-apikey": import.meta.env.VITE_X_API_KEY
       }
     })
-    console.log(res)
+    console.log('RESPONSE AVATAR', res)
   };
   return (
     <>
