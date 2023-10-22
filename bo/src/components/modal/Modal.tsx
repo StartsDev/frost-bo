@@ -14,6 +14,7 @@ interface ModalProps {
   data: Record<string, any>;
   onClose: () => void;
   title: string;
+  image: string;
   headTitle?: string;
   locatTitle?: string;
   equipmentTitle?: string;
@@ -26,6 +27,7 @@ function Modal({
   data,
   onClose,
   title,
+  image,
   headTitle,
   locatTitle,
   equipmentTitle,
@@ -36,18 +38,18 @@ function Modal({
   const headersHead = ["Nombre"];
   const headersLocations = ["Nombre"];
   const headersEquipments = ["Serial", "Nombre", "Modelo", "Tipo", "Marca"];
-  //const { openModal, closeModal, isOpen } = useModal();
+
   const excludedKeys = new Set([
     "Actividades",
-    "Estado", 
+    "Estado",
     "Cliente",
-    "Sede", 
+    "Sede",
     "Nit",
     "Ciudad",
     "Contacto cliente",
     "Nº Orden",
     "Tipo",
-    "Marca", 
+    "Marca",
     "Serial y Modelo",
     "Ubicacion",
     "Equipo",
@@ -77,23 +79,23 @@ function Modal({
 
         {title === "Mantenimiento" ?
           <>
-            <Headmaint data={data}/>
+            <Headmaint data={data} />
             {/* Div grid para detalles del mantenimiento */}
             <div className={styles.modalDetailClientGrid}>
               {
                 filteredEntries.map(([key, value], index) => (
-                    <div key={index} className={styles.modalItem}>
-                      <div className={styles.modalItemKeyCont}><span className={styles.modalItemKey}>{key}: </span></div>
-                      <div className={styles.modalItemValueCont}><span className={styles.modalItemValue}>{value}</span></div>
-                    </div>
-                  ))
+                  <div key={index} className={styles.modalItem}>
+                    <div className={styles.modalItemKeyCont}><span className={styles.modalItemKey}>{key}: </span></div>
+                    <div className={styles.modalItemValueCont}><span className={styles.modalItemValue}>{value}</span></div>
+                  </div>
+                ))
               }
             </div>
-             {/* componente de observaciones y firmas */}
-            <FooterMaint data={data}/>
+            {/* componente de observaciones y firmas */}
+            <FooterMaint data={data} />
           </> :
           <div>
-             {/* Detalles */}
+            {/* Detalles */}
             <div className={styles.modalDetailClientGrid}>
               {
                 Object.entries(data).map(([key, value], index) => (
@@ -104,7 +106,10 @@ function Modal({
                 ))
               }
             </div>
-
+            {/* Foto equipo */}
+            {title === "Equipo" && <><div>
+              {image && <img src={image} alt="Fetched Image" />}
+            </div></>}
             {/* Div container para Sedes y Ubicaciones */}
             <div className={styles.modalContainerHeadLoc}>
 

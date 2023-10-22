@@ -30,6 +30,7 @@ type ResponseItem = {
 }
 
 function Equipments() {
+    const [imageUrl, setImageUrl] = useState<string>("");
     const [data, setData] = useState<Response | null>(null);
     const [item, setItem] = useState<ResponseItem | null>(null);
     const [loading, setLoading] = useState(true);
@@ -90,7 +91,7 @@ function Equipments() {
 
     const equipmentPreview = useMemo(() => {
         return data?.equipments?.map(equipment => {
-
+            setImageUrl(equipment.image)
             return {
                 serial: equipment.serial,
                 nombre: capitalString(equipment.name),
@@ -99,7 +100,6 @@ function Equipments() {
                 marca: capitalString(equipment.brand),
                 fecha: moment(equipment.createdAt).format('DD/MM/YYYY')
             }
-
         })
 
     }, [data])
@@ -119,7 +119,7 @@ function Equipments() {
         );
 
         const mapObject = filteredEquipment?.map((equipment) => {
-            //location.equipments?.map((equipment) => equipmentArray.push(equipment));
+            
             return {
                 Serial: capitalString(equipment.serial),
                 Nombre: equipment.name
@@ -197,6 +197,7 @@ function Equipments() {
                     data={equipmentDetail!}
                     onClose={closeModal}
                     title="Equipo"
+                    image={imageUrl}
                 />
             ) : null}
         </div>
