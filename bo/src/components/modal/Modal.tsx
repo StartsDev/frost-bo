@@ -37,7 +37,7 @@ function Modal({
 }: ModalProps) {
   const headersHead = ["Nombre"];
   const headersLocations = ["Nombre"];
-  const headersEquipments = ["Serial", "Nombre", "Modelo", "Tipo", "Marca"];
+  const headersEquipments = ["Nombre"];
 
   const excludedKeys = new Set([
     "Actividades",
