@@ -26,7 +26,6 @@
   font-size: 0.9rem;
   display: grid;
   grid-template-columns: 0.3fr 1fr;
-  /* background-color: rgb(217, 242, 255); */
 }
 
 .modalItemKeyHead{
@@ -39,9 +38,6 @@
   width:75%;
 }
 
-/* .styleSign{
-  border: 1px red solid;
-} */
 .modalItemFooter{
   margin-top:1px;
   display :grid;
@@ -168,7 +164,7 @@ img {
 }
 
 .itemHeadLoc {
-  margin-top: 20px;
+  margin-top: 5px;
   height: 100px;
 }
 
