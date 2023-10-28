@@ -1,4 +1,4 @@
-import {useRef} from 'react'
+import React, {useRef} from 'react'
 import style from  './photoselector.module.css'
 import axios from 'axios';
 import { ENDPOINT } from '../../config';
@@ -24,7 +24,7 @@ export const PhotoSelector = ({setImage, setMenu, id}: Props) => {
     setMenu!(false)
     const data = new FormData()
     const blob = new Blob([selectedFile]);
-    data.append('image', blob, selectedFile.name)
+    data.append('data', blob, selectedFile.name)
     const res = await axios.post(`${ENDPOINT.image.uploadAvatar}/${id}`, data, {
       headers: {
         'Content-Type':'multipart/form-data',

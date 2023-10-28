@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
 import { THEME } from "../../theme";
 import Avatar from "../../components/avatar/Avatar";
@@ -13,11 +13,36 @@ import {
 import Option from "./components/Option";
 import Title from "../../components/title/Title";
 import { User } from "../../types";
+import { ENDPOINT } from "../../config";
 
 function Bo() {
-const user: User = localStorage.getItem("user")
+const userLogged: User = localStorage.getItem("user")
     ? JSON.parse(localStorage.getItem("user") || "")
     : null;
+
+  const [user, setUser] = useState<User>(userLogged)
+
+  useEffect(()=> {
+    getUserById(userLogged.id)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[])
+
+
+  const getUserById = (id: string) => {
+    fetch(`${ENDPOINT.auth.getUserById}/${id}`)
+    .then((res) => {
+      if(res.ok){
+        return res.json();
+      }
+    })
+    .then((data) => {
+      setUser(data.findUser)
+      localStorage.setItem('user', JSON.stringify(data.findUser))
+    })
+    .catch((error) => {
+      console.log(error)
+    })
+  }
 
 useEffect(() => {
     const listElements = document.querySelectorAll(".list__button--click");
@@ -89,6 +114,7 @@ useEffect(() => {
       <Logo image={"../src/assets/logo.jpeg" ?? ""} />
         <h2>Aire Aplicado S.A.S</h2>
       </div>
+    
 
       <Avatar id={user?.id} userProfileImage={user?.image} />
       </div>

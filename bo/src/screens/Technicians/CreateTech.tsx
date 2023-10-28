@@ -59,7 +59,7 @@ const CreateTech = ({isEditable = false}: Props) => {
   const { data: userToModify} = useFetcher<userResponse>({method: "GET", url: ENDPOINT.auth.users})
   const [isLoading, setIsLoading] = useState(false)
   const [user, setUser] = useState({
-    id: '',
+    id: null,
     numIdent: '',
     firstName: '',
     lastName: '',
@@ -71,7 +71,7 @@ const CreateTech = ({isEditable = false}: Props) => {
 
   useEffect(()=> {
     setUser({
-      id:'',
+      id: null,
       numIdent: '',
       firstName: '',
       lastName: '',
@@ -81,6 +81,8 @@ const CreateTech = ({isEditable = false}: Props) => {
       roleId: ''
     })
   },[isEditable])
+
+  const {id, ...userNew} = user
   
 
   const handleInputChange = (e:React.ChangeEvent<HTMLInputElement>) => {
@@ -105,12 +107,12 @@ const CreateTech = ({isEditable = false}: Props) => {
     e.preventDefault()
     setIsLoading(true)
     fetch(!isEditable ? ENDPOINT.auth.register : `${ENDPOINT.auth.update}/${user.id}`, {
-      method: "PATCH",
+      method: isEditable ? "PATCH" : "POST",
       headers: {
         "Content-Type": "application/json",
         "x-token": localStorage.getItem('key')!
       },
-      body: JSON.stringify(user)
+      body: JSON.stringify(isEditable ? user : userNew )
     }).then((res) => {
       if(!res.ok) {
         toast.error(`El usuario no pudo ser ${isEditable ? 'modificado' : 'creado'}, por favor consulte con el administrador`)

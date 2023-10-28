@@ -2,6 +2,7 @@ import styles from "./avatar.module.css"
 import { THEME } from "../../theme"
 import { useState } from 'react';
 import { PhotoSelector } from "../photoSelector/PhotoSelector";
+import React from "react";
 
 interface Props {
   id: string
@@ -17,6 +18,7 @@ function Avatar({id, userProfileImage}: Props) {
     localStorage.removeItem("key")
     window.location.reload()
   }
+  console.log(profilePicture)
 
   return (
     <>
