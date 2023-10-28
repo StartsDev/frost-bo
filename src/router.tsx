@@ -60,11 +60,11 @@ const boChildrens: RouteObject[] = [
 
 const mainChildren: RouteObject[] = [
     {
-        path: "/*",
+        path: "/",
         element: <Login />
     },
     {
-        path: "/bo*",
+        path: "/bo",
         element: <Bo />,
         children: boChildrens,
         loader: async () => {
