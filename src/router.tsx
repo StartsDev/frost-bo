@@ -18,6 +18,7 @@ import AddMaintenance from "./screens/maintenance/AddMaintenence";
 import EditMaintenance from "./screens/maintenance/EditMaintence";
 import CreateTech from "./screens/Technicians/CreateTech";
 import CreateEditEquipment from "./screens/equipment/CreateEditEquipment"
+import React from "react";
 
 const routesClients: RouteObject[] = [
     {path: "clients",  element: <Clients />  },
@@ -59,11 +60,11 @@ const boChildrens: RouteObject[] = [
 
 const mainChildren: RouteObject[] = [
     {
-        path: "/",
+        path: "/*",
         element: <Login />
     },
     {
-        path: "/bo",
+        path: "/bo*",
         element: <Bo />,
         children: boChildrens,
         loader: async () => {
