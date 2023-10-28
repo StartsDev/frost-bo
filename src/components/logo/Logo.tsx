@@ -3,7 +3,7 @@ import logoimg from "../../assets/logo.png"
 import { THEME } from "../../theme"
 import React from "react"
 
-function Logo({ image = ""}: { image?: string }) {
+function Logo({ image = ""}: { image: string }) {
   return (
     <div
         style={{ backgroundColor: THEME.blue }}
@@ -11,7 +11,7 @@ function Logo({ image = ""}: { image?: string }) {
     >
         <img 
           src={
-            image === "" ? logoimg : image 
+            logoimg 
           } 
           alt="logo"  
           className={styles?.img}
