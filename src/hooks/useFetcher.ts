@@ -72,6 +72,7 @@ export const useFetcher = <T>({ url, method, body = {}, headers = {} }: FetcherP
     const mutationFetcher = (url: string, body: T, method: Method, headers?: Header): void => {
         mutation(url, body, method, headers)
             .then(data => {
+                console.log(data)
                 setLoading(true)
             })
             .catch(() => {
