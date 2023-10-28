@@ -1,7 +1,7 @@
+import React, { useState } from "react"
 import { useNavigate } from "react-router-dom"
-import { useState } from "react"
 import styles from "./login.module.css"
-import Logo from "../../assets/logo.jpeg"
+import Logo from "../../assets/logo.png"
 import { THEME } from '../../theme';
 import { ENDPOINT } from "../../config"
 import { Session } from "../../types"

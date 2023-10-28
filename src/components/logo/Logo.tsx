@@ -1,6 +1,7 @@
 import styles from "./logo.module.css"
-import logoimg from "../../assets/logo.jpeg"
+import logoimg from "../../assets/logo.png"
 import { THEME } from "../../theme"
+import React from "react"
 
 function Logo({ image = ""}: { image?: string }) {
   return (

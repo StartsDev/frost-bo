@@ -111,7 +111,7 @@ useEffect(() => {
           display: "flex",
           alignItems: "center",
         }}>
-      <Logo image={"../src/assets/logo.jpeg" ?? ""} />
+      <Logo image={"../src/assets/logo.png" ?? ""} />
         <h2>Aire Aplicado S.A.S</h2>
       </div>
     
