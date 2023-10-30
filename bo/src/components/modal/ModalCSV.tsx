@@ -62,13 +62,11 @@ function ModalCSV({ onClose, title, itemsCSV, moduleName }: ModalProps) {
         if (!startDate && !endDate) {
             //Exportacion a Excel
             const csvContent = convertToCSV(itemsCSV);
-            console.log('CSV CONTENT', csvContent)
             const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-            console.log('BLOB ',blob)
             const url = URL.createObjectURL(blob);
             const link = document.createElement('a');
             link.href = url;
-            link.setAttribute('download', `${moduleName}.csv`);
+            link.setAttribute('download', `${moduleName}.xlsx`);
             link.click();
         }
         if (!startDate && endDate) {
