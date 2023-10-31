@@ -1,4 +1,6 @@
-import { useState } from "react";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import React, { useState } from "react";
+import * as XLSX from 'xlsx';
 import Title from "../title/Title";
 import styles from "./modal.module.css";
 import moment from 'moment';
@@ -16,16 +18,16 @@ function ModalCSV({ onClose, title, itemsCSV, moduleName }: ModalProps) {
     const label: string = 'Exportar';
 
     // CSV Format
-    const convertToCSV = (dataCSV): any => {
-        const headers = Object.keys(dataCSV[0]);
-        const rows = dataCSV.map((obj: any) => headers.map((header: any) => {
-            const value = obj[header];
-            return typeof value === 'string' && value.includes(',') ? `"${value}"` : value;
-        }));
-        const headerRow = headers.join(',');
-        const csvRows = [headerRow, ...rows.map((row: any) => row.join(','))];
-        return csvRows.join('\n');
-    }
+    // const convertToCSV = (dataCSV): any => {
+    //     const headers = Object.keys(dataCSV[0]);
+    //     const rows = dataCSV.map((obj: any) => headers.map((header: any) => {
+    //         const value = obj[header];
+    //         return typeof value === 'string' && value.includes(',') ? `"${value}"` : value;
+    //     }));
+    //     const headerRow = headers.join(',');
+    //     const csvRows = [headerRow, ...rows.map((row: any) => row.join(','))];
+    //     return csvRows.join('\n');
+    // }
 
     const handleStartDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setStartDate(event.target.value);
@@ -42,15 +44,19 @@ function ModalCSV({ onClose, title, itemsCSV, moduleName }: ModalProps) {
 
                 //Exportacion a Excel filtrado
                 if (filteredItems && filteredItems.length > 0) {
-                    const csvContent = convertToCSV(filteredItems);
-                    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-                    const url = URL.createObjectURL(blob);
-                    const link = document.createElement('a');
-                    link.href = url;
-                    link.setAttribute('download', `${moduleName}_fecha.xlsx`);
-                    link.click();
-                    setStartDate('');
-                    setEndDate('');
+                    // const csvContent = convertToCSV(filteredItems);
+                    // const blob = new Blob([csvContent], { type: 'xlsx;charset=utf-8;' });
+                    // const url = URL.createObjectURL(blob);
+                    // const link = document.createElement('a');
+                    // link.href = url;
+                    // link.setAttribute('download', `${moduleName}_fecha.xlsx`);
+                    // link.click();
+                    // setStartDate('');
+                    // setEndDate('');
+                    const ws = XLSX.utils.json_to_sheet(filteredItems);
+                    const wb = XLSX.utils.book_new();
+                    XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+                    XLSX.writeFile(wb, `${moduleName}_fecha.xlsx`);
                 }
 
                 if (filteredItems?.length === 0) {
@@ -60,14 +66,18 @@ function ModalCSV({ onClose, title, itemsCSV, moduleName }: ModalProps) {
 
         //Not filter by date
         if (!startDate && !endDate) {
-            //Exportacion a Excel
-            const csvContent = convertToCSV(itemsCSV);
-            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-            const url = URL.createObjectURL(blob);
-            const link = document.createElement('a');
-            link.href = url;
-            link.setAttribute('download', `${moduleName}.xlsx`);
-            link.click();
+            // Exportacion a Excel
+            // const csvContent = convertToCSV(itemsCSV);
+            // const blob = new Blob([csvContent], { type: 'xlsx;charset=utf-8;' });
+            // const url = URL.createObjectURL(blob);
+            // const link = document.createElement('a');
+            // link.href = url;
+            // link.setAttribute('download', `${moduleName}.xlsx`);
+            // link.click();
+            const ws = XLSX.utils.json_to_sheet(itemsCSV);
+            const wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+            XLSX.writeFile(wb, `${moduleName}_fecha.xlsx`);
         }
         if (!startDate && endDate) {
             alert('Debe ingresar una fecha inicial...')
