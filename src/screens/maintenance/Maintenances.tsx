@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react"
+import React, { useEffect, useMemo, useState } from "react"
 import Actions from "../../components/actions/Actions"
 import View from "../../components/view/View"
 import Table from "../../components/table/Table"

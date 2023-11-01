@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useState } from 'react';
+import React, { useState, CSSProperties } from 'react';
 import { Fields } from "../../components/form/Form"
 import View from "../../components/view/View"
 import styles from '../headsquare/headQuarters.module.css'
@@ -10,6 +10,7 @@ import Loader from '../../components/Loader/Loader';
 import { Client, ClientResponse, User } from '../../types';
 import { useFetcher } from '../../hooks/useFetcher';
 import { Input } from '../../components/form/Input';
+import { THEME } from '../../theme';
 
 const fields: Fields[] = [
   {
@@ -69,6 +70,7 @@ function EditClient() {
 
   const { data, loading } = useFetcher<ClientResponse>({method: "GET", url: ENDPOINT.clients.list})
   const [userByCustomer, setUsersByCustomer] = useState<any>([])
+  const [userByRole, setUsersByRole] = useState<any>([])
   const [client, setCleint] = useState({
     id: '',
     businessName:"",
@@ -97,10 +99,13 @@ function EditClient() {
       }
       return res.json()
     }).then(data => {
-      // const usersFound = data.users.filter((user: User) => user.clientId === clientId)
+      console.log(data)
+      const usersCustomers = data.users.filter((user: User) => user.clientId === clientId)
+      const usersByRole = data.users.filter((user: User) => user?.Role?.role === "Cliente")
       // console.log(usersFound);
       // setUsersByCustomer(usersFound)
-      setUsersByCustomer(data)
+      setUsersByRole(usersByRole)
+      setUsersByCustomer(usersCustomers)
     }).finally(()=> {
       setIsLoading(false)
     })
@@ -130,8 +135,6 @@ function EditClient() {
       }
     })  
   }
-
-  console.log(userByCustomer);
 
   const handleUserChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const userSelected = userByCustomer.users.find((user: User) => user.id === e.target.value)
@@ -201,25 +204,52 @@ function EditClient() {
   return (
     <View>
         <ToastContainer />
-        <div className={styles.selectContainer} style={{marginLeft: 33}}>
-          <label htmlFor="" className={styles.labelStyle}>Seleccione el cliente</label>
-          <select name="clientId" id="" className={styles.formInput} onChange={(e)=> handleChangeInput(e as never)}>
-            <option value="" style={{color: 'grey'}}>Seleccione un cliente</option>
-            {data?.clients?.map((client: any, index: any) =>(
-              <option key={index} value={client.id}>{client.businessName}</option>
-            ))}
-            
-          </select>
-        </div>
-        <div className={styles.selectContainer} style={{marginLeft: 33, marginTop: 10}}>
-          <label htmlFor="" className={styles.labelStyle}>Seleccione usuario asociado al cliente </label>
-          <select name="" id="" className={styles.formInput} onChange={(e) => handleUserChange(e as never)}>
-              <option value='' style={{color: 'grey'}}>Seleccione un usuario</option>
-              {userByCustomer.users?.map((user: any, index: any) =>(
-                <option key={index} value={user.id}>{user.firstName + ' ' + user.lastName}</option>
-              ))}
-              
-          </select>
+        <div className={styles.headerContainer}>
+          <div className={styles.headerContainer__selectOption}>
+            <div className={styles.selectContainer} style={{padding: 15}}>
+              <label htmlFor="" className={styles.labelStyle}>Seleccione el cliente</label>
+              <select name="clientId" id="" className={styles.formInput} onChange={(e)=> handleChangeInput(e as never)}>
+                <option value="" style={{color: 'grey'}}>Seleccione un cliente</option>
+                {data?.clients?.map((client: any, index: any) =>(
+                  <option key={index} value={client.id}>{client.businessName}</option>
+                ))}
+                
+              </select>
+            </div>
+            <div className={styles.selectContainer} style={{padding: 15}}>
+              <label htmlFor="" className={styles.labelStyle}>Seleccione usuario asociado al cliente </label>
+              <select name="" id="" className={styles.formInput} onChange={(e) => handleUserChange(e as never)}>
+                  <option value='' style={{color: 'grey'}}>Seleccione un usuario</option>
+                  {userByRole?.map((user: any, index: any) =>(
+                    <option key={index} value={user.id}>{user.firstName + ' ' + user.lastName}</option>
+                  ))}
+                  
+              </select>
+            </div>
+          </div>
+          <div className={styles.headerContainer__listUser} style={{padding: 15, marginRight: 100}}>
+            {
+              client.id.length > 0 &&
+              <p style={{fontWeight: 600}}>Usuarios asociados al cliente</p>
+            }
+            {
+              client.id.length > 0 && userByCustomer.length > 0 && 
+              <div className={styles.headerContainer__listUser__container} style={{height: '150px', overflow: 'auto'}}>
+                {
+                  userByCustomer.map((user: User, index: any) => (
+                    <div key={index}>
+                      <span className={styles.headerContainer__listUser__user}>{user.firstName} {user.lastName}</span>
+                      <div className={styles.headerContainer__listUser__separator}/>
+                    </div>
+                  ))
+                }
+              </div>
+            }
+            {
+              client.id.length > 0 && userByCustomer.length === 0 && 
+              <p style={componentStyles.description}>El cliente no tiene usuarios asociados</p>
+            } 
+          </div>
         </div>
         {isLoading || loading ? <Loader/> : 
         <>
@@ -247,5 +277,19 @@ function EditClient() {
         }
     </View>
   )
+}
+
+interface ComponentStyles {
+  description: CSSProperties;
+}
+
+const componentStyles: ComponentStyles = {
+  description: {
+    width:"100%",
+    marginTop: 20,
+    marginBottom: 20,
+    fontSize: 14,
+    color: THEME.secondary
+  }
 }
 export default EditClient

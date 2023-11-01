@@ -24,3 +24,30 @@
 .labelStyle{
   margin-bottom: 10px !important;
 }
+
+.headerContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.headerContainer__listUser {
+  width: 50%;
+}
+.headerContainer__selectOption {
+  width: 100%;
+}
+
+.headerContainer__listUser__container{
+  display: flex;
+  flex-direction: column;
+}
+.headerContainer__listUser__user{
+  margin-top: 10px;
+}
+
+.headerContainer__listUser__separator{
+  margin-top: 3px;
+  border: 0.1px solid #d7d3d3;
+}

@@ -1,4 +1,4 @@
-import { useState, CSSProperties } from 'react';
+import React, { useState, CSSProperties } from 'react';
 import { Fields } from "../../components/form/Form"
 import View from "../../components/view/View"
 import { ENDPOINT } from "../../config"
@@ -97,7 +97,7 @@ function AddEquipment({isEditable = false}: Props) {
       })
     }   
 
-    if(e.target.name === 'type'){
+    if(e.target.name === 'type'){     
       const equipmentDataBytype: Equipment[] = equipmentList?.filter(p => p.type === e.target.value) as never
       setEquipmentListByType(equipmentDataBytype)
       setEquipment({
