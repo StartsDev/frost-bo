@@ -16,10 +16,12 @@ interface Props {
   imageList?: string[]
   id?: string
   isEditable?: boolean
+  endpoint?: string
+  dataName?: string
 }
 
 
-export const Input = ({name, type, value, label, placeholder, required = true, styleInput, rowStyle, disabled=false, onChange, imageList = [], id, isEditable=false}: Props) => {
+export const Input = ({name, type, value, label, placeholder, required = true, styleInput, rowStyle, disabled=false, onChange, imageList = [], id, isEditable=false, endpoint='', dataName=''}: Props) => {
   return (
     <div className={formStyles.formRow} style={rowStyle}>
       <label htmlFor={name} className={formStyles?.formLabel} style={styleInput}>{label}</label>
@@ -43,6 +45,9 @@ export const Input = ({name, type, value, label, placeholder, required = true, s
         <ImageLoader
           imageList={imageList}
           id={id!}
+          endpoint={endpoint}
+          dataName={dataName}
+          image={value}
         />
       }
     </div>

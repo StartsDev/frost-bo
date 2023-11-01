@@ -242,6 +242,19 @@ function AddEquipment({isEditable = false}: Props) {
                     value={equipment[field.name]}
                   />
                 ))}
+                <Input
+                  type='file'
+                  label='Foto'
+                  name='picture'
+                  placeholder='Sube foto del equipo'
+                  required={false}
+                  value={equipment.image!}
+                  // imageList={[equipment.image!]}
+                  onChange={()=>console.log('test')}
+                  dataName='picture'
+                  endpoint={ENDPOINT.image.uploadWithEquipment}
+                  id={equipment.id}
+                />
                 {
                   isEditable && equipment.id!.length > 0 &&
                   <div className={formStyles.buttonContainer} style={{marginTop: 10}}>

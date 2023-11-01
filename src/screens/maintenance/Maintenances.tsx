@@ -15,6 +15,7 @@ import moment from "moment";
 import Pagination from "../../utils/Pagination"
 import axios from "axios"
 import { capitalString } from "../../utils/capitalizeStr";
+import {padNumber} from '../../utils/helpers'
 
 
 // Create new modal csv call API without pagination and generate csv file with filters date
@@ -88,7 +89,7 @@ function Maintenances() {
     const maintenancePreviewCSV = useMemo(() => {
         return item?.maintenances?.map(maintenance => {
             return {
-                id: maintenance.id,
+                id: padNumber(maintenance.id),
                 cliente: capitalString(maintenance.client.businessName),
                 hora: moment(maintenance.service_hour, 'HH:mm').format('h:mm A'),
                 fecha: moment(maintenance.service_date).format('DD/MM/YYYY'),
@@ -102,7 +103,7 @@ function Maintenances() {
     const maintenancePreview = useMemo(() => {
         return data?.maintenances?.map(maintenance => {
             return {
-                id: maintenance.id,
+                id: padNumber(maintenance.id),
                 cliente: capitalString(maintenance.client.businessName),
                 hora: moment(maintenance.service_hour, 'HH:mm').format('h:mm A'),
                 fecha: moment(maintenance.service_date).format('DD/MM/YYYY'),
@@ -127,7 +128,7 @@ function Maintenances() {
 
         const mapObject = filteredMaintenance?.map(maintenance => {
             return {
-                "Nº Orden": `MTO-${maintenance.id}`,
+                "Nº Orden": padNumber(maintenance.id),
                 Estado: maintenance.status,
                 Actividades: maintenance.activities,
                 "Voltaje en L1L2": maintenance.voltage_on_L1L2,
@@ -183,7 +184,7 @@ function Maintenances() {
             <Actions>
                 <button
                     style={{
-                        width: 120,
+                        width: 130,
                         height: 30,
                         backgroundColor: THEME.black,
                         color: THEME.white,
@@ -200,7 +201,7 @@ function Maintenances() {
                         openModalCSV()
                     }}
                 >
-                    Exportar CSV <MdDescription />
+                    Exportar a Excel <MdDescription />
                 </button>
                 {
                     isOpenCSV ? (

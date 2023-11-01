@@ -1,4 +1,4 @@
-import { useState } from "react"
+import React, { useState } from "react"
 import moment from "moment"
 import { Fields } from "../../components/form/Form"
 import View from "../../components/view/View"
@@ -245,6 +245,9 @@ function AddMaintenance({isEditable = false}: Props) {
   }
 
   // console.log(maintanance)
+  const userByRole = {users: userToModify?.users.filter(e => e.Role.role === 'Tecnico')}
+  console.log(userToModify)
+  console.log(userByRole)
 
   return (
     <View>
@@ -285,7 +288,7 @@ function AddMaintenance({isEditable = false}: Props) {
               <SelectInput
                 label="Tecnico"
                 placeholder="Selecciona un tecnico"
-                data={userToModify?.users as never}
+                data={userByRole?.users as never}
                 name="techId"
                 selectedValue={maintanance?.techName?.split(" ")[0]}
                 handleChange={handleInputChange}
@@ -384,7 +387,7 @@ function AddMaintenance({isEditable = false}: Props) {
                 <SelectInput
                   label="Tecnico"
                   placeholder="Selecciona un tecnico"
-                  data={userToModify?.users as never}
+                  data={userByRole?.users as never}
                   name="techId"
                   handleChange={handleInputChange}
                   value="id"

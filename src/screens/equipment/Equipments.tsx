@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react"
+import React, { useEffect, useMemo, useState } from "react"
 import Actions from "../../components/actions/Actions"
 import View from "../../components/view/View"
 import Table from "../../components/table/Table"
@@ -140,7 +140,7 @@ function Equipments() {
             <Actions>
                 <button
                     style={{
-                        width: 120,
+                        width: 130,
                         height: 30,
                         backgroundColor: THEME.black,
                         color: THEME.white,
@@ -156,7 +156,7 @@ function Equipments() {
                         openModalCSV()
                     }}
                 >
-                    Exportar CSV <MdDescription />
+                    Exportar a Excel <MdDescription />
                 </button>
                 {
                     isOpenCSV ? (
