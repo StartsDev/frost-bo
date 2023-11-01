@@ -19,6 +19,7 @@ import EditMaintenance from "./screens/maintenance/EditMaintence";
 import CreateTech from "./screens/Technicians/CreateTech";
 import CreateEditEquipment from "./screens/equipment/CreateEditEquipment"
 import React from "react";
+import { PasswordManagement } from "./screens/Technicians/PasswordManagement";
 
 const routesClients: RouteObject[] = [
     {path: "clients",  element: <Clients />  },
@@ -42,6 +43,7 @@ const routesReports: RouteObject[] = [
 const routesTechnical: RouteObject[] = [
     {path: "add-technical", element: <CreateTech  isEditable={false}/> },
     {path: "edit-technical", element: <CreateTech  isEditable={true}/> },
+    {path: "edit-password", element: <PasswordManagement /> },
 ]
 
 const routesMantenence: RouteObject[] = [

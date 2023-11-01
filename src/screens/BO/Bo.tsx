@@ -84,6 +84,7 @@ useEffect(() => {
   const optionsTechnical = [
     { route: "add-technical", title: "Crear Usuario" },
     { route: "edit-technical", title: "Modificar Usuario" },
+    { route: "edit-password", title: "Gestionar Contraseñas" },
   ];
 
   const optionsMantenence = [

@@ -1,0 +1,14 @@
+.radioContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  width: 100%;
+  padding: 10px;
+}
+
+.radioBox {
+  margin-right: 30px;
+  display: flex;
+  justify-content: space-between;
+  width: 100px;
+}
