@@ -1,3 +1,4 @@
+import React from "react";
 import styles from "../../components/modal/modal.module.css";
 
 

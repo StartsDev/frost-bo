@@ -7,6 +7,8 @@ import { Headquarter, Location, Equipment } from "../../types";
 import Headmaint from "../../screens/maintenance/Headermaint";
 import FooterMaint from "../../screens/maintenance/FootMaint";
 import { useModal } from "../../hooks/useModal";
+import React from "react";
+import { useNavigate } from "react-router-dom"
 
 
 
@@ -66,6 +68,9 @@ function Modal({
   ]);
   const shouldExcludeKey = (key) => excludedKeys.has(key);
   const filteredEntries = Object.entries(data).filter(([key]) => !shouldExcludeKey(key));
+  const navigate = useNavigate()
+  
+  console.log('first', data['Serial y Modelo'])
 
   return (
     <div className={styles.modal}>
@@ -75,9 +80,12 @@ function Modal({
           X
         </button>
 
-        <Title title={title} />
+        <div style={{display: 'flex', flexDirection: 'row', width: '300px', alignItems: 'center'}}>
+          <Title title={title} />
+          <button className={styles.pdfButtonGenerator} onClick={()=>navigate('/bo/pdf-maintenance', {state: {maintenance: data}} )}>Generar PDF</button>
+        </div>
 
-        {title === "Mantenimiento" ?
+        {title === "Detalle del Mantenimiento" ?
           <>
             <Headmaint data={data} />
             {/* Div grid para detalles del mantenimiento */}

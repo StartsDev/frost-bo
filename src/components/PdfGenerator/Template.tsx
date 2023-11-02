@@ -1,4 +1,6 @@
+import React from 'react';
 import logoImported from '../../assets/logo.png';
+import './style.css'
 
 export interface PdfParameters {
   logo: string;
@@ -43,7 +45,7 @@ export interface PdfParameters {
 }
 
 
-export const html = ({
+export const HtmlTemplate = ({
   logo,
   ot,
   type,
@@ -85,192 +87,194 @@ export const html = ({
   observations = '',
 }: PdfParameters) => {
   // console.log(logo);
-  return `
-<html>
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Informe de Mantenimiento</title>
-</head>
-<body style="width: 800px;">
-  <div style="margin-bottom: 50px;">
-    <img src=${logo} alt="logo" style="position: absolute; left: 20px; top: 30px;">
-    <h1 style="text-align: center; color: #072D8D; font-size: 28px;">AIRE APLICADO SAS</h1>
-    <h2 style="text-align: center; font-size: 20px; font-family: 'Calibri', sans-serif, monospace;" >Especialistas en soluciones</h2>
-  </div>
-  <h4 style="text-align: center; font-size: 16px; font-family: 'Calibri', sans-serif, monospace; margin-top: 80px;">INFORME DE SERVICIO</h4>
-  <div style="display: flex; flex-direction: row; width: 100%; justify-content: space-between;">
-    <div style="width: 360px; border-radius: 3px; padding: 5px;">
-      <table style="width: 100%;">
-        <tbody>
-          <tr style="margin-bottom: 3px;">
-            <td style="width: 40%; background-color: rgb(230, 228, 228); border-radius: 3px; padding: 5px; font-weight: 600; font-family: 'Calibri', sans-serif, monospace;">Cliente:</td>
-            <td style="width: 100%;font-family: 'Calibri', sans-serif, monospace; border-bottom: 1px solid rgb(211, 209, 209)">${customer}</td>
-          </tr>
-          <tr>
-            <td style="width: 40%;background-color: rgb(230, 228, 228); border-radius: 3px; padding: 5px; font-weight: 600; font-family: 'Calibri', sans-serif, monospace;">Sede:</td>
-            <td style="width: 100%;font-family: 'Calibri', sans-serif, monospace; border-bottom: 1px solid rgb(211, 209, 209)">${headQuarter}</td>
-          </tr>
-          <tr>
-            <td style="width: 40%;background-color: rgb(230, 228, 228); border-radius: 3px; padding: 5px; font-weight: 600; font-family: 'Calibri', sans-serif, monospace;">Ciudad:</td>
-            <td style="width: 100%;font-family: 'Calibri', sans-serif, monospace; border-bottom: 1px solid rgb(211, 209, 209)">${city ? city : '---'}</td>
-          </tr>
-          <tr>
-            <td style="width: 40%;background-color: rgb(230, 228, 228); border-radius: 3px; padding: 5px; font-weight: 600; font-family: 'Calibri', sans-serif, monospace;">Contacto:</td>
-            <td style="width: 100%;font-family: 'Calibri', sans-serif, monospace; border-bottom: 1px solid rgb(211, 209, 209)">${contact}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <div style="width: 400px ;border-radius: 3px; padding: 5px;">
-      <table style="width: 100%;">
-        <tbody>
-          <tr>
-            <td style="width: 50%; background-color: rgb(230, 228, 228); border-radius: 3px; padding: 5px; font-weight: 600; font-family: 'Calibri', sans-serif, monospace;">Orden de Trabajo:</td>
-            <td style="width: 100%;font-family: 'Calibri', sans-serif, monospace; border-bottom: 1px solid rgb(211, 209, 209)">${ot}</td>
-          </tr>
-          <tr>
-            <td style="width: 50%; background-color: rgb(230, 228, 228); border-radius: 3px; padding: 5px; font-weight: 600; font-family: 'Calibri', sans-serif, monospace;">Tipo de Equipo:</td>
-            <td style="width: 100%;font-family: 'Calibri', sans-serif, monospace; border-bottom: 1px solid rgb(211, 209, 209)">${type}</td>
-          </tr>
-          <tr>
-            <td style="width: 50%; background-color: rgb(230, 228, 228); border-radius: 3px; padding: 5px; font-weight: 600; font-family: 'Calibri', sans-serif, monospace;">Ubicación:</td>
-            <td style="width: 100%;font-family: 'Calibri', sans-serif, monospace; border-bottom: 1px solid rgb(211, 209, 209)">${location}</td>
-          </tr>
-          <tr>
-            <td style="width: 50%; background-color: rgb(230, 228, 228); border-radius: 3px; padding: 5px; font-weight: 600; font-family: 'Calibri', sans-serif, monospace;">Marca / Modelo:</td>
-            <td style="width: 100%;font-family: 'Calibri', sans-serif, monospace; border-bottom: 1px solid rgb(211, 209, 209)">${brand} ${reference}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-  <div style="width: 100%; display: flex; justify-content: center; flex-direction: column; align-items: center;">
-    <h4 style="font-family: 'Calibri', sans-serif, monospace;">Actividades Ejecutadas</h4>
-    <div style="width: 100%; height: 150px; background-color:rgb(240, 239, 239); border-radius: 5px;">
-      <span style="font-family: 'Calibri', sans-serif, monospace; padding: 5px; text-align: justify;">
-        ${activities}
-      </span>
-    </div>
-  </div>
-  <div style="width: 100%;">
-    <h4 style="font-family: 'Calibri', sans-serif, monospace; text-align: center;">Parametros de Operación</h4>
-    <div style="display: flex; flex-direction: row; justify-content: space-between;">
-      <table style="width: 100%; margin-right: 50px;">
-        <tbody>
-          <tr>
-            <td style="width: 50%; background-color: rgb(240, 239, 239); border-radius: 3px; padding: 5px; font-weight: 600; font-size: 14px; font-family: 'Calibri', sans-serif, monospace;">V. Entrada L1L2:</td>
-            <td style="width: 50%; font-family: 'Calibri', sans-serif, monospace; border-bottom: 1px solid rgb(211, 209, 209); font-size: 14px; text-align: center;">${voltajel1l2}</td>
-          </tr>
-          <tr>
-            <td style="width: 50%; background-color: rgb(240, 239, 239); border-radius: 3px; padding: 5px; font-weight: 600; font-size: 14px; font-family: 'Calibri', sans-serif, monospace;">V. Entrada L1L3:</td>
-            <td style="width: 50%; font-family: 'Calibri', sans-serif, monospace; border-bottom: 1px solid rgb(211, 209, 209); font-size: 14px; text-align: center;">${voltajel1l3}</td>
-          </tr>
-          <tr>
-            <td style="width: 50%; background-color: rgb(240, 239, 239); border-radius: 3px; padding: 5px; font-weight: 600; font-size: 14px; font-family: 'Calibri', sans-serif, monospace;">V. Entrada L2L3:</td>
-            <td style="width: 50%; font-family: 'Calibri', sans-serif, monospace; border-bottom: 1px solid rgb(211, 209, 209); font-size: 14px; text-align: center;">${voltajel2l3}</td>
-          </tr>
-          <tr>
-            <td style="width: 50%; background-color: rgb(240, 239, 239); border-radius: 3px; padding: 5px; font-weight: 600; font-size: 14px; font-family: 'Calibri', sans-serif, monospace;">Compresor 1 Amp. L1:</td>
-            <td style="width: 50%; font-family: 'Calibri', sans-serif, monospace; border-bottom: 1px solid rgb(211, 209, 209); font-size: 14px; text-align: center;">${compressor1l1}</td>
-          </tr>
-          <tr>
-            <td style="width: 50%; background-color: rgb(240, 239, 239); border-radius: 3px; padding: 5px; font-weight: 600; font-size: 14px; font-family: 'Calibri', sans-serif, monospace;">Compresor 1 Amp. L2:</td>
-            <td style="width: 50%; font-family: 'Calibri', sans-serif, monospace; border-bottom: 1px solid rgb(211, 209, 209); font-size: 14px; text-align: center;">${compressor1l2}</td>
-          </tr>
-          <tr>
-            <td style="width: 50%; background-color: rgb(240, 239, 239); border-radius: 3px; padding: 5px; font-weight: 600; font-size: 14px; font-family: 'Calibri', sans-serif, monospace;">Compresor 1 Amp. L3:</td>
-            <td style="width: 50%; font-family: 'Calibri', sans-serif, monospace; border-bottom: 1px solid rgb(211, 209, 209); font-size: 14px; text-align: center;">${compressor1l3}</td>
-          </tr>
-          <tr>
-            <td style="width: 50%; background-color: rgb(240, 239, 239); border-radius: 3px; padding: 5px; font-weight: 600; font-size: 14px; font-family: 'Calibri', sans-serif, monospace;">Compresor 2 Amp. L1:</td>
-            <td style="width: 50%; font-family: 'Calibri', sans-serif, monospace; border-bottom: 1px solid rgb(211, 209, 209); font-size: 14px; text-align: center;">${compressor2l1}</td>
-          </tr>
-          <tr>
-            <td style="width: 50%; background-color: rgb(240, 239, 239); border-radius: 3px; padding: 5px; font-weight: 600; font-size: 14px; font-family: 'Calibri', sans-serif, monospace;">Compresor 2 Amp. L2:</td>
-            <td style="width: 50%; font-family: 'Calibri', sans-serif, monospace; border-bottom: 1px solid rgb(211, 209, 209); font-size: 14px; text-align: center;">${compressor2l2}</td>
-          </tr>
-          <tr>
-            <td style="width: 50%; background-color: rgb(240, 239, 239); border-radius: 3px; padding: 5px; font-weight: 600; font-size: 14px; font-family: 'Calibri', sans-serif, monospace;">Compresor 2 Amp. L3:</td>
-            <td style="width: 50%; font-family: 'Calibri', sans-serif, monospace; border-bottom: 1px solid rgb(211, 209, 209); font-size: 14px; text-align: center;">${compressor2l3}</td>
-          </tr>
-        </tbody>
-      </table>
-      <table style="width: 100%;">
-        <tbody>
-          <tr>
-            <td style="width: 50%; background-color: rgb(240, 239, 239); border-radius: 3px; padding: 5px; font-weight: 600; font-size: 14px; font-family: 'Calibri', sans-serif, monospace;">Amp. Motor 1:</td>
-            <td style="width: 100%;font-family: 'Calibri', sans-serif, monospace; border-bottom: 1px solid rgb(211, 209, 209); font-size: 14px; text-align: center;">${ampEngine1}</td>
-          </tr>
-          <tr>
-            <td style="width: 50%; background-color: rgb(240, 239, 239); border-radius: 3px; padding: 5px; font-weight: 600; font-size: 14px; font-family: 'Calibri', sans-serif, monospace;">Amp. Motor 2:</td>
-            <td style="width: 100%;font-family: 'Calibri', sans-serif, monospace; border-bottom: 1px solid rgb(211, 209, 209); font-size: 14px; text-align: center;">${ampEngine2}</td>
-          </tr>
-          <tr>
-            <td style="width: 50%; background-color: rgb(240, 239, 239); border-radius: 3px; padding: 5px; font-weight: 600; font-size: 14px; font-family: 'Calibri', sans-serif, monospace;">Amp. Motor 3:</td>
-            <td style="width: 100%;font-family: 'Calibri', sans-serif, monospace; border-bottom: 1px solid rgb(211, 209, 209); font-size: 14px; text-align: center;">${ampEngine3}</td>
-          </tr>
-          <tr>
-            <td style="width: 50%; background-color: rgb(240, 239, 239); border-radius: 3px; padding: 5px; font-weight: 600; font-size: 14px; font-family: 'Calibri', sans-serif, monospace;">Amp. Motor Evap:</td>
-            <td style="width: 100%;font-family: 'Calibri', sans-serif, monospace; border-bottom: 1px solid rgb(211, 209, 209); font-size: 14px; text-align: center;">${evapMotor}</td>
-          </tr>
-          <tr>
-            <td style="width: 50%; background-color: rgb(240, 239, 239); border-radius: 3px; padding: 5px; font-weight: 600; font-size: 14px; font-family: 'Calibri', sans-serif, monospace;">Voltaje Control:</td>
-            <td style="width: 100%;font-family: 'Calibri', sans-serif, monospace; border-bottom: 1px solid rgb(211, 209, 209); font-size: 14px; text-align: center;">${voltageControl}</td>
-          </tr>
-          <tr>
-            <td style="width: 50%; background-color: rgb(240, 239, 239); border-radius: 3px; padding: 5px; font-weight: 600; font-size: 14px; font-family: 'Calibri', sans-serif, monospace;">Temp. Suminsitro:</td>
-            <td style="width: 100%;font-family: 'Calibri', sans-serif, monospace; border-bottom: 1px solid rgb(211, 209, 209); font-size: 14px; text-align: center;">${temperatureEntrance}</td>
-          </tr>
-          <tr>
-            <td style="width: 50%; background-color: rgb(240, 239, 239); border-radius: 3px; padding: 5px; font-weight: 600; font-size: 14px; font-family: 'Calibri', sans-serif, monospace;">Temp. Retorno:</td>
-            <td style="width: 100%;font-family: 'Calibri', sans-serif, monospace; border-bottom: 1px solid rgb(211, 209, 209); font-size: 14px; text-align: center;">${temperatureExit}</td>
-          </tr>
-          <tr>
-            <td style="width: 50%; background-color: rgb(240, 239, 239); border-radius: 3px; padding: 5px; font-weight: 600; font-size: 14px; font-family: 'Calibri', sans-serif, monospace;">Presión Succión:</td>
-            <td style="width: 100%;font-family: 'Calibri', sans-serif, monospace; border-bottom: 1px solid rgb(211, 209, 209); font-size: 14px; text-align: center;">${suctionPressure}</td>
-          </tr>
-          <tr>
-            <td style="width: 50%; background-color: rgb(240, 239, 239); border-radius: 3px; padding: 5px; font-weight: 600; font-size: 14px; font-family: 'Calibri', sans-serif, monospace;">Presión Descarga:</td>
-            <td style="width: 100%;font-family: 'Calibri', sans-serif, monospace; border-bottom: 1px solid rgb(211, 209, 209); font-size: 14px; text-align: center;">${dischargedPressure}</td>
-          </tr>
-        </tbody>
-      </table>
+  return (
+    <>
+      <div>
+        {/* <head> */}
+          {/* <meta charset="UTF-8"/> */}
+          {/* <meta name="viewport" content="width=device-width, initial-scale=1.0"/> */}
+          {/* <title>Informe de Mantenimiento</title> */}
+        {/* </head> */}
+        <body className='body__container'>
+          <div className='body__container__header'>
+            <img src={logo} alt="logo" className='body__container__logo'/>
+            <h1 className='body__container__title'>AIRE APLICADO SAS</h1>
+            <h2 className='body__container__subtitle' >Especialistas en soluciones</h2>
+          </div>
+          <h4 className='body__container__report'>INFORME DE SERVICIO</h4>
+          <div className="body__container__infoCustomer">
+            <div className='infoCustomer__container'>
+              <table style={{width: '100%'}}>
+                <tbody>
+                  <tr style={{marginBottom: '3px'}}>
+                    <td className='infoCustomer__container__title__column'>Cliente:</td>
+                    <td className='infoCustomer__container__title__value'>{customer}</td>
+                  </tr>
+                  <tr>
+                    <td className='infoCustomer__container__title__column'>Sede:</td>
+                    <td className='infoCustomer__container__title__value'>{headQuarter}</td>
+                  </tr>
+                  <tr>
+                    <td className='infoCustomer__container__title__column'>Ciudad:</td>
+                    <td className='infoCustomer__container__title__value'>{city ? city : '---'}</td>
+                  </tr>
+                  <tr>
+                    <td className='infoCustomer__container__title__column'>Contacto:</td>
+                    <td className='infoCustomer__container__title__value'>{contact}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div className='infoCustomer__container'>
+              <table style={{width: '100%'}}>
+                <tbody>
+                  <tr>
+                    <td className='infoCustomer__container__title__column'>Orden de Trabajo:</td>
+                    <td className='infoCustomer__container__title__value'>{ot}</td>
+                  </tr>
+                  <tr>
+                    <td className='infoCustomer__container__title__column'>Tipo de Equipo:</td>
+                    <td className='infoCustomer__container__title__value'>{type}</td>
+                  </tr>
+                  <tr>
+                    <td className='infoCustomer__container__title__column'>Ubicación:</td>
+                    <td className='infoCustomer__container__title__value'>{location}</td>
+                  </tr>
+                  <tr>
+                    <td className='infoCustomer__container__title__column'>Marca / Modelo:</td>
+                    <td className='infoCustomer__container__title__value'>{brand} ${reference}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div className="body__container__infoCustomer_2">
+            <h4 className='body__container__infoCustomer_2__title'>Actividades Ejecutadas</h4>
+            <div className='body__container__infoCustomer_2__activities__container'>
+              <span className='body__container__infoCustomer_2__activities__container__value'>
+                {activities}
+              </span>
+            </div>
+          </div>
+          <div style={{width: '100%'}}>
+            <h4 className='parameters__title'>Parametros de Operación</h4>
+            <div className='parameters__container'>
+              <table className="parameters__container__table">
+                <tbody>
+                  <tr>
+                    <td className='parameters__container__table__column'>V. Entrada L1L2:</td>
+                    <td className='parameters__container__table__value'>{voltajel1l2}</td>
+                  </tr>
+                  <tr>
+                    <td className='parameters__container__table__column'>V. Entrada L1L3:</td>
+                    <td className='parameters__container__table__value'>{voltajel1l3}</td>
+                  </tr>
+                  <tr>
+                    <td className='parameters__container__table__column'>V. Entrada L2L3:</td>
+                    <td className='parameters__container__table__value'>{voltajel2l3}</td>
+                  </tr>
+                  <tr>
+                    <td className='parameters__container__table__column'>Compresor 1 Amp. L1:</td>
+                    <td className='parameters__container__table__value'>{compressor1l1}</td>
+                  </tr>
+                  <tr>
+                    <td className='parameters__container__table__column'>Compresor 1 Amp. L2:</td>
+                    <td className='parameters__container__table__value'>{compressor1l2}</td>
+                  </tr>
+                  <tr>
+                    <td className='parameters__container__table__column'>Compresor 1 Amp. L3:</td>
+                    <td className='parameters__container__table__value'>{compressor1l3}</td>
+                  </tr>
+                  <tr>
+                    <td className='parameters__container__table__column'>Compresor 2 Amp. L1:</td>
+                    <td className='parameters__container__table__value'>{compressor2l1}</td>
+                  </tr>
+                  <tr>
+                    <td className='parameters__container__table__column'>Compresor 2 Amp. L2:</td>
+                    <td className='parameters__container__table__value'>{compressor2l2}</td>
+                  </tr>
+                  <tr>
+                    <td className='parameters__container__table__column'>Compresor 2 Amp. L3:</td>
+                    <td className='parameters__container__table__value'>{compressor2l3}</td>
+                  </tr>
+                </tbody>
+              </table>
+              <table style={{width: '100%'}}>
+                <tbody>
+                  <tr>
+                    <td className='parameters__container__table__column'>Amp. Motor 1:</td>
+                    <td className='parameters__container__table__value'>{ampEngine1}</td>
+                  </tr>
+                  <tr>
+                    <td className='parameters__container__table__column'>Amp. Motor 2:</td>
+                    <td className='parameters__container__table__value'>{ampEngine2}</td>
+                  </tr>
+                  <tr>
+                    <td className='parameters__container__table__column'>Amp. Motor 3:</td>
+                    <td className='parameters__container__table__value'>{ampEngine3}</td>
+                  </tr>
+                  <tr>
+                    <td className='parameters__container__table__column'>Amp. Motor Evap:</td>
+                    <td className='parameters__container__table__value'>{evapMotor}</td>
+                  </tr>
+                  <tr>
+                    <td className='parameters__container__table__column'>Voltaje Control:</td>
+                    <td className='parameters__container__table__value'>{voltageControl}</td>
+                  </tr>
+                  <tr>
+                    <td className='parameters__container__table__column'>Temp. Suminsitro:</td>
+                    <td className='parameters__container__table__value'>{temperatureEntrance}</td>
+                  </tr>
+                  <tr>
+                    <td className='parameters__container__table__column'>Temp. Retorno:</td>
+                    <td className='parameters__container__table__value'>{temperatureExit}</td>
+                  </tr>
+                  <tr>
+                    <td className='parameters__container__table__column'>Presión Succión:</td>
+                    <td className='parameters__container__table__value'>{suctionPressure}</td>
+                  </tr>
+                  <tr>
+                    <td className='parameters__container__table__column'>Presión Descarga:</td>
+                    <td className='parameters__container__table__value'>{dischargedPressure}</td>
+                  </tr>
+                </tbody>
+              </table>
 
-    </div>
-  </div>
-  <div style="margin-top: 30px;">
-    <h4 style="font-family: 'Calibri', sans-serif, monospace; font-size: 14px;">Fecha y hora de ejecución del servicio</h4>
-    <div style="display: flex; flex-direction: row;">
-      <span style="font-family: 'Calibri', sans-serif, monospace; font-size: 16px;">${date}</span>
-      <span style="margin-inline: 20px;">-</span>
-      <span style="font-family: 'Calibri', sans-serif, monospace; font-size: 16px;">${hour}</span>
-    </div>
-  </div>
-  <div style="width: 100%; display: flex; justify-content: center; flex-direction: column; align-items: center; margin-top: 50px">
-    <h4 style="font-family: 'Calibri', sans-serif, monospace;">Observaciones adicionales</h4>
-    <div style="width: 100%; height: 100px; background-color:rgb(240, 239, 239); border-radius: 5px;">
-      <span style="font-family: 'Calibri', sans-serif, monospace; padding: 5px; text-align: justify;">
-        ${observations}
-      </span>
-    </div>
-  </div>
-  <div style="display: flex; flex-direction: row; justify-content: center; margin-top: 70px; margin-bottom: 100px;">
-    <div style="display: flex; flex-direction: column; margin-right: 200px;">
-      <img src=${techSign} alt="tech-sign" style="width: 150px; height: 100px;">
-      <span style="font-family: 'Calibri', sans-serif, monospace; text-align: center; margin-top: 20px; font-weight: 700;">Firma tecnico</span>
-    </div>
-    <div style="display: flex; flex-direction: column; margin-left: 200px;">
-      <img src=${customerSign} alt="customer-sign" style="width: 150px; height: 100px;">
-      <span style="font-family: 'Calibri', sans-serif, monospace; text-align: center; margin-top: 20px; font-weight: 700;">Firma cliente</span>
-    </div>
-  </div>
-  <div>
-    <span style="font-family: 'Calibri', sans-serif, monospace;">Informe generado el:</span>
-    <span style="font-family: 'Calibri', sans-serif, monospace;">${new Date().toLocaleDateString()}</span>
-  </div>
-  
-</body>
-</html>
-`;
+            </div>
+          </div>
+          <div style={{marginTop: '30px'}}>
+            <h4 className='date__containter__title'>Fecha y hora de ejecución del servicio</h4>
+            <div className='date__container'>
+              <span className='date__container__values'>{date}</span>
+              <span style={{marginInline: "20px;"}}>-</span>
+              <span className='date__container__values'>{hour}</span>
+            </div>
+          </div>
+          <div className='observations__container'>
+            <h4 className='observations__container__title'>Observaciones adicionales</h4>
+            <div className='observations__container__column'>
+              <span className='observations__container__value'>
+                {observations}
+              </span>
+            </div>
+          </div>
+          <div className='sign__container'>
+            <div className='sign__container__box'>
+              <img src={techSign} alt="tech-sign" className='sign__container__box__img'/>
+              <span className='sign__container__box__sign'>Firma tecnico</span>
+            </div>
+            <div className='sign__container__box'>
+              <img src={customerSign} alt="customer-sign" className='sign__container__box__img'/>
+              <span className='sign__container__box__sign'>Firma cliente</span>
+            </div>
+          </div>
+          <div>
+            <span className='footer'>Informe generado el:</span>
+            <span className='footer'>{new Date().toLocaleDateString()}</span>
+          </div>
+          
+        </body>
+      </div>
+    </>
+  );
 };

@@ -1,0 +1,121 @@
+.body__container {
+  width: 800px;
+}
+
+.body__container__header {
+  margin-bottom: 50px
+}
+
+.body__container__logo {
+  position: absolute; left: 20px; top: 30px;
+}
+
+.body__container__title{
+  text-align: center; color: #072D8D; font-size: 28px;
+}
+
+.body__container__subtitle{
+  text-align: center; font-size: 20px; font-family: 'Calibri', sans-serif, monospace;
+}
+
+.body__container__report {
+  text-align: center; font-size: 16px; font-family: 'Calibri', sans-serif, monospace; margin-top: 80px;
+}
+
+.body__container__infoCustomer{
+  display: flex; flex-direction: row; width: 100%; justify-content: space-between;
+}
+
+.body__container__infoCustomer_2{
+  width: 100%; display: flex; justify-content: center; flex-direction: column; align-items: center;
+}
+
+.infoCustomer__container {
+  width: 360px; border-radius: 3px; padding: 5px;
+}
+
+.body__container__infoCustomer_2__title {
+  font-family: 'Calibri', sans-serif, monospace;
+}
+
+.body__container__infoCustomer_2__activities__container{
+  width: 100%; height: 150px; background-color:rgb(240, 239, 239); border-radius: 5px;
+}
+
+.body__container__infoCustomer_2__activities__container__value {
+  font-family: 'Calibri', sans-serif, monospace; padding: 5px; text-align: justify;
+}
+
+.infoCustomer__container__title__column {
+  width: 40%; background-color: rgb(240, 239, 239); border-radius: 3px; padding: 5px; font-weight: 600; font-family: 'Calibri', sans-serif, monospace;
+}
+
+.infoCustomer__container__title__value{
+  width: 100%;font-family: 'Calibri', sans-serif, monospace; border-bottom: 1px solid rgb(211, 209, 209)
+}
+
+.parameters__title {
+  font-family: 'Calibri', sans-serif, monospace; text-align: center;
+}
+
+.parameters__container {
+  display: flex; flex-direction: row; justify-content: space-between;
+}
+
+.parameters__container__table{
+  width: 100%; margin-right: 50px;
+}
+
+.parameters__container__table__column{
+  width: 50%; background-color: rgb(240, 239, 239); border-radius: 3px; padding: 5px; font-weight: 600; font-size: 14px; font-family: 'Calibri', sans-serif, monospace;
+}
+
+.parameters__container__table__value {
+  width: 50%; font-family: 'Calibri', sans-serif, monospace; border-bottom: 1px solid rgb(211, 209, 209); font-size: 14px; text-align: center;
+}
+
+.date__containter__title {
+  font-family: 'Calibri', sans-serif, monospace; font-size: 14px;
+}
+
+.date__container{
+  display: flex; flex-direction: row;
+}
+
+.date__container__values{
+  font-family: 'Calibri', sans-serif, monospace; font-size: 16px;
+}
+
+.observations__container {
+  width: 100%; display: flex; justify-content: center; flex-direction: column; align-items: center; margin-top: 50px
+}
+.observations__container__title {
+  font-family: 'Calibri', sans-serif, monospace;
+}
+
+.observations__container__column {
+  width: 100%; height: 100px; background-color:rgb(240, 239, 239); border-radius: 5px;
+}
+
+.observations__container__value{
+  font-family: 'Calibri', sans-serif, monospace; padding: 5px; text-align: justify;
+}
+
+.sign__container {
+  display: flex; flex-direction: row; justify-content: center; margin-top: 70px; margin-bottom: 100px;
+}
+
+.sign__container__box {
+  display: flex; flex-direction: column; margin-right: 200px;
+}
+
+.sign__container__box__img{
+  width: 150px; height: 100px;
+}
+
+.sign__container__box__sign {
+  font-family: 'Calibri', sans-serif, monospace; text-align: center; margin-top: 20px; font-weight: 700;
+}
+.footer {
+  font-family: 'Calibri', sans-serif, monospace;
+}

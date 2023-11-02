@@ -213,6 +213,17 @@ img {
   border:1px rgb(217, 242, 255) solid;
 }
 
+.pdfButtonGenerator {
+  background-color: white !important;
+  height: 25px;
+  /* border: solid 1px rgb(112, 113, 114); */
+  border: 0px;
+  box-shadow: 1px 1px 5px rgb(118, 117, 117) !important;
+  border-radius: 5px;
+  width: 100px;
+  color: rgb(87, 87, 87)
+}
+
  @-webkit-keyframes scale-up-center {
     0% {
        transform: scale(0.5);

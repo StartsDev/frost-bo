@@ -20,6 +20,7 @@ import CreateTech from "./screens/Technicians/CreateTech";
 import CreateEditEquipment from "./screens/equipment/CreateEditEquipment"
 import React from "react";
 import { PasswordManagement } from "./screens/Technicians/PasswordManagement";
+import { PdfViewer } from "./components/PdfGenerator/PdfViewer";
 
 const routesClients: RouteObject[] = [
     {path: "clients",  element: <Clients />  },
@@ -51,6 +52,7 @@ const routesMantenence: RouteObject[] = [
     {path: "edit-mantenence", element: <AddMaintenance isEditable={true}/>  },
     {path: "add-equipement", element: <CreateEditEquipment isEditable={false}/>  },
     {path: "edit-equipement", element: <CreateEditEquipment isEditable={true}/>  },
+    {path: "pdf-maintenance", element: <PdfViewer/> },
 ]
 
 const boChildrens: RouteObject[] = [

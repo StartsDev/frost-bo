@@ -128,7 +128,7 @@ function Maintenances() {
 
         const mapObject = filteredMaintenance?.map(maintenance => {
             return {
-                "Nº Orden": padNumber(maintenance.id),
+                "Orden de trabajo": padNumber(maintenance.id),
                 Estado: maintenance.status,
                 Actividades: maintenance.activities,
                 "Voltaje en L1L2": maintenance.voltage_on_L1L2,
@@ -243,7 +243,7 @@ function Maintenances() {
                     <Modal
                         data={maintenanceDetail!}
                         onClose={closeModal}
-                        title="Mantenimiento"
+                        title="Detalle del Mantenimiento"
                     />
                 ) : null
             }
