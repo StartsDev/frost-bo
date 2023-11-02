@@ -153,6 +153,7 @@ function Maintenances() {
                 "Estado del rociador": maintenance.sprinkler_state,
                 "Estado flotador": maintenance.float_state,
                 "Descarga de presión": maintenance.discharge_pressure,
+                "Presión de succión": maintenance.suction_pressure,
                 "Descripción de la ubicación": maintenance?.location?.description,
                 Cliente: capitalString(maintenance?.client?.businessName),
                 Nit: maintenance?.client?.nit,

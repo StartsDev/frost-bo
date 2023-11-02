@@ -82,7 +82,10 @@ function Modal({
 
         <div style={{display: 'flex', flexDirection: 'row', width: '300px', alignItems: 'center'}}>
           <Title title={title} />
-          <button className={styles.pdfButtonGenerator} onClick={()=>navigate('/bo/pdf-maintenance', {state: {maintenance: data}} )}>Generar PDF</button>
+          {
+            title === "Detalle del Mantenimiento" &&
+            <button className={styles.pdfButtonGenerator} onClick={()=>navigate('/bo/pdf-maintenance', {state: {maintenance: data}} )}>Generar PDF</button>
+          }
         </div>
 
         {title === "Detalle del Mantenimiento" ?

@@ -339,7 +339,7 @@ export const MyDocument = ({receivedData=''}: any) => {
                     </View>
                     <View style={{marginBottom: '3px', flexDirection: 'row'}}>
                       <Text style={styles.parameters__container__table__column}>Compresor 2 Amp. L3:</Text>
-                      <Text style={styles.parameters__container__table__value}>{receivedData['Compresor 3 amp L3']}</Text>
+                      <Text style={styles.parameters__container__table__value}>{receivedData['Compresor 2 amp L3']}</Text>
                     </View>
                   </View>
                 </View>
@@ -375,7 +375,7 @@ export const MyDocument = ({receivedData=''}: any) => {
                     </View>
                     <View style={{marginBottom: '3px', flexDirection: 'row'}}>
                       <Text style={styles.parameters__container__table__column}>Presión Succión:</Text>
-                      <Text style={styles.parameters__container__table__value}>suctionPressure</Text>
+                      <Text style={styles.parameters__container__table__value}>{receivedData['Presión de succión']}</Text>
                     </View>
                     <View style={{marginBottom: '3px', flexDirection: 'row'}}>
                       <Text style={styles.parameters__container__table__column}>Presión Descarga:</Text>
