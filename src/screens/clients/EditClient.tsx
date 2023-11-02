@@ -71,6 +71,7 @@ function EditClient() {
   const { data, loading } = useFetcher<ClientResponse>({method: "GET", url: ENDPOINT.clients.list})
   const [userByCustomer, setUsersByCustomer] = useState<any>([])
   const [userByRole, setUsersByRole] = useState<any>([])
+  const [userList, setUserList] = useState<any>([])
   const [client, setCleint] = useState({
     id: '',
     businessName:"",
@@ -99,11 +100,11 @@ function EditClient() {
       }
       return res.json()
     }).then(data => {
-      console.log(data)
       const usersCustomers = data.users.filter((user: User) => user.clientId === clientId)
       const usersByRole = data.users.filter((user: User) => user?.Role?.role === "Cliente")
       // console.log(usersFound);
       // setUsersByCustomer(usersFound)
+      setUserList(data?.users)
       setUsersByRole(usersByRole)
       setUsersByCustomer(usersCustomers)
     }).finally(()=> {
@@ -126,9 +127,6 @@ function EditClient() {
       city: customerToEdit.city,
       phone: customerToEdit.phone,
       user_app:{
-        // user_id:customerToEdit.user_app.user_id ?? '',
-        // role_id:customerToEdit.user_app.role_id ?? '', 
-        // role_name:customerToEdit.user_app.role_name ?? ''
         user_id:'',
         role_id:'', 
         role_name:''
@@ -137,7 +135,7 @@ function EditClient() {
   }
 
   const handleUserChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const userSelected = userByCustomer.users.find((user: User) => user.id === e.target.value)
+    const userSelected = userList?.find((user: User) => user.id === e.target.value)
     setCleint({
       ...client,
       user_app: {
