@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Outlet } from "react-router-dom";
+import { Outlet, Link } from "react-router-dom";
 import { THEME } from "../../theme";
 import Avatar from "../../components/avatar/Avatar";
 import Logo from "../../components/logo/Logo";
@@ -16,39 +16,38 @@ import { User } from "../../types";
 import { ENDPOINT } from "../../config";
 
 function Bo() {
-const userLogged: User = localStorage.getItem("user")
+  const userLogged: User = localStorage.getItem("user")
     ? JSON.parse(localStorage.getItem("user") || "")
     : null;
 
-  const [user, setUser] = useState<User>(userLogged)
+  const [user, setUser] = useState<User>(userLogged);
 
-  useEffect(()=> {
-    getUserById(userLogged.id)
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[])
-
+  useEffect(() => {
+    getUserById(userLogged.id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const getUserById = (id: string) => {
     fetch(`${ENDPOINT.auth.getUserById}/${id}`)
-    .then((res) => {
-      if(res.ok){
-        return res.json();
-      }
-    })
-    .then((data) => {
-      setUser(data.findUser)
-      localStorage.setItem('user', JSON.stringify(data.findUser))
-    })
-    .catch((error) => {
-      console.log(error)
-    })
-  }
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+      })
+      .then((data) => {
+        setUser(data.findUser);
+        localStorage.setItem("user", JSON.stringify(data.findUser));
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
-useEffect(() => {
+  useEffect(() => {
     const listElements = document.querySelectorAll(".list__button--click");
 
     listElements.forEach((element) => {
-    element.addEventListener("click", () => {
+      element.addEventListener("click", () => {
         let height = 0;
         const menu = element.nextElementSibling;
 
@@ -107,17 +106,33 @@ useEffect(() => {
           justifyContent: "space-between",
           alignItems: "center",
         }}
-      > 
-      <div style={{
-          display: "flex",
-          alignItems: "center",
-        }}>
-      <Logo image={"../src/assets/logo.png"} />
-        <h2>Aire Aplicado S.A.S</h2>
-      </div>
-    
+      >
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+          }}
+        >
+          <Link
+            to="/bo"
+            style={{
+              textDecoration: "none",
+              color: "black",
+              display: "flex",
+              alignItems: "center",
+            }}
+          >
+            <Logo image={"../src/assets/logo.png"} />
+            <h2>Aire Aplicado S.A.S</h2>
+          </Link>
+          <Link to="/bo" style={{ textDecoration: "none", color: "black" }}>
+            <h3 style={{ marginLeft: "50px", textDecoration: "none" }}>
+              Inicio.
+            </h3>
+          </Link>
+        </div>
 
-      <Avatar id={user?.id} userProfileImage={user?.image} />
+        <Avatar id={user?.id} userProfileImage={user?.image} />
       </div>
       <section className={styles?.wrapper_bo}>
         <aside
@@ -156,8 +171,10 @@ useEffect(() => {
             gap: 5,
           }}
         >
-          <Title title={`Bienvenido, ${user?.firstName} ${user?.lastName}` ?? ""} />
-         
+          <Title
+            title={`Bienvenido, ${user?.firstName} ${user?.lastName}` ?? ""}
+          />
+  
           <Outlet />
         </section>
       </section>

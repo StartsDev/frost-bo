@@ -18,6 +18,7 @@ import AddMaintenance from "./screens/maintenance/AddMaintenence";
 import EditMaintenance from "./screens/maintenance/EditMaintence";
 import CreateTech from "./screens/Technicians/CreateTech";
 import CreateEditEquipment from "./screens/equipment/CreateEditEquipment"
+import BigLogo from "./screens/BO/components/BigLogo";
 import React from "react";
 import { PasswordManagement } from "./screens/Technicians/PasswordManagement";
 import { PdfViewer } from "./components/PdfGenerator/PdfViewer";
@@ -59,7 +60,8 @@ const boChildrens: RouteObject[] = [
     ...routesClients,
     ...routesReports,
     ...routesTechnical,
-    ...routesMantenence
+    ...routesMantenence,
+    {path: "", element: <BigLogo/>},
 ]
 
 
@@ -70,7 +72,7 @@ const mainChildren: RouteObject[] = [
     },
     {
         path: "/bo",
-        element: <Bo />,
+        element:<Bo /> ,
         children: boChildrens,
         loader: async () => {
             
