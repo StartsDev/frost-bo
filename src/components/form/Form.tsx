@@ -43,7 +43,7 @@ function Form({ fields, action, btnText, error = false }: Props){
             name={field.name}
             onChange={field.onChange}
             placeholder={field.placeholder}
-            required
+            required={false}
           />
         </div>
       ))}
