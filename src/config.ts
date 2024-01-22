@@ -53,6 +53,7 @@ export const ENDPOINT = {
         identifications: `${import.meta.env.VITE_BASE_URL_AUTH}/identification/get-identifications`,
         register: `${import.meta.env.VITE_BASE_URL_AUTH}/auth/register`,
         update: `${import.meta.env.VITE_BASE_URL_AUTH}/user/update-user`,
+        delete: `${import.meta.env.VITE_BASE_URL_AUTH}/user/delete-user`,
         updatePassword: `${import.meta.env.VITE_BASE_URL_AUTH}/password/update-password`,
         asignPassword: `${import.meta.env.VITE_BASE_URL_AUTH}/password/create`,
     }

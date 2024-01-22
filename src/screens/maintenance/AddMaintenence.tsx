@@ -157,7 +157,7 @@ function AddMaintenance({isEditable = false}: Props) {
       if(!data.success) {
         toast.error(data.msg)
       } else {
-        toast.success(`El servicio con OT ${data.ot} ha sido ${isEditable ? 'modificado' : 'creado'} con exito`)
+        toast.success(`El servicio con OT ${data.maintenance.id} ha sido ${isEditable ? 'modificado' : 'creado'} con exito`)
       }
     }).catch(() => {
       console.log('error')
