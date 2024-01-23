@@ -96,7 +96,7 @@ function Equipments() {
                 serial: equipment.serial,
                 nombre: capitalString(equipment.name),
                 modelo: equipment.model,
-                tipo: capitalString(equipment.type),
+                descripcion: capitalString(equipment.description),
                 marca: capitalString(equipment.brand),
                 fecha: moment(equipment.createdAt).format('DD/MM/YYYY')
             }
@@ -104,7 +104,7 @@ function Equipments() {
 
     }, [data])
     
-    const headers = ["serial", "nombre", "modelo", "tipo", "marca", "fecha"]
+    const headers = ["serial", "nombre", "modelo", "descripción", "marca", "fecha"]
 
     const equipmentDetail = useMemo(() => {
         const locate =
@@ -128,7 +128,7 @@ function Equipments() {
                 Modelo: equipment.model
                     ? capitalString(equipment.model)
                     : undefined,
-                Tipo: capitalString(equipment.type),
+                Descripcion: capitalString(equipment.description),
                 Marca: capitalString(equipment.brand)
             };
         });
