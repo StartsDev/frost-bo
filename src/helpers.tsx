@@ -14,6 +14,8 @@ export const showError = (obj: any, nameChanger: Function) => {
 }
 
 export const EQUIPMENT_TYPES = [{name: 'MINISPLIT, CENTRAL, PISOTECHO, CASSETTE'}, {name: 'BOMBAS'}, {name: 'TORRES'} ]
+export const EQUIPMENT_TYPES2 = [{name: 'MINISPLIT'}, {name: 'BOMBAS'}, {name: 'TORRES'},{name: 'CENTRAL'}, {name: "PISOTECHO"}, {name: "CASSETTE"} ]
+
 
 export  const minisplitParamters = {
   voltage_on_L1L2: '0',

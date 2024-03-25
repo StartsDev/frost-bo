@@ -11,6 +11,7 @@ import { Client, ClientResponse, User } from '../../types';
 import { useFetcher } from '../../hooks/useFetcher';
 import { Input } from '../../components/form/Input';
 import { THEME } from '../../theme';
+import axios from 'axios';
 
 const fields: Fields[] = [
   {
@@ -68,7 +69,7 @@ const fields: Fields[] = [
 function EditClient() {
 
 
-  const { data, loading } = useFetcher<ClientResponse>({method: "GET", url: ENDPOINT.clients.list})
+  const { data, loading, fetchMemo } = useFetcher<ClientResponse>({method: "GET", url: ENDPOINT.clients.list})
   const [userByCustomer, setUsersByCustomer] = useState<any>([])
   const [userByRole, setUsersByRole] = useState<any>([])
   const [userList, setUserList] = useState<any>([])
@@ -91,7 +92,6 @@ function EditClient() {
   // console.log(client);
 
   const getUser = (clientId: string) => {
-    console.log(clientId);
     setIsLoading(true)
     fetch(ENDPOINT.auth.users)
     .then(res => {
@@ -154,31 +154,29 @@ function EditClient() {
     })
   }
 
-  const sendData = (e:React.ChangeEvent<HTMLInputElement>) => {
+  const sendData = async (e:React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault()
-    setIsLoading(true)
-    fetch(`${ENDPOINT.clients.update}/${client.id}`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-        "x-token": localStorage.getItem('key')!
-      },
-      body: JSON.stringify(client)
-    }).then((res) => {
-      if(!res.ok) {
-        toast.error('El cliente no pudo ser modificado, por favor consulte con el administrador')
-      }
-      return res.json()
-    }).then((data) => {
-      if(!data.success) {
-        toast.error(data.msg)
-      } else {
-        toast.success(`El cliente ${client.businessName} ha sido modificado con exito`)
-      }
-    }).catch(() => {
-      console.log('error')
-    })
-    .finally(() => {
+    try {
+      setIsLoading(true)
+      const {data} = await axios({
+        method: "PATCH",
+        url: `${ENDPOINT.clients.update}/${client.id}`,
+        headers: {
+          "Content-Type": "application/json",
+          "x-token": localStorage.getItem('key')!
+        },
+        data: JSON.stringify(client)
+        })
+        if(data.success) {
+          toast.success(data.msg)
+        } else {
+          toast.error(data.msg)
+        }
+    } catch (error) {
+      console.log('error: ', error)
+      toast.error(error.response.data.error)
+    } finally {
+      fetchMemo()
       setIsLoading(false)
       setCleint({
         id: '',
@@ -195,7 +193,7 @@ function EditClient() {
             role_name:""
         }
       })
-    })
+    }
   }
 
 

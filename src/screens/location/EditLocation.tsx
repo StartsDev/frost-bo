@@ -1,4 +1,4 @@
-import { useState, useMemo, CSSProperties } from 'react';
+import React, { useState, useMemo, CSSProperties } from 'react';
 import { Fields } from "../../components/form/Form"
 import View from "../../components/view/View"
 import { ENDPOINT } from "../../config"
@@ -10,6 +10,7 @@ import { Input } from "../../components/form/Input";
 import Loader from "../../components/Loader/Loader";
 import { THEME } from '../../theme';
 import { Client, ClientResponse, Headquarter, Location } from '../../types';
+import axios from 'axios';
 
 const fields: Fields[] = [
   {
@@ -30,7 +31,7 @@ const fields: Fields[] = [
 
 function EditLocation() {
 
-  const { data, loading } = useFetcher<ClientResponse>({method: "GET", url: ENDPOINT.clients.list})
+  const { data, loading, fetchMemo } = useFetcher<ClientResponse>({method: "GET", url: ENDPOINT.clients.list})
   const [headQuarterList, setHeadQuarterList] = useState<Headquarter[]>([])
   const [locationList, setLocationList] = useState<Location[]>([])
   const [customerSelected, setCustomerSelected] = useState<Client>()
@@ -73,31 +74,29 @@ function EditLocation() {
     }
   }
 
-  const sendData = (e:React.ChangeEvent<HTMLInputElement>) => {
+  const sendData = async (e:React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault()
-    setIsLoading(true)
-    fetch(`${ENDPOINT.location.update}${location.id}`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-        "x-token": localStorage.getItem('key')!
-      },
-      body: JSON.stringify(location)
-    }).then((res) => {
-      if(!res.ok) {
-        toast.error('La ubicación no pudo ser modificada, por favor consulte con el administrador')
-      }
-      return res.json()
-    }).then((data) => {
-      if(!data.success) {
-        toast.error(data.msg)
-      } else {
-        toast.success(`La ubicación ${location.locationName} ha sido modificada con exito`)
-      }
-    }).catch(() => {
-      console.log('error')
-    })
-    .finally(() => {
+    try {
+      setIsLoading(true)
+      const {data} = await axios({
+        method: "PATCH",
+        url: `${ENDPOINT.location.update}${location.id}`,
+        headers: {
+          "Content-Type": "application/json",
+          "x-token": localStorage.getItem('key')!
+        },
+        data: JSON.stringify(location)
+        })
+        if(data.success) {
+          toast.success(data.msg)
+        } else {
+          toast.error(data.msg)
+        }
+    } catch (error) {
+      console.log('error: ', error)
+      toast.error(error.response.data.error)
+    } finally {
+      fetchMemo()
       setIsLoading(false)
       setLocation({
         id: "",
@@ -105,7 +104,7 @@ function EditLocation() {
         locationName: "",
         description: '',
       })
-    })
+    }
   }
 
   return (

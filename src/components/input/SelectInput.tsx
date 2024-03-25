@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { CSSProperties } from 'react'
+import React, { CSSProperties } from 'react'
 import styles from './select.module.css'
 
 interface Props {

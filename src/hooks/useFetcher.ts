@@ -17,6 +17,7 @@ type ResponseFetcher<T> = {
     data?: T | null | undefined
     loading: boolean
     mutation?: (url: string, body: T, method: Method, headers?: Header) => void | undefined
+    fetchMemo: () => Promise<void>
 }
 
 const getMethod = async (url: string, headers?: Header) => {
@@ -44,13 +45,13 @@ async function fetcher<T>({ url, method, body, headers }: FetcherParams<T>){
         await mutation(url, body, method, headers)
 
     } catch (error) {
-        
+        console.error(error)
     } 
 
 
 }
 
-export const useFetcher = <T>({ url, method, body = {}, headers = {} }: FetcherParams<any>): ResponseFetcher<T> => {
+export const useFetcher = <T>({ url, method, body = {}, headers = {} }: FetcherParams<unknown>): ResponseFetcher<T> => {
     
     const [data, setResponse] = useState<T | null | undefined>(null)
     const [loading, setLoading] = useState(false)
@@ -67,7 +68,7 @@ export const useFetcher = <T>({ url, method, body = {}, headers = {} }: FetcherP
             .finally(() => {
                 setLoading(false)
             })
-    }, [])
+    }, [body, headers, method, url])
 
     const mutationFetcher = (url: string, body: T, method: Method, headers?: Header): void => {
         mutation(url, body, method, headers)
@@ -92,6 +93,7 @@ export const useFetcher = <T>({ url, method, body = {}, headers = {} }: FetcherP
     return {
         data: (data === undefined || data === null) ? null : data,
         loading,
-        mutation: method !== "GET" ? mutationFetcher : undefined
+        mutation: method !== "GET" ? mutationFetcher : undefined,
+        fetchMemo
     }
 }

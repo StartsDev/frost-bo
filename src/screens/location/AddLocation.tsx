@@ -1,4 +1,4 @@
-import { useState, useMemo, CSSProperties } from 'react';
+import React, { useState, useMemo, CSSProperties } from 'react';
 import Form from "../../components/form/Form"
 import View from "../../components/view/View"
 import { ENDPOINT } from "../../config"
@@ -10,6 +10,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { showError } from '../../helpers';
 import styles from './location.module.css'
+import axios from 'axios';
 
 const fields = [
   {
@@ -62,8 +63,6 @@ function AddLocation() {
     return addEvent
   }, [])
 
-console.log(location);
-
   const nameChange = (info: string) => {
     switch (info) {
       case 'locationName':
@@ -75,32 +74,30 @@ console.log(location);
     }
   }
 
-  const sendData = () => {
-    setIsLoading(true)
-    fetch(`${ENDPOINT.location.add}`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "x-token": localStorage.getItem('key')!
-      },
-      body: JSON.stringify(location)
-    }).then((res) => {
-      if(!res.ok) {
-        toast.error('La ubicación no pudo ser creada, por favor consulte con el administrador')
-      } else {
-        toast.success(`La ubicación ${location.locationName} ha sido creada con exito`)
-      }
-    }).catch(() => {
-      console.log('error')
-    })
-    .finally(() => {
+  const sendData = async() => {
+    try {
+      setIsLoading(true)
+      const {data} = await axios({
+        method: "POST",
+        url: `${ENDPOINT.location.add}`,
+        headers: {
+          "Content-Type": "application/json",
+          "x-token": localStorage.getItem('key')!
+        },
+        data: JSON.stringify(location)
+        })
+        toast.success(data.msg)
+    } catch (error) {
+      console.log('error: ', error)
+      toast.error(error.response.data.error)
+    } finally {
       setIsLoading(false)
       setLocation({
         locationName: "",
         description: "",
         headquarterId: "",
       })
-    })
+    }
   }
 
   return (

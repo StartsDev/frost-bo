@@ -10,7 +10,8 @@ import formStyles from "../../components/form/form.module.css";
 import { ToastContainer, toast } from 'react-toastify';
 import Loader from "../../components/Loader/Loader"
 import { THEME } from '../../theme';
-import { EQUIPMENT_TYPES } from '../../helpers';
+import { EQUIPMENT_TYPES, EQUIPMENT_TYPES2 } from '../../helpers';
+import axios from 'axios';
 
 const fields:Fields[]= [
   {
@@ -18,12 +19,6 @@ const fields:Fields[]= [
     type: "text",
     label: "Nombre del Equipo",
     placeholder: "Escribe el nombre del equipo"
-  },
-  {
-    name: "description",
-    type: "text",
-    label: "Descripción del Equipo",
-    placeholder: "Escriba una breve descripción del equipo"
   },
   {
     name: "serial",
@@ -50,7 +45,7 @@ interface Props {
 }
 
 function AddEquipment({isEditable = false}: Props) {
-  const { data: customerData, loading } = useFetcher<ClientResponse>({method: "GET", url: ENDPOINT.clients.list})
+  const { data: customerData, loading, fetchMemo } = useFetcher<ClientResponse>({method: "GET", url: ENDPOINT.clients.list})
   const [equipment, setEquipment] = useState<EquiomentPayload>({
     id: '', 
     name: '',
@@ -98,12 +93,20 @@ function AddEquipment({isEditable = false}: Props) {
     }   
 
     if(e.target.name === 'type'){     
-      const equipmentDataBytype: Equipment[] = equipmentList?.filter(p => p.type === e.target.value) as never
-      setEquipmentListByType(equipmentDataBytype)
+      // const equipmentDataBytype: Equipment[] = equipmentList?.filter(p => p.type === e.target.value) as never
+      // setEquipmentListByType(equipmentDataBytype)
       setEquipment({
       ...equipment,
       type: e.target.value
       })
+    }
+    if(e.target.name === 'description') {
+      const equipmentDataBytype: Equipment[] = equipmentList?.filter(p => p.description === e.target.value) as never
+      setEquipmentListByType(equipmentDataBytype)
+      setEquipment({
+        ...equipment,
+        description: e.target.value
+        })
     }
     if(e.target.name === 'equipmentId') {
       const equipmentSelected: Equipment = customerSelected?.equipments.find(p => p.id === e.target.value) as never
@@ -121,32 +124,30 @@ function AddEquipment({isEditable = false}: Props) {
     }   
   }
 
-  const sendData = (e:React.ChangeEvent<HTMLInputElement>) => {
+  const sendData = async (e:React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault()
-    setIsLoading(true)
-    fetch(isEditable ? `${ENDPOINT.equipment.update}${equipment.id}`: `${ENDPOINT.equipment.add}`, {
-      method: isEditable ? "PATCH" : "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "x-token": localStorage.getItem('key')!,
-        "x-apikey": import.meta.env.VITE_X_API_KEY
-      },
-      body: JSON.stringify(equipment)
-    }).then((res) => {
-      if(!res.ok) {
-        toast.error('El equipo no pudo ser creado, por favor consulte con el administrador')
-      }
-      return res.json()
-    }).then((data) => {
-      if(!data.success) {
-        toast.error(data.msg)
-      } else {
-        toast.success(`El equipo ${equipment.name} ha sido ${isEditable ? 'modificado' : 'creado'} con exito`)
-      }
-    }).catch(() => {
-      console.log('error')
-    })
-    .finally(() => {
+    try {
+      setIsLoading(true)
+      const {data} = await axios({
+        method: isEditable ? "PATCH" : "POST",
+        url: isEditable ? `${ENDPOINT.equipment.update}${equipment.id}`: `${ENDPOINT.equipment.add}`,
+        headers: {
+          "Content-Type": "application/json",
+          "x-token": localStorage.getItem('key')!,
+          "x-apikey": import.meta.env.VITE_X_API_KEY
+        },
+        data: JSON.stringify(equipment)
+        })
+        if(data.success) {
+          toast.success(data.msg)
+        } else {
+          toast.error(data.msg)    
+        }
+    } catch (error) {
+      console.log('error', error)
+      toast.error(error.response.data.error)
+    } finally {
+      fetchMemo()
       setIsLoading(false)
       setEquipment({
         id: '',
@@ -159,7 +160,7 @@ function AddEquipment({isEditable = false}: Props) {
         image: '',
         locationId: ''
       })
-    })
+    }
   }
 
   return (
@@ -200,15 +201,29 @@ function AddEquipment({isEditable = false}: Props) {
               value="id"
               property="locationName"
             />
-            <SelectInput
-              label="Tipo de equipo"
-              placeholder="Selecciona el tipo de equipo"
-              data={EQUIPMENT_TYPES}
-              name="type"
-              handleChange={handleInputChange}
-              value="name"
-              property="name"
-            />
+            {
+              isEditable ?
+              
+              <SelectInput
+                  label="Tipo de equipo"
+                  placeholder="Selecciona el tipo de equipo"
+                  data={EQUIPMENT_TYPES2}
+                  name="description"
+                  handleChange={handleInputChange}
+                  value="description"
+                  property="name"
+                />
+                :
+                <SelectInput
+                  label="Tipo de Informe"
+                  placeholder="Selecciona el tipo de informe a mostrar"
+                  data={EQUIPMENT_TYPES}
+                  name="type"
+                  handleChange={handleInputChange}
+                  value="name"
+                  property="name"
+                />
+            }
             {
               isEditable &&
                 <SelectInput
@@ -227,6 +242,18 @@ function AddEquipment({isEditable = false}: Props) {
           {
             (equipment.type !== "" && equipment.id === "" || equipment.type !== "" && equipment.id !== "")  &&
             <form onSubmit={(e)=>sendData(e as never)} style={{width: '100%', height: '100%', display: 'flex', flexWrap: 'wrap', padding: '1rem 1rem', justifyContent: 'space-between', overflowY: "scroll",}}>
+                {
+                  !isEditable &&
+                  <SelectInput
+                    label="Tipo de equipo"
+                    placeholder="Selecciona el tipo de equipo"
+                    data={EQUIPMENT_TYPES2}
+                    name="description"
+                    handleChange={handleInputChange}
+                    value="description"
+                    property="name"
+                  />
+                }
                 {fields.map((field)=> (
                   <Input
                     key={field.name} 

@@ -19,6 +19,7 @@ import { useFetcher } from "../../hooks/useFetcher";
 import { ToastContainer, toast } from "react-toastify";
 import Loader from "../../components/Loader/Loader";
 import { Fields } from "../../components/form/Form";
+import axios from "axios";
 
 interface Props {
   isEditable: boolean;
@@ -67,7 +68,7 @@ const CreateTech = ({ isEditable = false }: Props) => {
     method: "GET",
     url: ENDPOINT.auth.identifications,
   });
-  const { data: userToModify } = useFetcher<userResponse>({
+  const { data: userToModify, fetchMemo } = useFetcher<userResponse>({
     method: "GET",
     url: ENDPOINT.auth.users,
   });
@@ -81,6 +82,9 @@ const CreateTech = ({ isEditable = false }: Props) => {
     phone: "",
     identId: "",
     roleId: "",
+    clientId: null,
+    deleteClient: false,
+    clientName: "",
   });
 
   useEffect(() => {
@@ -93,17 +97,33 @@ const CreateTech = ({ isEditable = false }: Props) => {
       phone: "",
       identId: "",
       roleId: "",
+      clientId: null,
+      deleteClient: false,
+      clientName: "",
     });
   }, [isEditable]);
 
   const { id, ...userNew } = user;
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (isEditable && e.target.name === "idUser") {
-      const userFound = userToModify?.users.find(
-        (user) => user.id === e.target.value
-      ) as never;
-      setUser(userFound);
+      const userFound = userToModify?.users.find((user) => user.id === e.target.value) as never;
+        try {
+          const {data} = await getCustomerbyid(userFound.clientId)
+          setUser({
+            ...userFound,
+            clientName: data.client.client.businessName
+          });
+        } catch (error) {
+          setUser(userFound);
+        }
+    }
+    if(isEditable && e.target.name === "clientId") {
+      setUser({
+        ...user,
+        deleteClient: true,
+        clientName: ""
+      })
     }
     if (e.target.name === "id")
       setUser({
@@ -117,48 +137,35 @@ const CreateTech = ({ isEditable = false }: Props) => {
       });
   };
 
-  const sendData = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const getCustomerbyid = async (id: string) => {
+    const customerFound = await axios.get(`${ENDPOINT.clients.byId}${id}`)
+    return customerFound
+  }
+
+  const sendData = async (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
-    setIsLoading(true);
-    fetch(
-      !isEditable
-        ? ENDPOINT.auth.register
-        : `${ENDPOINT.auth.update}/${user.id}`,
-      {
-        method: isEditable ? "PATCH" : "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "x-token": localStorage.getItem("key")!,
-        },
-        body: JSON.stringify(isEditable ? user : userNew),
-      }
-    )
-      .then((res) => {
-        if (!res.ok) {
-          toast.error(
-            `El usuario no pudo ser ${
-              isEditable ? "modificado" : "creado"
-            }, por favor consulte con el administrador`
-          );
-        }
-        return res.json();
-      })
-      .then((data) => {
-        if (!data.success) {
-          toast.error(data.msg);
-        } else {
-          toast.success(
-            `El usuario ${user.firstName} ${user.lastName} ha sido ${
-              isEditable ? "modificado" : "creado"
-            } con exito`
-          );
-        }
-      })
-      .catch(() => {
-        console.log("error");
-      })
-      .finally(() => {
-        setIsLoading(false);
+      try {
+        setIsLoading(true)
+        const {data} = await axios({
+          method: isEditable ? "PATCH" : "POST",
+          url: !isEditable ? ENDPOINT.auth.register : `${ENDPOINT.auth.update}/${user.id}`,
+          headers: {
+            "Content-Type": "application/json",
+            "x-token": localStorage.getItem('key')!
+          },
+          data: JSON.stringify(isEditable ? user : userNew),
+          })
+          if(data.success) {
+            toast.success(data.msg)
+          } else {
+            toast.error(data.msg)
+          }
+      } catch (error) {
+        console.log('error: ', error)
+        toast.error(error.response.data.error)
+      } finally {
+        fetchMemo()
+        setIsLoading(false)
         setUser({
           id: "",
           numIdent: "",
@@ -168,8 +175,11 @@ const CreateTech = ({ isEditable = false }: Props) => {
           phone: "",
           identId: "",
           roleId: "",
+          clientId: null,
+          deleteClient: false,
+          clientName: "",
         });
-      });
+      }
   };
   const delUser = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
@@ -203,6 +213,7 @@ const CreateTech = ({ isEditable = false }: Props) => {
           console.log("error");
         })
         .finally(() => {
+          fetchMemo()
           setIsLoading(false);
           setUser({
             id: "",
@@ -213,6 +224,9 @@ const CreateTech = ({ isEditable = false }: Props) => {
             phone: "",
             identId: "",
             roleId: "",
+            clientId: null,
+            deleteClient: false,
+            clientName: "",
           });
         });
     }
@@ -237,7 +251,8 @@ const CreateTech = ({ isEditable = false }: Props) => {
             los usuarios que accederan al Backoffice o la aplicación
           </p>
           {isEditable && (
-            <div className={styles.selectContainer} style={{ marginLeft: 33 }}>
+            <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', width: '100%', marginBottom: 15, marginLeft: 33}}>
+            <div className={styles.selectContainer} style={{ marginLeft: 0 }}>
               <label htmlFor="" className={styles.labelStyle}>
                 Selecciona un usuario
               </label>
@@ -256,6 +271,24 @@ const CreateTech = ({ isEditable = false }: Props) => {
                   </option>
                 ))}
               </select>
+            </div>
+            <div
+                  className={styles.selectContainer}
+                  style={{ marginLeft: 17 }}
+                >
+                  <label htmlFor="" className={styles.labelStyle}>
+                    Cliente Asociado
+                  </label>
+                  {
+                    user.clientId &&
+                    <div className={styles.userRelated}>
+                      <span className={styles.userRelatedText}>
+                        {user.clientName}
+                      </span>
+                      <button className={styles.deleteButton} name='clientId' onClick={(e)=>handleInputChange(e as never)}>X</button>
+                    </div>
+                  }
+                </div>
             </div>
           )}
           {true && (

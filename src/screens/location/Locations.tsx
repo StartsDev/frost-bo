@@ -38,7 +38,21 @@ function Locations() {
   const [pageSize, setpageSize] = useState(8);
   const equipmentArray: Equipment[] = [];
   const locationArray: Location[] = [];
-
+  
+  //Not paginated Data
+  useEffect(() => {
+    const fetchDataSingle = async () => {
+      try {
+        const response = await axios.get<Response>(ENDPOINT.location.list);
+        setItem(response.data);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchDataSingle();
+  }, [])
   //Pagination Data
   useEffect(() => {
     const fetchData = async () => {
@@ -55,20 +69,6 @@ function Locations() {
     fetchData();
   }, [currentPage, pageSize]);
 
-  //Not paginated Data
-  useEffect(() => {
-    const fetchDataSingle = async () => {
-      try {
-        const response = await axios.get<Response>(ENDPOINT.location.list);
-        setItem(response.data);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchDataSingle();
-  }, [])
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);

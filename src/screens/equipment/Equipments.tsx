@@ -77,12 +77,13 @@ function Equipments() {
     const equipmentPreviewCSV = useMemo(() => {
         return item?.equipments?.map(equipment => {
             return {
-                serial: equipment.serial,
-                nombre: capitalString(equipment.name),
-                modelo: equipment.model,
-                tipo: capitalString(equipment.type),
-                marca: capitalString(equipment.brand),
-                fecha: moment(equipment.createdAt).format('DD/MM/YYYY')
+                Serial: equipment.serial,
+                Nombre: capitalString(equipment.name),
+                Modelo: equipment.model,
+                'Tipo de Equipo': capitalString(equipment.description),
+                'Tipo de Informe': capitalString(equipment.type),
+                Marca: capitalString(equipment.brand),
+                Fecha: moment(equipment.createdAt).format('DD/MM/YYYY')
             }
 
         })
@@ -104,7 +105,7 @@ function Equipments() {
 
     }, [data])
     
-    const headers = ["serial", "nombre", "modelo", "descripción", "marca", "fecha"]
+    const headers = ["serial", "nombre", "modelo", "tipo de equipo", "marca", "fecha"]
 
     const equipmentDetail = useMemo(() => {
         const locate =

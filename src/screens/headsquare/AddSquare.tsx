@@ -1,16 +1,17 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useState, useMemo, CSSProperties } from 'react';
+import React, { useState, useMemo, CSSProperties } from 'react';
 import Form from "../../components/form/Form"
 import View from "../../components/view/View"
 import { ENDPOINT } from "../../config"
 import { useFetcher } from "../../hooks/useFetcher";
-import styles from './headQuarters.module.css'
+import styles from './headQuarters.module.css';
 import { THEME } from '../../theme';
 import { showError } from '../../helpers';
 import Loader from '../../components/Loader/Loader';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { ClientResponse } from '../../types';
+import axios from 'axios';
 
 const fields = [
   {
@@ -85,25 +86,23 @@ function AddHeadSquare() {
     return addEvent
   }, [])
 
-  const sendData = () => {
-    setIsLoading(true)
-    fetch(`${ENDPOINT.squares.add}`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "x-token": localStorage.getItem('key')!
-      },
-      body: JSON.stringify(square)
-    }).then((res) => {
-      if(!res.ok) {
-        toast.error('La sede no pudo ser creado, por favor consulte con el administrador')
-      } else {
-        toast.success(`La sede ${square.headName} ha sido creado con exito`)
-      }
-    }).catch(() => {
-      console.log('error')
-    })
-    .finally(() => {
+  const sendData = async() => {
+    try {
+      setIsLoading(true)
+      const {data} = await axios({
+        method: "POST",
+        url: `${ENDPOINT.squares.add}`,
+        headers: {
+          "Content-Type": "application/json",
+          "x-token": localStorage.getItem('key')!
+        },
+        data: JSON.stringify(square)
+        })
+        toast.success(data.msg)
+    } catch (error) {
+      console.log('error: ', error)
+      toast.error(error.response.data.error)
+    } finally {
       setIsLoading(false)
       setSquare({
         address: "",
@@ -112,7 +111,7 @@ function AddHeadSquare() {
         phone: "",
         clientId: ""
       })
-    })
+    }
   }
 
   return (

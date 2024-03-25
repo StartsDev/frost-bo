@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useState, CSSProperties } from 'react';
+import React, { useState, CSSProperties } from 'react';
 import { Fields } from "../../components/form/Form"
 import View from "../../components/view/View"
 import { ENDPOINT } from "../../config"
@@ -11,6 +11,7 @@ import formStyles from "../../components/form/form.module.css";
 import { Input } from "../../components/form/Input";
 import Loader from "../../components/Loader/Loader";
 import { THEME } from '../../theme';
+import axios from 'axios';
 
 const fields: Fields[] = [
   {
@@ -41,7 +42,7 @@ const fields: Fields[] = [
 
 function EditHeadSquare() {
 
-  const { data, loading } = useFetcher<ClientResponse>({method: "GET", url: ENDPOINT.clients.list})
+  const { data, loading, fetchMemo } = useFetcher<ClientResponse>({method: "GET", url: ENDPOINT.clients.list})
   const [square, setSquare] = useState({
     id: '',
     headName: "",
@@ -62,9 +63,8 @@ function EditHeadSquare() {
     }));
   }
 
-  const handleChangeInputCustomer = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChangeInputCustomer = async(event: React.ChangeEvent<HTMLInputElement>) => {
     const customerToEdit:Client = data?.clients.find(client => client.id === event.target.value) as never
-    console.log(customerToEdit);
     setHeadQuarterList(customerToEdit.headquarters)
     setSquare({
       ...square,
@@ -85,31 +85,29 @@ function EditHeadSquare() {
   }
 
   
-  const sendData = (e:React.ChangeEvent<HTMLInputElement>) => {
+  const sendData = async (e:React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault()
-    setIsLoading(true)
-    fetch(`${ENDPOINT.squares.update}${square.id}`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-        "x-token": localStorage.getItem('key')!
-      },
-      body: JSON.stringify(square)
-    }).then((res) => {
-      if(!res.ok) {
-        toast.error('La sede no pudo ser modificada, por favor consulte con el administrador')
-      }
-      return res.json()
-    }).then((data) => {
-      if(!data.success) {
-        toast.error(data.msg)
-      } else {
-        toast.success(`La sede ${square.headName} ha sido modificada con exito`)
-      }
-    }).catch(() => {
-      console.log('error')
-    })
-    .finally(() => {
+    try {
+      setIsLoading(true)
+      const {data} = await axios({
+        method: "PATCH",
+        url: `${ENDPOINT.squares.update}${square.id}`,
+        headers: {
+          "Content-Type": "application/json",
+          "x-token": localStorage.getItem('key')!
+        },
+        data: JSON.stringify(square)
+        })
+        if(data.success) {
+          toast.success(data.msg)
+        } else {
+          toast.error(data.msg)
+        }
+    } catch (error) {
+      console.log('error: ', error)
+      toast.error(error.response.data.error)
+    } finally {
+      fetchMemo()
       setIsLoading(false)
       setSquare({
         id: '',
@@ -119,7 +117,7 @@ function EditHeadSquare() {
         phone: "",
         clientId: ""
       })
-    })
+    }
   }
 
   return (
