@@ -1,5 +1,7 @@
+import React from "react"
+
 /* eslint-disable @typescript-eslint/no-explicit-any */
-export const showError = (obj: any, nameChanger: Function) => {
+export const showError = (obj: any, nameChanger: any) => {
   const keys = Object.keys(obj)
   for(const field of keys) {
     if(obj[field] === ''){
@@ -13,8 +15,20 @@ export const showError = (obj: any, nameChanger: Function) => {
   return false
 }
 
-export const EQUIPMENT_TYPES = [{name: 'MINISPLIT, CENTRAL, PISOTECHO, CASSETTE'}, {name: 'BOMBAS'}, {name: 'TORRES'} ]
-export const EQUIPMENT_TYPES2 = [{name: 'MINISPLIT'}, {name: 'BOMBAS'}, {name: 'TORRES'},{name: 'CENTRAL'}, {name: "PISOTECHO"}, {name: "CASSETTE"} ]
+export const EQUIPMENT_TYPES = [
+  {name: 'MINISPLIT, CENTRAL, PISOTECHO, CASSETTE'},
+  {name: 'BOMBAS'}, {name: 'TORRES'}
+]
+export const EQUIPMENT_TYPES2 = [
+  {name: 'MINISPLIT'},
+  {name: 'BOMBAS'},
+  {name: 'TORRES'},
+  {name: 'CENTRAL'},
+  {name: "PISOTECHO"},
+  {name: "CASSETTE"},
+  {name: "CHILLER"},
+  {name: "UMA"}
+]
 
 
 export  const minisplitParamters = {
