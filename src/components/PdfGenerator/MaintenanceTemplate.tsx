@@ -2,6 +2,7 @@
 import React from 'react';
 import { Document, Page, Text, View, StyleSheet, Image, } from '@react-pdf/renderer';
 import placeholderSign from  '../../assets/placeholder_sign.png'
+import { usePdfGenerator } from './usePdfGenerator';
 
 
 // Create styles
@@ -234,8 +235,8 @@ const styles = StyleSheet.create({
   
 });
 
-// Create Document Component
 export const MyDocument = ({receivedData=''}: any) => {
+  const {techImageSrc, customerImageSrc} = usePdfGenerator({receivedData})
 
   return (
     <Document title='Informe de Mantenimiento'  >
@@ -404,11 +405,17 @@ export const MyDocument = ({receivedData=''}: any) => {
             </View>
             <View style={{flexDirection: 'row', justifyContent: 'center', marginTop: 15, marginBottom: 20}}>
               <View style={{flexDirection: 'column', marginRight: '200px'}}>
-                <Image source={receivedData['Firma técnico'] === null || receivedData['Firma técnico'] === ""  ? placeholderSign : receivedData['Firma técnico']} style={styles.sign__container__box__img}/>
+                <Image
+                  src={techImageSrc ? techImageSrc : placeholderSign}
+                  style={styles.sign__container__box__img}
+                />
                 <Text style={{textAlign: 'center', marginTop: 10, fontWeight: 'bold', fontSize: 10}}>Firma tecnico</Text>
               </View>
               <View style={{display: 'flex', flexDirection: 'column', marginRight: '200px'}}>
-                <Image source={receivedData['Firma cliente'] === null  || receivedData['Firma cliente'] === "" ? placeholderSign : receivedData['Firma cliente']} style={styles.sign__container__box__img}/>
+                <Image 
+                  src={customerImageSrc ? customerImageSrc : placeholderSign}
+                  style={styles.sign__container__box__img}
+                />
                 <Text style={{textAlign: 'center', marginTop: 10, fontWeight: 'bold', fontSize: 10}}>Firma cliente</Text>
               </View>
             </View>
