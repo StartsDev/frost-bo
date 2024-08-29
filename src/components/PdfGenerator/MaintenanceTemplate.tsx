@@ -289,6 +289,10 @@ export const MyDocument = ({receivedData=''}: any) => {
                       <Text style={styles.infoCustomer__container__title__column}>Marca / Modelo:</Text>
                       <Text style={styles.infoCustomer__container__title__value}>{receivedData['Marca']} {receivedData['Serial y Modelo']}</Text>
                     </View>
+                    <View style={{marginBottom: '3px', flexDirection: 'row'}}>
+                      <Text style={styles.infoCustomer__container__title__column}>Nombre del equipo:</Text>
+                      <Text style={styles.infoCustomer__container__title__value}>{receivedData['Equipo']}</Text>
+                    </View>
                   </View>
                 </View>
               </View>
