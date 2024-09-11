@@ -415,12 +415,8 @@ export const MyDocument = ({receivedData=''}: any) => {
                 />
                 <Text style={{textAlign: 'center', marginTop: 10, fontWeight: 'bold', fontSize: 10}}>Firma tecnico</Text>
               </View>
-              <View style={{display: 'flex', flexDirection: 'column', marginRight: '200px'}}>
-                <Image 
-                  src={customerImageSrc ? customerImageSrc : placeholderSign}
-                  style={styles.sign__container__box__img}
-                />
-                <Text style={{textAlign: 'center', marginTop: 10, fontWeight: 'bold', fontSize: 10}}>Firma cliente</Text>
+              <View style={{display: 'flex', flexDirection: 'column', marginRight: '200px'}}>       
+                <Text style={{textAlign: 'center', marginTop: 107, fontWeight: 'bold', fontSize: 10}}>Firma cliente</Text>
               </View>
             </View>
             <View style={{flexDirection: 'row'}}>
