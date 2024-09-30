@@ -36,7 +36,7 @@ function Maintenances() {
     const [loading, setLoading] = useState(true);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
-    const [pageSize] = useState(8); // Tamaño de la página fijo para simplicidad
+    const [pageSize] = useState(8);
 
     // Filtros para nombre, orden y fecha
     const [filterName, setFilterName] = useState<string>("");
@@ -47,13 +47,12 @@ function Maintenances() {
         const fetchData = async () => {
             try {
                 setLoading(true);
-                const response = await axios.get<Response>(
-                    `${ENDPOINT.maintanance.list}`
-                );
+                const response = await axios.get<Response>(`${ENDPOINT.maintanance.list}`);
                 const fetchedData = response.data.maintenances || [];
                 setAllData(fetchedData);
-                setData(fetchedData); // Establece los datos originales aquí
-                setTotalPages(Math.ceil(fetchedData.length / pageSize));
+                const filteredData = applyFilters(fetchedData);
+                setData(filteredData);
+                setTotalPages(Math.ceil(filteredData.length / pageSize));
                 setCurrentPage(1);
             } catch (error) {
                 console.error("Error fetching data:", error);
@@ -61,9 +60,9 @@ function Maintenances() {
                 setLoading(false);
             }
         };
-
+    
         fetchData();
-    }, []);
+    }, [filterName, filterOrder, filterDate]); 
 
     // Aplicar los filtros
     const applyFilters = (data: Maintenance[]) => {
@@ -94,12 +93,6 @@ function Maintenances() {
         resetFilters();
     }, []);
 
-    const handleApplyFilters = () => {
-        const filteredData = applyFilters(allData || []);
-        setData(filteredData);
-        setTotalPages(Math.ceil(filteredData.length / pageSize));
-        setCurrentPage(1);
-    };
 
     const maintenancePreview = useMemo(() => {
         const start = (currentPage - 1) * pageSize;
@@ -125,11 +118,75 @@ function Maintenances() {
         setCurrentPage(1);
     };
 
-    // Columnas de la tabla
-    const headers = ["Orden Servicio", "Cliente", "Hora", "Fecha", "Técnico"];
+     // Columnas de la tabla
+     const headers = ["Orden Servicio", "Cliente", "Hora", "Fecha", "Técnico"];
 
-    const { openModal, closeModal, isOpen } = useModal();
-    const { openModalCSV, closeModalCSV, isOpenCSV } = useModalCSV();
+     const { openModal, closeModal, isOpen } = useModal();
+     const { openModalCSV, closeModalCSV, isOpenCSV } = useModalCSV();
+
+    const maintenanceDetail = useMemo(() => {
+
+                const current = localStorage.getItem('item') === null
+                    ? {}
+                    : JSON.parse(localStorage.getItem('item')!)
+        
+                const idS: string = current?.id
+        
+                const filteredMaintenance = data?.
+                    filter(maintenance => maintenance.id === Number(idS))
+        
+                const mapObject = filteredMaintenance?.map(maintenance => {
+                    return {
+                        "Orden de trabajo": padNumber(maintenance.id),
+                        Estado: maintenance.status,
+                        Actividades: maintenance.activities,
+                        "Voltaje en L1L2": maintenance.voltage_on_L1L2,
+                        "Voltaje en L1L3": maintenance.voltage_on_L1L3,
+                        "Voltaje en L2L3": maintenance.voltage_on_L2L3,
+                        "Amp motor 1": maintenance.amp_engine_1,
+                        "Amp motor 2": maintenance.amp_engine_2,
+                        "Amp motor 3": maintenance.amp_engine_3,
+                        "Amp motor 4": maintenance.amp_engine_4,
+                        "Control de voltaje": maintenance.voltage_control,
+                        "Amp motor evap": maintenance.amp_engine_evap,
+                        "Compresor 1 amp L1": maintenance.compressor_1_amp_L1,
+                        "Compresor 1 amp L2": maintenance.compressor_1_amp_L2,
+                        "Compresor 1 amp L3": maintenance.compressor_1_amp_L3,
+                        "Compresor 2 amp L1": maintenance.compressor_2_amp_L1,
+                        "Compresor 2 amp L2": maintenance.compressor_2_amp_L2,
+                        "Compresor 2 amp L3": maintenance.compressor_2_amp_L3,
+                        "Temperatura de suministro": maintenance.supply_temp,
+                        "Temperatura de retorno": maintenance.return_temp,
+                        "Temperatura del agua": maintenance.water_in_temp,
+                        "Temperatura agua salida": maintenance.water_out_temp,
+                        "Estado del rociador": maintenance.sprinkler_state,
+                        "Estado flotador": maintenance.float_state,
+                        "Descarga de presión": maintenance.discharge_pressure,
+                        "Presión de succión": maintenance.suction_pressure,
+                        "Descripción de la ubicación": maintenance?.location?.description,
+                        Cliente: capitalString(maintenance?.client?.businessName),
+                        Nit: maintenance?.client?.nit,
+                        "Dirección del cliente": maintenance?.client?.address,
+                        "Contacto cliente": `${maintenance?.client?.contact} - mail: ${maintenance?.client?.email} - tel: ${maintenance?.client?.phone}`,
+                        "Ciudad": maintenance?.client?.city,
+                        Técnico: capitalString(maintenance?.tech?.techName),
+                        "Hora Servicio": moment(maintenance.service_hour, 'HH:mm').format('h:mm A'),
+                        "Fecha Servicio": moment(maintenance.service_date).format('DD/MM/YYYY'),
+                        Sede: capitalString(maintenance?.headquarter?.headName),
+                        Ubicación: maintenance?.location?.locationName,
+                        Equipo: maintenance?.equipment?.name,
+                        Descripcion: maintenance?.equipment?.description,
+                        "Serial y Modelo": `${maintenance?.equipment?.serial} - ${maintenance?.equipment?.model}`,
+                        Tipo: capitalString(maintenance?.equipment?.type),
+                        Marca: maintenance?.equipment?.brand,
+                        Observaciones: maintenance.observations,
+                        "Firma técnico": maintenance.tech_sign,
+                        "Firma cliente": maintenance.customer_sign,
+                    }
+                })
+        
+                return mapObject?.[0]
+            }, [isOpen])
 
     return (
         <div>
@@ -155,21 +212,6 @@ function Maintenances() {
                     value={filterDate || ""}
                     onChange={(e) => setFilterDate(e.target.value)}
                 />
-                <button
-                    onClick={handleApplyFilters}
-                    style={{
-                        marginLeft: "10px",
-                        padding: "5px 10px",
-                        backgroundColor: THEME.blue,
-                        color: THEME.white,
-                        borderRadius: 5,
-                        border: "none",
-                        cursor: "pointer",
-                    }}
-                >
-                    Aplicar filtros
-                </button>
-
                 <button
                     onClick={resetFilters}
                     style={{
@@ -246,7 +288,7 @@ function Maintenances() {
             {/* Modal de detalles */}
             {isOpen && (
                 <Modal
-                    data={{}}
+                    data={maintenanceDetail || {}}
                     onClose={closeModal}
                     title="Detalle del Mantenimiento"
                     image={""}
