@@ -99,6 +99,7 @@ function Maintenances() {
         resetFilters();
     }, []);
 
+
     const maintenancePreview = useMemo(() => {
         const start = (currentPage - 1) * pageSize;
         const end = start + pageSize;
@@ -229,6 +230,7 @@ function Maintenances() {
             setSortOrder("asc");
         }
     };
+
 
     return (
         <div>
