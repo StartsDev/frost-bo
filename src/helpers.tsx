@@ -20,14 +20,20 @@ export const EQUIPMENT_TYPES = [
   {name: 'BOMBAS'}, {name: 'TORRES'}
 ]
 export const EQUIPMENT_TYPES2 = [
-  {name: 'MINISPLIT'},
   {name: 'BOMBAS'},
-  {name: 'TORRES'},
   {name: 'CENTRAL'},
-  {name: "PISOTECHO"},
+  {name: 'MINISPLIT'},
+  {name: 'TORRES'},
+  {name: "CAJA DE VOLUMEN VARIABLE"},
   {name: "CASSETTE"},
   {name: "CHILLER"},
-  {name: "UMA"}
+  {name: "FAN COIL"},
+  {name: "PISOTECHO"},
+  {name: "UMA"},
+  {name: "UNIDAD CONDENSADORA"},
+  {name: "UNIDAD EVAPORADORA"},
+  {name: "VENTILADOR"},
+  {name: "OTROS"},
 ]
 
 

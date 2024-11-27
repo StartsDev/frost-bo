@@ -125,7 +125,7 @@ function AddEquipment({isEditable = false}: Props) {
   }
 
   const sendData = async (e:React.ChangeEvent<HTMLInputElement>) => {
-    e.preventDefault()
+    e.preventDefault()    
     try {
       setIsLoading(true)
       const {data} = await axios({
