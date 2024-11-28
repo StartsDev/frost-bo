@@ -238,6 +238,8 @@ const styles = StyleSheet.create({
 export const MyDocument = ({receivedData=''}: any) => {
   const {techImageSrc, customerImageSrc} = usePdfGenerator({receivedData})
 
+  const general = receivedData['Tipo'] === 'Minisplit, Central, Pisotecho, Cassette'
+  
   return (
     <Document title='Informe de Mantenimiento'  >
       <Page size="A4" style={styles.page}>
@@ -362,22 +364,27 @@ export const MyDocument = ({receivedData=''}: any) => {
                       <Text style={styles.parameters__container__table__column}>Amp. Motor 3:</Text>
                       <Text style={styles.parameters__container__table__value}>{receivedData['Amp motor 3']}</Text>
                     </View>
-                    <View style={{marginBottom: '3px', flexDirection: 'row'}}>
-                      <Text style={styles.parameters__container__table__column}>Amp. Motor Evap:</Text>
-                      <Text style={styles.parameters__container__table__value}>{receivedData['Amp motor evap']}</Text>
-                    </View>
-                    <View style={{marginBottom: '3px', flexDirection: 'row'}}>
-                      <Text style={styles.parameters__container__table__column}>Voltaje Control:</Text>
-                      <Text style={styles.parameters__container__table__value}>{receivedData['Control de voltaje']}</Text>
-                    </View>
-                    <View style={{marginBottom: '3px', flexDirection: 'row'}}>
-                      <Text style={styles.parameters__container__table__column}>Temp. Suminsitro:</Text>
-                      <Text style={styles.parameters__container__table__value}>{receivedData['Temperatura de suministro']}</Text>
-                    </View>
-                    <View style={{marginBottom: '3px', flexDirection: 'row'}}>
-                      <Text style={styles.parameters__container__table__column}>Temp. Retorno:</Text>
-                      <Text style={styles.parameters__container__table__value}>{receivedData['Temperatura agua salida']}</Text>
-                    </View>
+                    {
+                      general &&
+                      <>
+                        <View style={{marginBottom: '3px', flexDirection: 'row'}}>
+                          <Text style={styles.parameters__container__table__column}>Amp. Motor Evap:</Text>
+                          <Text style={styles.parameters__container__table__value}>{receivedData['Amp motor evap']}</Text>
+                        </View>
+                        <View style={{marginBottom: '3px', flexDirection: 'row'}}>
+                          <Text style={styles.parameters__container__table__column}>Voltaje Control:</Text>
+                          <Text style={styles.parameters__container__table__value}>{receivedData['Control de voltaje']}</Text>
+                        </View>
+                        <View style={{marginBottom: '3px', flexDirection: 'row'}}>
+                          <Text style={styles.parameters__container__table__column}>Temp. Suminsitro:</Text>
+                          <Text style={styles.parameters__container__table__value}>{receivedData['Temperatura de suministro']}</Text>
+                        </View>
+                        <View style={{marginBottom: '3px', flexDirection: 'row'}}>
+                          <Text style={styles.parameters__container__table__column}>Temp. Retorno:</Text>
+                          <Text style={styles.parameters__container__table__value}>{receivedData['Temperatura agua salida']}</Text>
+                        </View>
+                      </>
+                    }
                     <View style={{marginBottom: '3px', flexDirection: 'row'}}>
                       <Text style={styles.parameters__container__table__column}>Presión Succión:</Text>
                       <Text style={styles.parameters__container__table__value}>{receivedData['Presión de succión']}</Text>
