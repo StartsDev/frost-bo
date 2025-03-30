@@ -1,10 +1,11 @@
+import React from "react"
 import Item from "./Item"
 import { mapPropertiesOfItems } from "./utils"
 import styles from "./table.module.css"
 import { THEME, ITEM_THEME } from "../../theme"
  
 interface Props<T> {
-    headers: string[] | [],
+    headers: React.ReactNode[] | [],
     items: T[] | [],
     actionItem?: (param?: any) => void
 }
@@ -59,7 +60,6 @@ function Table<T>({ headers, items, actionItem }: Props<T>) {
                             }}
                         >
                             {
-                                //@ts-expect-error
                                 mapPropertiesOfItems(item).map((value, index) =>
                                 {
                                     return <Item key={index} value={value} />

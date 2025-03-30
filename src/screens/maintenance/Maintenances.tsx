@@ -3,7 +3,7 @@ import Actions from "../../components/actions/Actions";
 import View from "../../components/view/View";
 import Table from "../../components/table/Table";
 import { THEME } from "../../theme";
-import { MdDescription } from "react-icons/md";
+import { MdArrowDropDown, MdArrowDropUp, MdDescription } from "react-icons/md";
 import { ENDPOINT } from "../../config";
 import type { Maintenance } from "../../types";
 import Loader from "../../components/Loader/Loader";
@@ -42,12 +42,16 @@ function Maintenances() {
     const [filterName, setFilterName] = useState<string>("");
     const [filterOrder, setFilterOrder] = useState<number | null>(null);
     const [filterDate, setFilterDate] = useState<string | null>(null);
+    const [sortOrder, setSortOrder] = useState<"asc" | "desc" | null>(null);
+    const [sortField, setSortField] = useState<"id" | "service_date" | "client" | null>(null);
 
     useEffect(() => {
         const fetchData = async () => {
             try {
                 setLoading(true);
-                const response = await axios.get<Response>(`${ENDPOINT.maintanance.list}`);
+                const response = await axios.get<Response>(
+                    `${ENDPOINT.maintanance.list}`
+                );
                 const fetchedData = response.data.maintenances || [];
                 setAllData(fetchedData);
                 const filteredData = applyFilters(fetchedData);
@@ -60,13 +64,13 @@ function Maintenances() {
                 setLoading(false);
             }
         };
-    
+
         fetchData();
-    }, [filterName, filterOrder, filterDate]); 
+    }, [filterName, filterOrder, filterDate, sortField, sortOrder]);
 
     // Aplicar los filtros
     const applyFilters = (data: Maintenance[]) => {
-        return data.filter((maintenance) => {
+        let filteredData = data.filter((maintenance) => {
             const matchesName = maintenance.client.businessName
                 .toLowerCase()
                 .includes(filterName.toLowerCase());
@@ -81,6 +85,8 @@ function Maintenances() {
                 : true;
             return matchesName && matchesOrder && matchesDate;
         });
+
+        return applySort(filteredData);
     };
 
     // Manejador de cambio de página
@@ -118,75 +124,113 @@ function Maintenances() {
         setCurrentPage(1);
     };
 
-     // Columnas de la tabla
-     const headers = ["Orden Servicio", "Cliente", "Hora", "Fecha", "Técnico"];
+    // Columnas de la tabla
+    const headers = [
+        { label: "Orden Servicio", field: "id", sortable: true },
+        { label: "Cliente", field: "client", sortable: true },
+        { label: "Hora", field: "service_hour", sortable: false },
+        { label: "Fecha", field: "service_date", sortable: true },
+        { label: "Técnico", field: "techName", sortable: false },
+    ];
 
-     const { openModal, closeModal, isOpen } = useModal();
-     const { openModalCSV, closeModalCSV, isOpenCSV } = useModalCSV();
+    const { openModal, closeModal, isOpen } = useModal();
+    const { openModalCSV, closeModalCSV, isOpenCSV } = useModalCSV();
 
     const maintenanceDetail = useMemo(() => {
+        const current =
+            localStorage.getItem("item") === null
+                ? {}
+                : JSON.parse(localStorage.getItem("item")!);
 
-                const current = localStorage.getItem('item') === null
-                    ? {}
-                    : JSON.parse(localStorage.getItem('item')!)
-        
-                const idS: string = current?.id
-        
-                const filteredMaintenance = data?.
-                    filter(maintenance => maintenance.id === Number(idS))
-        
-                const mapObject = filteredMaintenance?.map(maintenance => {
-                    return {
-                        "Orden de trabajo": padNumber(maintenance.id),
-                        Estado: maintenance.status,
-                        Actividades: maintenance.activities,
-                        "Voltaje en L1L2": maintenance.voltage_on_L1L2,
-                        "Voltaje en L1L3": maintenance.voltage_on_L1L3,
-                        "Voltaje en L2L3": maintenance.voltage_on_L2L3,
-                        "Amp motor 1": maintenance.amp_engine_1,
-                        "Amp motor 2": maintenance.amp_engine_2,
-                        "Amp motor 3": maintenance.amp_engine_3,
-                        "Amp motor 4": maintenance.amp_engine_4,
-                        "Control de voltaje": maintenance.voltage_control,
-                        "Amp motor evap": maintenance.amp_engine_evap,
-                        "Compresor 1 amp L1": maintenance.compressor_1_amp_L1,
-                        "Compresor 1 amp L2": maintenance.compressor_1_amp_L2,
-                        "Compresor 1 amp L3": maintenance.compressor_1_amp_L3,
-                        "Compresor 2 amp L1": maintenance.compressor_2_amp_L1,
-                        "Compresor 2 amp L2": maintenance.compressor_2_amp_L2,
-                        "Compresor 2 amp L3": maintenance.compressor_2_amp_L3,
-                        "Temperatura de suministro": maintenance.supply_temp,
-                        "Temperatura de retorno": maintenance.return_temp,
-                        "Temperatura del agua": maintenance.water_in_temp,
-                        "Temperatura agua salida": maintenance.water_out_temp,
-                        "Estado del rociador": maintenance.sprinkler_state,
-                        "Estado flotador": maintenance.float_state,
-                        "Descarga de presión": maintenance.discharge_pressure,
-                        "Presión de succión": maintenance.suction_pressure,
-                        "Descripción de la ubicación": maintenance?.location?.description,
-                        Cliente: capitalString(maintenance?.client?.businessName),
-                        Nit: maintenance?.client?.nit,
-                        "Dirección del cliente": maintenance?.client?.address,
-                        "Contacto cliente": `${maintenance?.client?.contact} - mail: ${maintenance?.client?.email} - tel: ${maintenance?.client?.phone}`,
-                        "Ciudad": maintenance?.client?.city,
-                        Técnico: capitalString(maintenance?.tech?.techName),
-                        "Hora Servicio": moment(maintenance.service_hour, 'HH:mm').format('h:mm A'),
-                        "Fecha Servicio": moment(maintenance.service_date).format('DD/MM/YYYY'),
-                        Sede: capitalString(maintenance?.headquarter?.headName),
-                        Ubicación: maintenance?.location?.locationName,
-                        Equipo: maintenance?.equipment?.name,
-                        Descripcion: maintenance?.equipment?.description,
-                        "Serial y Modelo": `${maintenance?.equipment?.serial} - ${maintenance?.equipment?.model}`,
-                        Tipo: capitalString(maintenance?.equipment?.type),
-                        Marca: maintenance?.equipment?.brand,
-                        Observaciones: maintenance.observations,
-                        "Firma técnico": maintenance.tech_sign,
-                        "Firma cliente": maintenance.customer_sign,
-                    }
-                })
-        
-                return mapObject?.[0]
-            }, [isOpen])
+        const idS: string = current?.id;
+
+        const filteredMaintenance = data?.filter(
+            (maintenance) => maintenance.id === Number(idS)
+        );
+
+        const mapObject = filteredMaintenance?.map((maintenance) => {
+            return {
+                "Orden de trabajo": padNumber(maintenance.id),
+                Estado: maintenance.status,
+                Actividades: maintenance.activities,
+                "Voltaje en L1L2": maintenance.voltage_on_L1L2,
+                "Voltaje en L1L3": maintenance.voltage_on_L1L3,
+                "Voltaje en L2L3": maintenance.voltage_on_L2L3,
+                "Amp motor 1": maintenance.amp_engine_1,
+                "Amp motor 2": maintenance.amp_engine_2,
+                "Amp motor 3": maintenance.amp_engine_3,
+                "Amp motor 4": maintenance.amp_engine_4,
+                "Control de voltaje": maintenance.voltage_control,
+                "Amp motor evap": maintenance.amp_engine_evap,
+                "Compresor 1 amp L1": maintenance.compressor_1_amp_L1,
+                "Compresor 1 amp L2": maintenance.compressor_1_amp_L2,
+                "Compresor 1 amp L3": maintenance.compressor_1_amp_L3,
+                "Compresor 2 amp L1": maintenance.compressor_2_amp_L1,
+                "Compresor 2 amp L2": maintenance.compressor_2_amp_L2,
+                "Compresor 2 amp L3": maintenance.compressor_2_amp_L3,
+                "Temperatura de suministro": maintenance.supply_temp,
+                "Temperatura de retorno": maintenance.return_temp,
+                "Temperatura del agua": maintenance.water_in_temp,
+                "Temperatura agua salida": maintenance.water_out_temp,
+                "Estado del rociador": maintenance.sprinkler_state,
+                "Estado flotador": maintenance.float_state,
+                "Descarga de presión": maintenance.discharge_pressure,
+                "Presión de succión": maintenance.suction_pressure,
+                "Descripción de la ubicación":
+                    maintenance?.location?.description,
+                Cliente: capitalString(maintenance?.client?.businessName),
+                Nit: maintenance?.client?.nit,
+                "Dirección del cliente": maintenance?.client?.address,
+                "Contacto cliente": `${maintenance?.client?.contact} - mail: ${maintenance?.client?.email} - tel: ${maintenance?.client?.phone}`,
+                Ciudad: maintenance?.client?.city,
+                Técnico: capitalString(maintenance?.tech?.techName),
+                "Hora Servicio": moment(
+                    maintenance.service_hour,
+                    "HH:mm"
+                ).format("h:mm A"),
+                "Fecha Servicio": moment(maintenance.service_date).format(
+                    "DD/MM/YYYY"
+                ),
+                Sede: capitalString(maintenance?.headquarter?.headName),
+                Ubicación: maintenance?.location?.locationName,
+                Equipo: maintenance?.equipment?.name,
+                Descripcion: maintenance?.equipment?.description,
+                "Serial y Modelo": `${maintenance?.equipment?.serial} - ${maintenance?.equipment?.model}`,
+                Tipo: capitalString(maintenance?.equipment?.type),
+                Marca: maintenance?.equipment?.brand,
+                Observaciones: maintenance.observations,
+                "Firma técnico": maintenance.tech_sign,
+                "Firma cliente": maintenance.customer_sign,
+            };
+        });
+
+        return mapObject?.[0];
+    }, [isOpen]);
+
+    const applySort = (data: Maintenance[]) => {
+        if (!sortField || !sortOrder) return data;
+
+        return [...data].sort((a, b) => {
+            const valueA = sortField === "client" ? a.client.businessName : a[sortField];
+            const valueB = sortField === "client" ? b.client.businessName : b[sortField];
+
+            if (sortOrder === "asc") {
+                return valueA > valueB ? 1 : -1;
+            } else {
+                return valueA < valueB ? 1 : -1;
+            }
+        });
+    };
+
+    const handleSort = (field: string) => {
+        if (sortField === field) {
+            setSortOrder(sortOrder === "asc" ? "desc" : "asc");
+        } else {
+            setSortField(field as "id" | "service_date" | "client");
+            setSortOrder("asc");
+        }
+    };
+
 
     return (
         <div>
@@ -266,7 +310,39 @@ function Maintenances() {
                 ) : data && data.length > 0 ? (
                     <>
                         <Table
-                            headers={headers}
+                            headers={headers.map((header) => (
+                                <div key={header.field}>
+                                    {header.label}
+                                    {header.sortable && (
+                                        <button
+                                            onClick={() =>
+                                                handleSort(header.field)
+                                            }
+                                            style={{
+                                                border: "none",
+                                                backgroundColor: "transparent",
+                                                cursor: "pointer",
+                                            }}
+                                        >
+                                            {sortField === header.field ? (
+                                                sortOrder === "desc" ? (
+                                                    <MdArrowDropDown
+                                                        height={40}
+                                                        style={{color: THEME.blue}}
+                                                    />
+                                                ) : (
+                                                    <MdArrowDropUp
+                                                        height={40}
+                                                        style={{color: THEME.blue}}
+                                                    />
+                                                )
+                                            ) : (
+                                                <MdArrowDropDown height={40} style={{color: THEME.blue}}/>
+                                            )}
+                                        </button>
+                                    )}
+                                </div>
+                            ))}
                             items={maintenancePreview || []}
                             actionItem={() => {
                                 openModal();
