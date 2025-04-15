@@ -43,26 +43,34 @@ function Maintenances() {
     const [filterOrder, setFilterOrder] = useState<number | null>(null);
     const [filterDate, setFilterDate] = useState<string | null>(null);
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                setLoading(true);
-                const response = await axios.get<Response>(`${ENDPOINT.maintanance.list}`);
-                const fetchedData = response.data.maintenances || [];
-                setAllData(fetchedData);
-                const filteredData = applyFilters(fetchedData);
-                setData(filteredData);
-                setTotalPages(Math.ceil(filteredData.length / pageSize));
-                setCurrentPage(1);
-            } catch (error) {
-                console.error("Error fetching data:", error);
-            } finally {
-                setLoading(false);
+    const fetchData = async () => {
+        console.log({ currentPage });
+        try {
+            setLoading(true);
+            let url = `${ENDPOINT.maintanance.list}?page=${currentPage + 1}&pageSize=5`;
+
+            if (filterOrder !== null) {
+                url += `&order=${filterOrder}`;
             }
-        };
-    
+            const response = await axios.get<Response>(url);
+            console.log({ response: response.data });
+            const fetchedData = response.data.maintenances || [];
+
+            setAllData(fetchedData);
+            const filteredData = applyFilters(fetchedData);
+            setData(filteredData);
+            setTotalPages(response.data.totalPages);
+        } catch (error) {
+            console.error("Error fetching data:", error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    useEffect(() => {
         fetchData();
-    }, [filterName, filterOrder, filterDate]); 
+    }, [filterName, filterOrder, filterDate]);
+    // }, []);
 
     // Aplicar los filtros
     const applyFilters = (data: Maintenance[]) => {
@@ -86,6 +94,7 @@ function Maintenances() {
     // Manejador de cambio de página
     const handlePageChange = (page: number) => {
         setCurrentPage(page);
+        fetchData();
     };
 
     // Reseteo de los filtros al recargar la página
@@ -95,10 +104,10 @@ function Maintenances() {
 
 
     const maintenancePreview = useMemo(() => {
-        const start = (currentPage - 1) * pageSize;
-        const end = start + pageSize;
-        const paginatedData = data?.slice(start, end);
-        return paginatedData?.map((maintenance) => ({
+        // const start = (currentPage - 1) * pageSize;
+        // const end = start + pageSize;
+        // const paginatedData = data?.slice(start, end);
+        return data?.map((maintenance) => ({
             id: padNumber(maintenance.id),
             cliente: capitalString(maintenance.client.businessName),
             hora: moment(maintenance.service_hour, "HH:mm").format("h:mm A"),
@@ -118,75 +127,76 @@ function Maintenances() {
         setCurrentPage(1);
     };
 
-     // Columnas de la tabla
-     const headers = ["Orden Servicio", "Cliente", "Hora", "Fecha", "Técnico"];
+    // Columnas de la tabla
+    const headers = ["Orden Servicio", "Cliente", "Hora", "Fecha", "Técnico"];
 
-     const { openModal, closeModal, isOpen } = useModal();
-     const { openModalCSV, closeModalCSV, isOpenCSV } = useModalCSV();
+    const { openModal, closeModal, isOpen } = useModal();
+    const { openModalCSV, closeModalCSV, isOpenCSV } = useModalCSV();
 
     const maintenanceDetail = useMemo(() => {
 
-                const current = localStorage.getItem('item') === null
-                    ? {}
-                    : JSON.parse(localStorage.getItem('item')!)
-        
-                const idS: string = current?.id
-        
-                const filteredMaintenance = data?.
-                    filter(maintenance => maintenance.id === Number(idS))
-        
-                const mapObject = filteredMaintenance?.map(maintenance => {
-                    return {
-                        "Orden de trabajo": padNumber(maintenance.id),
-                        Estado: maintenance.status,
-                        Actividades: maintenance.activities,
-                        "Voltaje en L1L2": maintenance.voltage_on_L1L2,
-                        "Voltaje en L1L3": maintenance.voltage_on_L1L3,
-                        "Voltaje en L2L3": maintenance.voltage_on_L2L3,
-                        "Amp motor 1": maintenance.amp_engine_1,
-                        "Amp motor 2": maintenance.amp_engine_2,
-                        "Amp motor 3": maintenance.amp_engine_3,
-                        "Amp motor 4": maintenance.amp_engine_4,
-                        "Control de voltaje": maintenance.voltage_control,
-                        "Amp motor evap": maintenance.amp_engine_evap,
-                        "Compresor 1 amp L1": maintenance.compressor_1_amp_L1,
-                        "Compresor 1 amp L2": maintenance.compressor_1_amp_L2,
-                        "Compresor 1 amp L3": maintenance.compressor_1_amp_L3,
-                        "Compresor 2 amp L1": maintenance.compressor_2_amp_L1,
-                        "Compresor 2 amp L2": maintenance.compressor_2_amp_L2,
-                        "Compresor 2 amp L3": maintenance.compressor_2_amp_L3,
-                        "Temperatura de suministro": maintenance.supply_temp,
-                        "Temperatura de retorno": maintenance.return_temp,
-                        "Temperatura del agua": maintenance.water_in_temp,
-                        "Temperatura agua salida": maintenance.water_out_temp,
-                        "Estado del rociador": maintenance.sprinkler_state,
-                        "Estado flotador": maintenance.float_state,
-                        "Descarga de presión": maintenance.discharge_pressure,
-                        "Presión de succión": maintenance.suction_pressure,
-                        "Descripción de la ubicación": maintenance?.location?.description,
-                        Cliente: capitalString(maintenance?.client?.businessName),
-                        Nit: maintenance?.client?.nit,
-                        "Dirección del cliente": maintenance?.client?.address,
-                        "Contacto cliente": `${maintenance?.client?.contact} - mail: ${maintenance?.client?.email} - tel: ${maintenance?.client?.phone}`,
-                        "Ciudad": maintenance?.client?.city,
-                        Técnico: capitalString(maintenance?.tech?.techName),
-                        "Hora Servicio": moment(maintenance.service_hour, 'HH:mm').format('h:mm A'),
-                        "Fecha Servicio": moment(maintenance.service_date).format('DD/MM/YYYY'),
-                        Sede: capitalString(maintenance?.headquarter?.headName),
-                        Ubicación: maintenance?.location?.locationName,
-                        Equipo: maintenance?.equipment?.name,
-                        Descripcion: maintenance?.equipment?.description,
-                        "Serial y Modelo": `${maintenance?.equipment?.serial} - ${maintenance?.equipment?.model}`,
-                        Tipo: capitalString(maintenance?.equipment?.type),
-                        Marca: maintenance?.equipment?.brand,
-                        Observaciones: maintenance.observations,
-                        "Firma técnico": maintenance.tech_sign,
-                        "Firma cliente": maintenance.customer_sign,
-                    }
-                })
-        
-                return mapObject?.[0]
-            }, [isOpen])
+        const current = localStorage.getItem('item') === null
+            ? {}
+            : JSON.parse(localStorage.getItem('item')!)
+
+        const idS: string = current?.id
+
+        const filteredMaintenance = data?.
+            filter(maintenance => maintenance.id === Number(idS))
+
+        const mapObject = filteredMaintenance?.map(maintenance => {
+            return {
+                "Orden de trabajo": padNumber(maintenance.id),
+                Estado: maintenance.status,
+                Actividades: maintenance.activities,
+                "Voltaje en L1L2": maintenance.voltage_on_L1L2,
+                "Voltaje en L1L3": maintenance.voltage_on_L1L3,
+                "Voltaje en L2L3": maintenance.voltage_on_L2L3,
+                "Amp motor 1": maintenance.amp_engine_1,
+                "Amp motor 2": maintenance.amp_engine_2,
+                "Amp motor 3": maintenance.amp_engine_3,
+                "Amp motor 4": maintenance.amp_engine_4,
+                "Control de voltaje": maintenance.voltage_control,
+                "Amp motor evap": maintenance.amp_engine_evap,
+                "Compresor 1 amp L1": maintenance.compressor_1_amp_L1,
+                "Compresor 1 amp L2": maintenance.compressor_1_amp_L2,
+                "Compresor 1 amp L3": maintenance.compressor_1_amp_L3,
+                "Compresor 2 amp L1": maintenance.compressor_2_amp_L1,
+                "Compresor 2 amp L2": maintenance.compressor_2_amp_L2,
+                "Compresor 2 amp L3": maintenance.compressor_2_amp_L3,
+                "Temperatura de suministro": maintenance.supply_temp,
+                "Temperatura de retorno": maintenance.return_temp,
+                "Temperatura del agua": maintenance.water_in_temp,
+                "Temperatura agua salida": maintenance.water_out_temp,
+                "Estado del rociador": maintenance.sprinkler_state,
+                "Estado flotador": maintenance.float_state,
+                "Descarga de presión": maintenance.discharge_pressure,
+                "Presión de succión": maintenance.suction_pressure,
+                "Descripción de la ubicación": maintenance?.location?.description,
+                Cliente: capitalString(maintenance?.client?.businessName),
+                Nit: maintenance?.client?.nit,
+                "Dirección del cliente": maintenance?.client?.address,
+                "Contacto cliente": `${maintenance?.client?.contact} - mail: ${maintenance?.client?.email} - tel: ${maintenance?.client?.phone}`,
+                "Ciudad": maintenance?.client?.city,
+                Técnico: capitalString(maintenance?.tech?.techName),
+                "Hora Servicio": moment(maintenance.service_hour, 'HH:mm').format('h:mm A'),
+                "Fecha Servicio": moment(maintenance.service_date).format('DD/MM/YYYY'),
+                Sede: capitalString(maintenance?.headquarter?.headName),
+                Ubicación: maintenance?.location?.locationName,
+                Equipo: maintenance?.equipment?.name,
+                Descripcion: maintenance?.equipment?.description,
+                "Serial y Modelo": `${maintenance?.equipment?.serial} - ${maintenance?.equipment?.model}`,
+                Tipo: capitalString(maintenance?.equipment?.type),
+                Marca: maintenance?.equipment?.brand,
+                Observaciones: maintenance.observations,
+                "Firma técnico": maintenance.tech_sign,
+                "Firma cliente": maintenance.customer_sign,
+            }
+        })
+
+        return mapObject?.[0]
+    }, [isOpen])
+
 
     return (
         <div>
