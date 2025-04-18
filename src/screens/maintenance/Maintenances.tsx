@@ -44,16 +44,21 @@ function Maintenances() {
     const [filterDate, setFilterDate] = useState<string | null>(null);
 
     const fetchData = async () => {
-        console.log({ currentPage });
         try {
             setLoading(true);
-            let url = `${ENDPOINT.maintanance.list}?page=${currentPage + 1}&pageSize=5`;
+            const hasDate = filterDate !== null && filterDate !== "" ? filterDate : null;
+            let url = `${ENDPOINT.maintanance.list}?page=${hasDate ? 1 : currentPage}&pageSize=${hasDate ? 100 : 9}`;
 
-            if (filterOrder !== null) {
+            if (filterOrder !== null && filterOrder > 0) {
                 url += `&order=${filterOrder}`;
             }
+            if (filterName !== "") {
+                url += `&name=${filterName}`;
+            }
+            if (hasDate) {
+                url += `&date=${filterDate}`;
+            }
             const response = await axios.get<Response>(url);
-            console.log({ response: response.data });
             const fetchedData = response.data.maintenances || [];
 
             setAllData(fetchedData);
@@ -68,9 +73,22 @@ function Maintenances() {
     };
 
     useEffect(() => {
+        const handler = setTimeout(() => {
+            fetchData();
+        }, 500);
+
+        return () => {
+            clearTimeout(handler);
+        };
+    }, [filterName, filterOrder]);
+
+    useEffect(() => {
         fetchData();
-    }, [filterName, filterOrder, filterDate]);
-    // }, []);
+    }, [filterDate]);
+
+    useEffect(() => {
+        fetchData();
+    }, [currentPage]);
 
     // Aplicar los filtros
     const applyFilters = (data: Maintenance[]) => {
@@ -94,7 +112,6 @@ function Maintenances() {
     // Manejador de cambio de página
     const handlePageChange = (page: number) => {
         setCurrentPage(page);
-        fetchData();
     };
 
     // Reseteo de los filtros al recargar la página
@@ -104,9 +121,6 @@ function Maintenances() {
 
 
     const maintenancePreview = useMemo(() => {
-        // const start = (currentPage - 1) * pageSize;
-        // const end = start + pageSize;
-        // const paginatedData = data?.slice(start, end);
         return data?.map((maintenance) => ({
             id: padNumber(maintenance.id),
             cliente: capitalString(maintenance.client.businessName),
